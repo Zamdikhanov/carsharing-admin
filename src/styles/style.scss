@@ -1,0 +1,26 @@
+@import url('../assets/fonts/fonts.css');
+@import './variables';
+*,
+*::before,
+*::after {
+    font-family: 'Helvetica', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10.5px;
+    line-height: 12px;
+    letter-spacing: -0.18421px;
+    color: $color_main_black;
+}
+
+input,
+button,
+textarea,
+select {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    letter-spacing: -0.175439px;
+    color: $color_main_text;
+}
