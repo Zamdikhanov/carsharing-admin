@@ -3,12 +3,26 @@
     background-color: $color_background_admin;
     min-height: 100vh;
     width: 100vw;
-    padding-top: 168px;
+    padding-top: calc(100vh*0.128);
 }
 
 .block {
     margin: 0px auto;
     width: 376px;
+    &_header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 16.5px;
+        &__title {
+            color: $color_title_text;
+            font-family: 'Helvetica', sans-serif;
+            font-weight: 400;
+            font-size: 24px;
+            line-height: 28px;
+            margin-left: 11.5px;
+        }
+    }
 }
 
 .card {
@@ -17,7 +31,6 @@
     box-shadow: 0px 1px 0px rgba(90, 97, 105, 0.11), 0px 2px 4px rgba(90, 97, 105, 0.12), 0px 5px 5px rgba(90, 97, 105, 0.06), 0px 3.5px 35px rgba(90, 97, 105, 0.1);
     border-radius: 9px;
     padding: 20px 18px;
-    border: 1px solid black;
     &_header {
         text-align: center;
         margin-bottom: 36px;
@@ -27,9 +40,14 @@
         letter-spacing: -0.4375px;
         color: $color_title_text;
     }
+    &_footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 }
 
-.input_label {
+.input_container {
     display: block;
     position: relative;
     width: 100%;
@@ -37,7 +55,7 @@
     font-family: "Helvetica";
     font-style: normal;
     font-weight: 400;
-    & span {
+    & label {
         display: block;
         font-size: 10.5px;
         line-height: 12px;
@@ -50,21 +68,86 @@
         letter-spacing: -0.175439px;
         padding: 8px 11px;
         width: 100%;
-        border: 0.5px solid #becad6;
-        border-radius: 3px;
+        border: 0.5px solid $color_input_border;
+        border-radius: 4px;
+        color: $color_main_text;
+        &:focus {
+            outline: 0.5px solid $color_input_border;
+            color: $color_main_black;
+        }
+        &:invalid {
+            border: 0.5px solid $color_alert;
+            box-shadow: 0px 2.5px 5.5px rgba(196, 24, 60, 0.1);
+        }
+        &:invalid:focus {
+            border: 0.5px solid $color_alert;
+            outline: 0.5px solid $color_alert;
+        }
+        &+div {
+            display: none;
+            position: absolute;
+            content: "";
+            bottom: 0;
+            left: 12px;
+            width: calc(100% - 12px);
+            font-size: 10px;
+            line-height: 11px;
+            letter-spacing: -0.175439px;
+            color: $color_alert;
+        }
+        &:invalid+div {
+            display: block;
+        }
     }
-    & div {
-        position: absolute;
-        content: "";
-        bottom: 0;
-        left: 12px;
-        width: calc(100% - 12px);
-        font-size: 10px;
-        line-height: 11px;
-        letter-spacing: -0.175439px;
-        color: $color_alert;
-    }
-    &+.input_label {
+    &+.input_container {
         margin-top: 12px;
+    }
+}
+
+.standart_button {
+    cursor: pointer;
+    height: 29px;
+    width: 110px;
+    color: #fff;
+    background: $color_main_choice;
+    border: 0.5px solid $color_main_choice;
+    border-radius: 4px;
+    font-family: 'Helvetica';
+    font-weight: 400;
+    font-size: 11.5px;
+    line-height: 13px;
+    letter-spacing: -0.0821429px;
+    transition: all ease-in-out 0.3s;
+    &:focus,
+    &:hover {
+        outline: none;
+        box-shadow: 0px 2.5px 5.5px rgba($color_main_choice, 0.3);
+    }
+    &:active {
+        border: 0.5px solid $color_main_black;
+        box-shadow: 0px 2.5px 5.5px 2.5px rgba($color_main_choice, 0.3);
+        transition: all ease-in-out 0.01s;
+    }
+}
+
+.button {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-family: 'Helvetica';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10.5px;
+    line-height: 12px;
+    letter-spacing: -0.18421px;
+    color: $color_main_choice;
+    &:focus,
+    &:hover {
+        text-decoration: underline;
+    }
+    &:active {
+        color: $color_main_black;
+        transition: all ease-in-out 0.01s;
     }
 }
