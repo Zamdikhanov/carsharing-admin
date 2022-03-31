@@ -1,6 +1,6 @@
 import css from './Input.module.scss';
 
-function Input({ label, placeholder, type, errors, register, required }) {
+function Input({ label, placeholder, type, errors, register, ...rest }) {
     return (
         <div className={css.input_container}>
             <label>
@@ -8,14 +8,15 @@ function Input({ label, placeholder, type, errors, register, required }) {
                 <input
                     type={type}
                     placeholder={placeholder}
-                    {...register(label, { required })}
+                    autoComplete="off"
+                    {...register(label, { ...rest })}
                 />
             </label>
-            {errors && errors[label]?.type === 'required' && (
-                <div className={css.error}>Поле обязательно к заполнению</div>
-            )}
             {errors && errors[label]?.message && (
                 <div className={css.error}>{errors[label].message}</div>
+            )}
+            {errors && errors[label]?.type === 'required' && (
+                <div className={css.error}>Поле обязательно к заполнению</div>
             )}
         </div>
     );

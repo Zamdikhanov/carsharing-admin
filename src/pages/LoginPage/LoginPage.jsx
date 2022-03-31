@@ -7,8 +7,8 @@ function LoginPage() {
     const {
         register,
         handleSubmit,
-        // formState: { errors },
-    } = useForm();
+        formState: { errors },
+    } = useForm({ mode: 'onBlur' });
     const onSubmit = (data) => console.log(data);
 
     return (
@@ -22,10 +22,12 @@ function LoginPage() {
                     <h3 className={css.card_header}>Вход</h3>
                     <Input
                         label="Почта"
-                        type="email"
+                        type="text"
                         placeholder="Введите почту или имя пользователя"
                         register={register}
                         required
+                        minLength={{ value: 3, message: 'Слишком коротко' }}
+                        errors={errors}
                     />
                     <Input
                         label="Пароль"
@@ -33,6 +35,11 @@ function LoginPage() {
                         placeholder="Введите пароль"
                         register={register}
                         required
+                        minLength={{
+                            value: 3,
+                            message: 'Слишком короткий пароль',
+                        }}
+                        errors={errors}
                     />
                     <div className={css.card_footer}>
                         <button className={css.button} type="button">
