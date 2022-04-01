@@ -26,7 +26,10 @@ function LoginPage() {
                         placeholder="Введите почту или имя пользователя"
                         register={register}
                         required
-                        minLength={{ value: 3, message: 'Слишком коротко' }}
+                        minLength={{
+                            value: 3,
+                            message: 'Не менее 3-х символов',
+                        }}
                         errors={errors}
                     />
                     <Input
@@ -37,7 +40,7 @@ function LoginPage() {
                         required
                         minLength={{
                             value: 3,
-                            message: 'Слишком короткий пароль',
+                            message: 'Не менее 3-х символов',
                         }}
                         errors={errors}
                     />

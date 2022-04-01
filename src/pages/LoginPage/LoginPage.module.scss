@@ -3,17 +3,23 @@
     background-color: $color_background_admin;
     min-height: 100vh;
     width: 100vw;
-    padding-top: calc(100vh * 0.128);
+    padding-top: calc(100vh * 0.153 - 32.48px);
 }
 
 .block {
     margin: 0px auto;
     width: 376px;
+    @media (max-width: 389px) {
+        width: calc(100vw - 14px);
+    }
     &_header {
         display: flex;
         justify-content: center;
         align-items: center;
         margin-bottom: 16.5px;
+        @media (max-width: 1023px) {
+            margin-bottom: 8.5px;
+        }
         &__title {
             color: $color_title_text;
             font-family: 'Helvetica', sans-serif;
@@ -31,6 +37,9 @@
     box-shadow: 0px 1px 0px rgba(90, 97, 105, 0.11), 0px 2px 4px rgba(90, 97, 105, 0.12), 0px 5px 5px rgba(90, 97, 105, 0.06), 0px 3.5px 35px rgba(90, 97, 105, 0.1);
     border-radius: 9px;
     padding: 20px 18px;
+    @media (max-width: 1023px) {
+        padding: 18px;
+    }
     &_header {
         text-align: center;
         margin-bottom: 36px;
@@ -39,6 +48,9 @@
         line-height: 20px;
         letter-spacing: -0.4375px;
         color: $color_title_text;
+        @media (max-width: 1023px) {
+            margin-bottom: 18px;
+        }
     }
     &_footer {
         display: flex;

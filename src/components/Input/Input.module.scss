@@ -8,14 +8,21 @@
     font-style: normal;
     font-weight: 400;
     margin-bottom: 11.5px;
+    @media (max-width: 1023px) {
+        height: 63px;
+        margin-bottom: 6px;
+    }
     & .label {
         display: block;
         font-size: 10.5px;
         line-height: 12px;
         letter-spacing: -0.18421px;
         margin-bottom: 8px;
+        @media (max-width: 1023px) {
+            margin-bottom: 6px;
+        }
     }
-    & input {
+    & .input {
         font-size: 11px;
         line-height: 13px;
         letter-spacing: -0.175439px;
@@ -28,11 +35,11 @@
             outline: 0.5px solid $color_input_border;
             color: $color_main_black;
         }
-        &:invalid {
+        &.input_error {
             border: 0.5px solid $color_alert;
             box-shadow: 0px 2.5px 5.5px rgba(196, 24, 60, 0.1);
         }
-        &:invalid:focus {
+        &:focus.input_error {
             border: 0.5px solid $color_alert;
             outline: 0.5px solid $color_alert;
         }
@@ -50,5 +57,8 @@
     }
     &+.input_container {
         margin-top: 12px;
+        @media (max-width: 1023px) {
+            margin-top: 6px;
+        }
     }
 }

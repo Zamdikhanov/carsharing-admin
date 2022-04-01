@@ -6,6 +6,9 @@ function Input({ label, placeholder, type, errors, register, ...rest }) {
             <label>
                 <div className={css.label}>{label}</div>
                 <input
+                    className={`${css.input} ${
+                        errors && errors[label] && css.input_error
+                    }`}
                     type={type}
                     placeholder={placeholder}
                     autoComplete="off"
@@ -16,7 +19,7 @@ function Input({ label, placeholder, type, errors, register, ...rest }) {
                 <div className={css.error}>{errors[label].message}</div>
             )}
             {errors && errors[label]?.type === 'required' && (
-                <div className={css.error}>Поле обязательно к заполнению</div>
+                <div className={css.error}>Обязательное поле</div>
             )}
         </div>
     );
