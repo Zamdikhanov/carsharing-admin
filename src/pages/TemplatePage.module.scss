@@ -1,0 +1,84 @@
+@import "../styles/variables";
+.bg {
+    background-color: #e5e5e5;
+}
+
+.wrapper {
+    width: 1400px;
+    min-height: 100vh;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.page {
+    display: flex;
+    min-height: 100vh;
+    background: $color_background_admin;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    & .nav {
+        min-height: 100vh;
+        width: 285px;
+        background-color: #fff;
+        box-shadow: 0px 1px 75px rgba(90, 97, 105, 0.11), 0px 2px 4px rgba(90, 97, 105, 0.12), 0px 7.5px 11px rgba(90, 97, 105, 0.1), 0px 3.5px 17.5px rgba(165, 182, 201, 0.1);
+        z-index: 1;
+    }
+    & .main_container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        & .header {
+            flex: 0 0 68px;
+            box-shadow: 0px 2.5px 9.5px rgba(90, 97, 105, 0.12);
+        }
+        & .main {
+            flex: 1 0 auto;
+            min-height: calc(100vh - 136.5px);
+        }
+        & .footer {
+            flex: 0 0 68.5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 0 27.5px;
+        }
+    }
+}
+
+.link_list {
+    display: flex;
+    text-decoration: none;
+    & .link_list__item {
+        margin-right: 16px;
+    }
+}
+
+.link {
+    display: flex;
+    padding: 0.125em 0;
+    border: none;
+    border-top: 0.5px solid transparent;
+    border-bottom: 0.5px solid transparent;
+    text-decoration: none;
+    color: $color_main_choice;
+    font-family: "Helvetica", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    background-color: rgb(255, 255, 255);
+    &:hover {
+        border-bottom: 0.5px solid $color_main_choice;
+    }
+}
+
+.copy {
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: right;
+    color: #818ea3;
+}
