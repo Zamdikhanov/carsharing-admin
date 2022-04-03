@@ -1,0 +1,33 @@
+@import "../../styles/variables.scss";
+$color_border: #cacedb;
+.header {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+}
+
+.search {
+    flex: 1 1 auto;
+    outline: none;
+    border: none;
+    padding: 0 10px 0 50.5px;
+    &:focus {
+        box-shadow: inset 0px 1px 0px $color_main_choice, inset -1px 0px 0px $color_main_choice, inset 0px -1px 0px $color_main_choice, inset 1px 0px 0px $color_main_choice;
+    }
+}
+
+.notifications {
+    flex: 0 0 69.5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0.5px 0px 0px $color_border, -0.5px 0px 0px $color_border;
+}
+
+.user_details {
+    flex: 0 0 217.5px;
+    display: flex;
+    align-items: center;
+    padding: 0 22.5px 0 26.5px;
+}

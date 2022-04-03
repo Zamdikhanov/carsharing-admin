@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import Header from "../components/Header/Header";
 import SideBar from "../components/SideBar/SideBar";
 import css from "./TemplatePage.module.scss";
 
@@ -11,7 +12,9 @@ function TemplatePage() {
             <SideBar />
           </nav>
           <div className={css.main_container}>
-            <header className={css.header}>header</header>
+            <div className={css.header}>
+              <Header />
+            </div>
             <main className={css.main}>main</main>
             <footer className={css.footer}>
               <ul className={css.link_list}>

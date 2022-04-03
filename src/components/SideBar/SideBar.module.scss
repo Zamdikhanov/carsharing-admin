@@ -1,1 +1,71 @@
 @import "../../styles/variables.scss";
+$color_border: #e1e5eb;
+$color_title_text: #3d5170;
+$color_alert: #c4183c;
+.container {
+    width: 100%;
+    background: #ffffff;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    height: 68.5px;
+    border-bottom: 1px solid $color_border;
+    padding-left: 49px;
+    &__title {
+        color: $color_title_text;
+        font-family: "Helvetica", sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 18px;
+    }
+}
+
+.menu_list {
+    width: 100%;
+    padding: 0;
+    &__item {
+        height: 57.5px;
+        background: #ffffff;
+        box-shadow: inset 0px -1px 0px $color_border;
+    }
+}
+
+.link {
+    color: $color_title_text;
+    font-family: "Helvetica", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 17px;
+    letter-spacing: -0.234375px;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding-left: 24px;
+    transition: all 1s ease-in-out;
+    outline: none;
+    &:focus,
+    &:hover {
+        color: $color_main_choice;
+        background: #fbfbfb;
+        box-shadow: inset 0px -1px 0px $color_border, inset 2px 0px 0px $color_main_choice;
+    }
+    &:active {
+        color: $color_alert;
+    }
+    &.link_active {
+        color: $color_main_choice;
+        background-color: #fbfbfb;
+        box-shadow: inset 0px -1px 0px $color_border, inset 4px 0px 0px $color_main_choice;
+    }
+    &_icon {
+        color: inherit;
+        width: 20px;
+        margin-right: 8px;
+    }
+}
