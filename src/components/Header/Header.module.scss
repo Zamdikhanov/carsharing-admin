@@ -1,5 +1,7 @@
 @import "../../styles/variables.scss";
 $color_border: #cacedb;
+$color_title_text: #3d5170;
+$color_alert: #c4183c;
 .header {
     display: flex;
     height: 100%;
@@ -11,7 +13,7 @@ $color_border: #cacedb;
     flex: 1 1 auto;
     outline: none;
     border: none;
-    padding: 0 10px 0 50.5px;
+    padding: 0 10px 0 51px;
     &:focus {
         box-shadow: inset 0px 1px 0px $color_main_choice, inset -1px 0px 0px $color_main_choice, inset 0px -1px 0px $color_main_choice, inset 1px 0px 0px $color_main_choice;
     }
@@ -20,14 +22,72 @@ $color_border: #cacedb;
 .notifications {
     flex: 0 0 69.5px;
     display: flex;
+    position: relative;
     justify-content: center;
     align-items: center;
+    padding: 0;
+    border: none;
+    outline: none;
     box-shadow: 0.5px 0px 0px $color_border, -0.5px 0px 0px $color_border;
+    &__svg {
+        fill: #818ea3;
+    }
+    &__count {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 14px;
+        width: 14px;
+        color: #fff;
+        background-color: $color_alert;
+        border-radius: 50%;
+        bottom: 17.5px;
+        right: 17.5px;
+    }
 }
 
 .user_details {
     flex: 0 0 217.5px;
     display: flex;
     align-items: center;
-    padding: 0 22.5px 0 26.5px;
+    padding: 0 28px 0 26.5px;
+    &__image {
+        flex: 0 0;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        object-position: center;
+        object-fit: cover;
+        margin-right: 14px;
+    }
+    &__name {
+        flex: 1 1 auto;
+        color: $color_title_text;
+        font-family: "Helvetica";
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 17px;
+        letter-spacing: -0.471429px;
+    }
+    &__dropdown {
+        flex: 0 0 18px;
+        display: flex;
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        cursor: pointer;
+        &_svg {
+            fill: $color_border;
+        }
+        &:hover .user_details__dropdown_svg,
+        &:focus .user_details__dropdown_svg {
+            fill: $color_main_choice;
+        }
+    }
 }

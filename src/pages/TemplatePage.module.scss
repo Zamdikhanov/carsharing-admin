@@ -72,8 +72,8 @@ $color_alert: #c4183c;
     font-size: 14px;
     line-height: 16px;
     background-color: rgb(255, 255, 255);
-    &:hover,
-    &:focus {
+    &:focus,
+    &:hover {
         border-bottom: 0.5px solid $color_main_choice;
         outline: none;
     }
