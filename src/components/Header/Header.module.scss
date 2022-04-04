@@ -14,15 +14,16 @@ $color_alert: #c4183c;
     display: flex;
     align-items: center;
     position: relative;
-    padding: 0 10px 0 51px;
+    padding: 4px 10px 4px 51px;
     &:focus-within {
         box-shadow: inset 0px 0px 0px 1px $color_main_choice;
     }
     & .search {
+        height: 100%;
         width: 100%;
         outline: none;
         border: none;
-        font-family: 'Helvetica', sans-serif;
+        font-family: "Helvetica", sans-serif;
         font-weight: 400;
         font-size: 13px;
         line-height: 15px;
