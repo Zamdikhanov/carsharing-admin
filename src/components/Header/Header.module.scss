@@ -1,5 +1,6 @@
 @import "../../styles/variables.scss";
-$color_border: #cacedb;
+$color_icon: #cacedb;
+$color_border: #e1e5eb;
 $color_title_text: #3d5170;
 $color_alert: #c4183c;
 .header {
@@ -34,7 +35,7 @@ $color_alert: #c4183c;
         left: 28px;
         bottom: 50%;
         transform: translateY(50%);
-        fill: $color_border;
+        fill: $color_icon;
     }
     &:hover .search_image {
         fill: $color_main_choice;
@@ -53,6 +54,9 @@ $color_alert: #c4183c;
     outline: none;
     box-shadow: 0.5px 0px 0px $color_border, -0.5px 0px 0px $color_border;
     cursor: pointer;
+    @media (max-width: 1023px) {
+        flex: 0 0 49px;
+    }
     &:focus {
         box-shadow: inset 0px 0px 0px 1px $color_main_choice;
     }
@@ -85,6 +89,10 @@ $color_alert: #c4183c;
         font-weight: 600;
         font-size: 9px;
         line-height: 14px;
+        @media (max-width: 1023px) {
+            bottom: 8px;
+            right: 8px;
+        }
     }
 }
 
@@ -98,6 +106,16 @@ $color_alert: #c4183c;
     color: $color_title_text;
     background-color: transparent;
     cursor: pointer;
+    @media (max-width: 1023px) {
+        flex: 0 0 178px;
+        padding: 0 16px 0 16px;
+    }
+    @media (max-width: 767px) {
+        flex: 0 0 144px;
+    }
+    @media (max-width: 480px) {
+        flex: 0 0 64px;
+    }
     &:hover {
         background-color: #fbfbfb;
         color: $color_main_choice;
@@ -113,6 +131,10 @@ $color_alert: #c4183c;
         object-position: center;
         object-fit: cover;
         margin-right: 14px;
+        @media (max-width: 1023px) {
+            height: 32px;
+            width: 32px;
+        }
     }
     &__name {
         flex: 1 1 auto;
@@ -124,6 +146,9 @@ $color_alert: #c4183c;
         line-height: 17px;
         letter-spacing: -0.471429px;
         overflow: hidden;
+        @media (max-width: 480px) {
+            display: none;
+        }
     }
     &__dropdown {
         flex: 0 0 18px;
@@ -133,11 +158,75 @@ $color_alert: #c4183c;
         padding: 0;
         justify-content: center;
         align-items: center;
+        @media (max-width: 767px) {
+            display: none;
+        }
         &_svg {
-            fill: $color_border;
+            fill: $color_icon;
         }
     }
     &:hover .user_details__dropdown_svg {
         fill: $color_main_choice;
+    }
+}
+
+.nav_burger {
+    display: none;
+    align-self: center;
+    z-index: 4;
+    width: 32px;
+    height: 32px;
+    position: relative;
+    margin-left: 8px;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    @media (max-width: 1023px) {
+        display: block;
+    }
+    & span,
+    &::before,
+    &::after {
+        display: block;
+        position: absolute;
+        height: 3px;
+        width: 24px;
+        border-radius: 1.5px;
+        background-color: $color_main_black;
+        margin: 0 auto;
+        left: 4px;
+        transition: all 0.5s ease 0s;
+    }
+    &:hover span,
+    &:hover::before,
+    &:hover::after {
+        background-color: $color_main_choice;
+    }
+    & span {
+        top: 50%;
+        transform: scale(1) translate(0px, -50%);
+    }
+    &::before,
+    &::after {
+        content: '';
+    }
+    &::before {
+        top: 8px;
+    }
+    &::after {
+        bottom: 8px;
+    }
+    &.menu_button__active {
+        &::before {
+            top: 50%;
+            transform: translate(0px, -50%) rotate(45deg);
+        }
+        &::after {
+            bottom: 50%;
+            transform: translate(0px, 50%) rotate(-45deg);
+        }
+        & span {
+            transform: scale(0);
+        }
     }
 }

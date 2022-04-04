@@ -17,7 +17,9 @@ function SideBar() {
               }
               to={linkItem.link}
             >
-              <div className={css.link_icon}>{linkItem.icon()}</div>
+              {/* <div className={css.link_icon}> */}
+              {linkItem.icon()}
+              {/* </div> */}
               <div className={css.link_text}>{linkItem.linkText}</div>
             </NavLink>
           </li>
