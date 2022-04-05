@@ -1,11 +1,13 @@
 import { NavLink } from "react-router-dom";
 import links from "./constants";
 import css from "./SideBar.module.scss";
+import { ReactComponent as Logo } from "../../assets/logo.svg";
 
 function SideBar() {
   return (
     <div className={css.container}>
       <div className={css.header}>
+        <Logo className={css.header__logo} />
         <h3 className={css.header__title}>Need for car</h3>
       </div>
       <ul className={css.menu_list}>

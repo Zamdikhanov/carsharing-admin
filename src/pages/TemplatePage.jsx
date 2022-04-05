@@ -5,7 +5,6 @@ import SideBar from "../components/SideBar/SideBar";
 import css from "./TemplatePage.module.scss";
 
 function TemplatePage() {
-
   const [isShow, setIsShow] = useState(false);
 
   const handleClick = () => {
@@ -17,7 +16,7 @@ function TemplatePage() {
     <div className={css.bg}>
       <div className={css.wrapper}>
         <div className={css.page}>
-          <nav className={`${css.nav} ${isShow ? css.nav_showOnMobile : ''}`}>
+          <nav className={`${css.nav} ${isShow ? css.nav_showOnMobile : ""}`}>
             <SideBar />
           </nav>
           <div className={css.main_container}>

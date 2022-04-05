@@ -14,6 +14,15 @@ $color_alert: #c4183c;
     height: 68.5px;
     border-bottom: 1px solid $color_border;
     padding-left: 49px;
+    @media (max-width: 1023px) {
+        height: 49px;
+    }
+    &__logo {
+        fill: $color_main_accent;
+        height: 21.5px;
+        width: 21.5px;
+        margin-right: 7px;
+    }
     &__title {
         color: $color_title_text;
         font-family: "Helvetica", sans-serif;
