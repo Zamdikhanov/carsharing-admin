@@ -1,0 +1,81 @@
+@import "../../styles/variables.scss";
+$color_border: #BECAD6;
+$color_main_text: #495057;
+$color_disable_background: #E9ECEF;
+.checkbox {
+    display: flex;
+    margin-right: 16px;
+    margin-bottom: 8px;
+    border: none;
+    &__input {
+        position: absolute;
+        z-index: -1;
+        opacity: 0;
+        &:not(:disabled):not(:checked)+div:hover::before {
+            border-color: $color_main_choice;
+        }
+        &:not(:disabled):active+div::before {
+            background-color: $color_disable_background;
+        }
+        &:focus+div::before {
+            box-shadow: 0 0 0 0.5px $color_border;
+        }
+        &:checked+div::before {
+            border: 1px solid $color_main_choice;
+            background-color: $color_main_choice;
+            border-radius: 2px;
+        }
+        &:checked+div::after {
+            position: absolute;
+            content: '';
+            width: 8px;
+            height: 6px;
+            left: 3.5px;
+            bottom: 4px;
+            background-image: url(../../assets/icons/check.svg);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+        &:checked+div {
+            color: $color_main_text;
+        }
+        &:checked+div:hover {
+            color: $color_main_choice;
+        }
+    }
+    &:focus-within .checkbox__label {
+        color: $color_main_choice;
+    }
+    &__label {
+        cursor: pointer;
+        display: inline-flex;
+        position: relative;
+        user-select: none;
+        font-family: 'Roboto', sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 12px;
+        align-items: center;
+        letter-spacing: -0.175439px;
+        color: $color_main_text;
+        &:hover {
+            color: $color_main_choice;
+        }
+        &::before {
+            content: '';
+            display: inline-block;
+            width: 13px;
+            height: 13px;
+            flex-shrink: 0;
+            flex-grow: 0;
+            color: #fff;
+            border: 0.5px solid $color_border;
+            border-radius: 1px;
+            margin-right: 8px;
+            background-repeat: no-repeat;
+            background-position: 2px -2px;
+            background-size: 100% 100%;
+        }
+    }
+}

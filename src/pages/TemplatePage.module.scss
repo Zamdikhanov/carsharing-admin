@@ -2,6 +2,7 @@
 $color_alert: #c4183c;
 .bg {
     background-color: #e5e5e5;
+    overflow: hidden;
 }
 
 .wrapper {
@@ -21,18 +22,20 @@ $color_alert: #c4183c;
     background: $color_background_admin;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     & .nav {
-        height: 100vh;
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        // height: 100vh;
         width: 285px;
         flex: 0 0 auto;
         background-color: #fff;
         box-shadow: 0px 1px 75px rgba(90, 97, 105, 0.11), 0px 2px 4px rgba(90, 97, 105, 0.12), 0px 7.5px 11px rgba(90, 97, 105, 0.1), 0px 3.5px 17.5px rgba(165, 182, 201, 0.1);
         z-index: 1;
+        overflow-x: hidden;
         overflow-y: auto;
         transition: left 0.5s ease-in-out;
-        top: 0;
-        left: 0;
         @media (max-width: 1023px) {
-            position: absolute;
             top: 0;
             left: -150vw;
             &.nav_showOnMobile {
@@ -42,9 +45,13 @@ $color_alert: #c4183c;
         }
     }
     & .main_container {
+        margin-left: 285px;
         display: flex;
         flex-direction: column;
         width: 100%;
+        @media (max-width: 1023px) {
+            margin-left: 0;
+        }
         & .header {
             flex: 0 0 68px;
             box-shadow: 0px 2.5px 9.5px rgba(90, 97, 105, 0.12);
@@ -54,9 +61,10 @@ $color_alert: #c4183c;
         }
         & .main {
             flex: 1 0 auto;
-            min-height: calc(100vh - 136.5px);
+            height: calc(100vh - 136.5px);
             overflow-y: auto;
             @media (max-width: 1023px) {
+                height: auto;
                 min-height: calc(100vh - 96px);
             }
             @media (max-width: 767px) {

@@ -10,6 +10,10 @@ function OrderListPage() {
         <div className={css.card__header}>filter block</div>
         <div className={css.card__main}>
           <OrderListRow {...order} />
+          <OrderListRow {...order} />
+          <OrderListRow {...order} />
+          <OrderListRow {...order} />
+          <OrderListRow {...order} />
         </div>
         <div className={css.card__footer}>footer</div>
       </div>

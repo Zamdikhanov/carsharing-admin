@@ -1,6 +1,43 @@
 @import "../../styles/variables.scss";
+$color_border: #BECAD6;
 .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 13px 0;
+    box-shadow: 0 0.5px 0 0 $color_border;
+    &:last-child {
+        box-shadow: none;
+    }
+}
+
+.aboutCar {
+    display: flex;
+}
+
+.details_list {
+    width: 286.5px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 15px;
+    letter-spacing: -0.424914px;
+    color: $color_gray_dark;
+    & span {
+        color: $color_main_black;
+    }
+    &__row+.details_list__row {
+        margin-top: 6px;
+    }
+}
+
+.price {
+    color: $color_main_black;
+    font-family: 'Helvetica', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 28px;
+    letter-spacing: -0.754286px;
 }
