@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import Header from "../components/Header/Header";
 import SideBar from "../components/SideBar/SideBar";
 import css from "./TemplatePage.module.scss";
@@ -23,7 +23,9 @@ function TemplatePage() {
             <div className={css.header}>
               <Header onBurgerClick={handleClick} />
             </div>
-            <main className={css.main}>main</main>
+            <main className={css.main}>
+              <Outlet />
+            </main>
             <footer className={css.footer}>
               <ul className={css.link_list}>
                 <li className={css.link_list__item}>

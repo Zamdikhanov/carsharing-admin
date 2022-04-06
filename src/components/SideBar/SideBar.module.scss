@@ -12,6 +12,8 @@ $color_alert: #c4183c;
     display: flex;
     align-items: center;
     height: 68.5px;
+    width: 285px;
+    background-color: #fff;
     border-bottom: 1px solid $color_border;
     padding-left: 49px;
     @media (max-width: 1023px) {
@@ -59,6 +61,9 @@ $color_alert: #c4183c;
     padding-left: 24px;
     transition: all 0.3s ease-in-out;
     outline: none;
+    @media (max-width: 1023px) {
+        padding-left: 48px;
+    }
     &:focus,
     &:hover {
         color: $color_main_choice;
