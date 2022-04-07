@@ -1,7 +1,6 @@
 @import '../styles/variables';
-$color_alert: #c4183c;
 .bg {
-    background-color: #e5e5e5;
+    background-color: $color_background_admin;
     overflow: hidden;
 }
 
@@ -54,6 +53,7 @@ $color_alert: #c4183c;
         & .header {
             flex: 0 0 68px;
             box-shadow: 0px 2.5px 9.5px rgba(90, 97, 105, 0.12);
+            z-index: 1;
             @media (max-width: 1023px) {
                 flex: 0 0 48px;
             }
@@ -114,12 +114,12 @@ $color_alert: #c4183c;
     border-bottom: 0.5px solid transparent;
     text-decoration: none;
     color: $color_main_choice;
-    font-family: 'Helvetica', sans-serif;
+    font-family: $font_title;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 16px;
-    background-color: rgb(255, 255, 255);
+    background-color: #ffffff;
     &:focus,
     &:hover {
         border-bottom: 0.5px solid $color_main_choice;
@@ -132,11 +132,11 @@ $color_alert: #c4183c;
 }
 
 .copy {
-    font-family: 'Roboto', sans-serif;
+    font-family: $font_text;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 16px;
     text-align: right;
-    color: #818ea3;
+    color: $color_gray_dark;
 }
