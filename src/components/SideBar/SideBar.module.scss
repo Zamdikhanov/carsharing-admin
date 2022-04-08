@@ -64,15 +64,15 @@
     &:hover {
         color: $color_main_choice;
         background: $color_background_hover;
-        box-shadow: inset 0px -1px 0px $color_gray_light, inset 2px 0px 0px $color_main_choice;
+        box-shadow: inset 0px -1px 0px $color_input_border, inset 0px 1px 0px $color_input_border;
         & .link_icon {
             fill: $color_main_choice;
         }
     }
     &:active {
-        color: $color_alert;
+        color: $color_main_black;
         & .link_icon {
-            fill: $color_alert;
+            fill: $color_main_black;
         }
     }
     &.link_active {

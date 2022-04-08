@@ -1,4 +1,5 @@
 import Checkbox from '../Checkbox/Checkbox';
+import TripleButton from '../TripleButton/TripleButton';
 import css from './OrderListRow.module.scss';
 
 function OrderListRow(order) {
@@ -39,6 +40,7 @@ function OrderListRow(order) {
                 />
             </div>
             <div className={css.price}>{price} ₽</div>
+            <TripleButton />
         </div>
     );
 }

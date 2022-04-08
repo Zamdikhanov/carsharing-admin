@@ -1,6 +1,8 @@
 @import '../../styles/variables.scss';
 .container {
     display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
     justify-content: space-between;
     align-items: center;
     padding: 13px 0;
