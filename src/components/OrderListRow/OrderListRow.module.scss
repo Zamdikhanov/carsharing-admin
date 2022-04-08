@@ -14,6 +14,19 @@
 
 .aboutCar {
     display: flex;
+    flex-wrap: wrap;
+}
+
+.imageContainer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.carImage {
+    width: 100%;
+    width: 138px;
+    height: 63px;
+    object-fit: cover;
 }
 
 .details_list {
@@ -38,9 +51,11 @@
 .price {
     color: $color_main_black;
     font-family: $font_title;
+    text-align: center;
     font-style: normal;
     font-weight: 400;
     font-size: 24px;
     line-height: 28px;
+    width: 131.5px;
     letter-spacing: -0.754286px;
 }

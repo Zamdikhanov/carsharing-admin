@@ -6,6 +6,7 @@
 .button {
     margin: 0;
     padding: 0;
+    color: $color_main_text;
     background: #ffffff;
     border: none;
     outline: none;
@@ -35,4 +36,8 @@
         color: $color_main_choice;
         box-shadow: 0.5px 0 0 0 $color_input_border, -0.5px 0 0 0 $color_input_border, 0 0.5px 0 0 $color_input_border, 0 -0.5px 0 0 $color_input_border;
     }
+}
+
+.svg {
+    margin-right: 4px;
 }

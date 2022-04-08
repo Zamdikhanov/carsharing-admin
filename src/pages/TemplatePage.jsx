@@ -17,9 +17,8 @@ function TemplatePage() {
             <div className={css.wrapper}>
                 <div className={css.page}>
                     <nav
-                        className={`${css.nav} ${
-                            isShow ? css.nav_showOnMobile : ''
-                        }`}
+                        className={`${css.nav} 
+                        ${isShow ? css.nav_showOnMobile : ''}`}
                     >
                         <SideBar />
                     </nav>
@@ -38,9 +37,12 @@ function TemplatePage() {
                                     </NavLink>
                                 </li>
                                 <li className={css.link_list__item}>
-                                    <NavLink className={css.link} to="/">
-                                        Ссылка
-                                    </NavLink>
+                                    <a
+                                        className={css.link}
+                                        href="https://zamdikhanov.github.io/carsharing/"
+                                    >
+                                        Need for drive
+                                    </a>
                                 </li>
                             </ul>
                             <div className={css.copy}>

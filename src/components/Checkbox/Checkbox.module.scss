@@ -4,8 +4,12 @@
     margin-right: 16px;
     margin-bottom: 8px;
     border: none;
+    &:last-child {
+        margin-bottom: 0px;
+    }
     &__input {
         position: absolute;
+        margin: 0;
         z-index: -1;
         opacity: 0;
         &:not(:disabled):not(:checked)+div:hover::before {
@@ -27,7 +31,7 @@
             content: '';
             width: 8px;
             height: 6px;
-            left: 3.5px;
+            left: 3px;
             bottom: 4px;
             background-image: url(../../assets/icons/check.svg);
             background-repeat: no-repeat;

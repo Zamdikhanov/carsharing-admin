@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import Checkbox from '../Checkbox/Checkbox';
 import TripleButton from '../TripleButton/TripleButton';
+import carStubPicture from '../../assets/images/car-stub-picture.png';
 import css from './OrderListRow.module.scss';
 
 function OrderListRow(order) {
@@ -15,10 +17,19 @@ function OrderListRow(order) {
         isNeedChildChair,
         isRightWheel,
     } = order;
+    const [hasError, setHasError] = useState(false);
     console.log(order);
     return (
         <div className={css.container}>
             <div className={css.aboutCar}>
+                <div className={css.imageContainer}>
+                    <img
+                        onError={() => setHasError(true)}
+                        className={css.carImage}
+                        src={hasError ? carStubPicture : carId.thumbnail.path}
+                        alt={carId.name}
+                    />
+                </div>
                 <div className={css.details_list}>
                     <div className={css.details_list__row}>
                         <span>{carId.name}</span> в <span>{cityId.name}</span>,{' '}
