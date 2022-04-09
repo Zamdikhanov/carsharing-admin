@@ -3,14 +3,15 @@ import Checkbox from '../Checkbox/Checkbox';
 import TripleButton from '../TripleButton/TripleButton';
 import carStubPicture from '../../assets/images/car-stub-picture.png';
 import css from './OrderListRow.module.scss';
+import formatDate from '../../utils/formatDate';
 
 function OrderListRow(order) {
     const {
         carId,
         cityId,
         pointId,
-        // dateFrom,
-        // dateTo,
+        dateFrom,
+        dateTo,
         color,
         price,
         isFullTank,
@@ -18,7 +19,7 @@ function OrderListRow(order) {
         isRightWheel,
     } = order;
     const [hasError, setHasError] = useState(false);
-    console.log(order);
+
     return (
         <div className={css.container}>
             <div className={css.aboutCar}>
@@ -35,7 +36,9 @@ function OrderListRow(order) {
                         <span>{carId.name}</span> в <span>{cityId.name}</span>,{' '}
                         {pointId.address}
                     </div>
-                    <div className={css.details_list__row}>Details</div>
+                    <div className={css.details_list__row}>
+                        {`${formatDate(dateFrom)} - ${formatDate(dateTo)}`}
+                    </div>
                     <div className={css.details_list__row}>
                         Цвет: <span>{color}</span>
                     </div>
@@ -50,7 +53,9 @@ function OrderListRow(order) {
                     {...{ checked: isRightWheel, label: 'Правый руль' }}
                 />
             </div>
-            <div className={css.price}>{price} ₽</div>
+            <div className={css.price}>
+                {Intl.NumberFormat('ru', { useGrouping: true }).format(price)} ₽
+            </div>
             <TripleButton />
         </div>
     );

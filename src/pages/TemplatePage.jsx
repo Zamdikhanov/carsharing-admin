@@ -20,11 +20,14 @@ function TemplatePage() {
                         className={`${css.nav} 
                         ${isShow ? css.nav_showOnMobile : ''}`}
                     >
-                        <SideBar />
+                        <SideBar onClick={handleClick} />
                     </nav>
                     <div className={css.main_container}>
                         <div className={css.header}>
-                            <Header onBurgerClick={handleClick} />
+                            <Header
+                                onBurgerClick={handleClick}
+                                isShow={isShow}
+                            />
                         </div>
                         <main className={css.main}>
                             <Outlet />

@@ -64,12 +64,11 @@
             overflow-y: auto;
             @media (max-width: 1023px) {
                 height: auto;
-                min-height: calc(100vh - 96px);
+                min-height: auto;
+                overflow-y: hidden;
             }
             @media (max-width: 767px) {
                 flex: 1 0 auto;
-                min-height: auto;
-                height: fit-content;
             }
         }
         & .footer {

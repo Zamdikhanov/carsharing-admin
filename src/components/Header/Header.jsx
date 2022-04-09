@@ -1,22 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import css from './Header.module.scss';
 import avatar from '../../assets/header/user-avatar.jpg';
 import { ReactComponent as DropdownSvg } from '../../assets/header/dropdown-icon.svg';
 import { ReactComponent as NotificationsSvg } from '../../assets/header/notifications.svg';
 import { ReactComponent as SearchSvg } from '../../assets/header/search-icon.svg';
 
-function Header({ onBurgerClick }) {
-    const [isShow, setIsShow] = useState(false);
-
+function Header({ onBurgerClick, isShow }) {
+    const [burgerShow, setBurgerShow] = useState(isShow);
+    useEffect(() => {
+        setBurgerShow(isShow);
+    }, []);
+    useEffect(() => {
+        setBurgerShow(isShow);
+    }, [isShow]);
     const handleClick = () => {
         onBurgerClick();
-        setIsShow(!isShow);
     };
     return (
         <header className={css.header}>
             <button
                 className={`${css.nav_burger}
-                    ${isShow ? css.menu_button__active : ''}
+                    ${burgerShow ? css.menu_button__active : ''}
                     `}
                 type="button"
                 onClick={handleClick}

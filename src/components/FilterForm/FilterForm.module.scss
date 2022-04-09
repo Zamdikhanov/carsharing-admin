@@ -1,0 +1,100 @@
+@import '../../styles/variables.scss';
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    gap: 15px;
+    padding: 15px 0;
+}
+
+.wrap_select {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 15px 0;
+}
+
+.input {
+    box-sizing: border-box;
+    padding: 0;
+    border-radius: 4px;
+    outline: none;
+    border: 0.5px solid $color_input_border;
+    align-self: center;
+    width: 110.5px;
+    height: 29px;
+    &:hover {
+        box-shadow: 0.5px 0 0 0 $color_input_border, -0.5px 0 0 0 $color_input_border, 0 0.5px 0 0 $color_input_border, 0 -0.5px 0 0 $color_input_border;
+        background-color: $color_background_hover;
+    }
+    &:focus-within {
+        outline: 0.5px solid $color_input_border;
+    }
+    [class*='-control'] {
+        height: 100%;
+        box-sizing: border-box;
+        outline: none;
+        box-shadow: none;
+        min-height: auto;
+        border: none;
+    }
+    [class*='-ValueContainer'] {
+        color: $color_gray_dark;
+        padding: 0 8px 0;
+    }
+    [class*='-option'] {
+        color: $color_gray_dark;
+        padding: 8px;
+        background-color: #fff;
+        cursor: pointer;
+        font-family: $font_title;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 11px;
+        line-height: 13px;
+        letter-spacing: -0.345714px;
+        &:hover {
+            color: $color_main_choice;
+        }
+        &:active {
+            background-color: white;
+            opacity: 1;
+        }
+    }
+    [class*='indicatorContainer'] {
+        padding: 0px;
+    }
+    [class*='indicatorSeparator'] {
+        display: none;
+    }
+    [class*='dropdown-indicator'] {
+        margin-right: 7.5px;
+    }
+    [class*='-singleValue'] {
+        margin: 0;
+        padding: 0;
+        color: $color_gray_dark;
+        font-family: $font_title;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 11px;
+        line-height: 13px;
+        letter-spacing: -0.345714px;
+    }
+    [class*='-placeholder'] {
+        margin: 0;
+        padding: 0;
+    }
+    [class*='__menu'] {
+        max-height: 33vh;
+    }
+    [class*='-Input'] {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+input[type='search']::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+}

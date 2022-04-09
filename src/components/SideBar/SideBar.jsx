@@ -3,7 +3,7 @@ import links from './constants';
 import css from './SideBar.module.scss';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 
-function SideBar() {
+function SideBar({ onClick }) {
     return (
         <div className={css.container}>
             <div className={css.header}>
@@ -20,6 +20,7 @@ function SideBar() {
                                 }`
                             }
                             to={linkItem.link}
+                            onClick={onClick}
                         >
                             {linkItem.icon()}
                             <div className={css.link_text}>
