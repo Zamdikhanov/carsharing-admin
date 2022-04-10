@@ -11,6 +11,8 @@
 
 .paginate {
     display: flex;
+    justify-content: center;
+    align-items: center;
     &__pageLinkClassName {
         @include for_paginate;
         margin: 0 7px;
@@ -25,7 +27,7 @@
         border-radius: 9px;
         display: flex;
         justify-content: center;
-        align-self: center;
+        align-items: center;
     }
     &__previousLinkClassName,
     &__nextLinkClassName {
