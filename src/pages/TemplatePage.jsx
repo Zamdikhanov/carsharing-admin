@@ -9,8 +9,8 @@ function TemplatePage() {
 
     const handleClick = () => {
         setIsShow(!isShow);
-        // const back = document.querySelector('body');
-        // back.classList.toggle('lock');
+        const back = document.querySelector('body');
+        back.classList.toggle('lock');
     };
     return (
         <div className={css.bg}>

@@ -28,9 +28,11 @@ function FilterForm({ filterData }) {
                     />
                 ))}
             </div>
-            <button className={css.button} type="button">
-                11
-            </button>
+            <div className={css.wrap_buttons}>
+                <button className={css.button} type="button">
+                    Применить
+                </button>
+            </div>
         </div>
     );
 }

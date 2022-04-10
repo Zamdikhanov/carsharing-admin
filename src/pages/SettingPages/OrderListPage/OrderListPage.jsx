@@ -1,5 +1,6 @@
 import FilterForm from '../../../components/FilterForm/FilterForm';
 import OrderListRow from '../../../components/OrderListRow/OrderListRow';
+import Pagination from '../../../components/Pagination/Pagination';
 import { order, city } from './constants';
 import css from './OrderListPage.module.scss';
 
@@ -38,7 +39,9 @@ function OrderListPage() {
                     <OrderListRow {...order} />
                     <OrderListRow {...order} />
                 </div>
-                <div className={css.card__footer}>footer</div>
+                <div className={css.card__footer}>
+                    <Pagination />
+                </div>
             </div>
         </div>
     );

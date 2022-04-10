@@ -10,21 +10,21 @@ import { ReactComponent as Menu7Svg } from '../../assets/menu/menu7-icon.svg';
 const links = [
     {
         id: 'link01',
+        link: '/admin/order-list',
+        linkText: 'Список заказов',
+        icon: () => <OrderSvg className={css.link_icon} />,
+    },
+    {
+        id: 'link02',
         link: '/admin/car-setting',
         linkText: 'Карточка автомобиля',
         icon: () => <PenSvg className={css.link_icon} />,
     },
     {
-        id: 'link02',
+        id: 'link03',
         link: '/admin/car-list',
         linkText: 'Список авто',
         icon: () => <CarListSvg className={css.link_icon} />,
-    },
-    {
-        id: 'link03',
-        link: '/admin/order-list',
-        linkText: 'Список заказов',
-        icon: () => <OrderSvg className={css.link_icon} />,
     },
     {
         id: 'link04',

@@ -1,0 +1,38 @@
+@import '../../styles/variables';
+@mixin for_paginate {
+    font-family: $font_title;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 17px;
+    letter-spacing: -0.471429px;
+    color: $color_main_choice;
+}
+
+.paginate {
+    display: flex;
+    &__pageLinkClassName {
+        @include for_paginate;
+        margin: 0 7px;
+        cursor: pointer;
+    }
+    &__activeLinkClassName {
+        color: #ffffff;
+        background-color: $color_main_choice;
+        height: 18px;
+        min-width: 18px;
+        padding: 0 4px;
+        border-radius: 9px;
+        display: flex;
+        justify-content: center;
+        align-self: center;
+    }
+    &__previousLinkClassName,
+    &__nextLinkClassName {
+        cursor: pointer;
+        @include for_paginate;
+    }
+    &__breakLinkClassName {
+        @include for_paginate;
+    }
+}
