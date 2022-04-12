@@ -2,7 +2,7 @@ import css from './Checkbox.module.scss';
 
 function Checkbox({ label, checked }) {
     return (
-        <label className={`${css.checkbox}`} htmlFor={label} key={label}>
+        <label className={css.checkbox} htmlFor={label} key={label}>
             <input
                 className={css.checkbox__input}
                 type="checkbox"

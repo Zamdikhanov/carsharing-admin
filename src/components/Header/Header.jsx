@@ -7,21 +7,23 @@ import { ReactComponent as SearchSvg } from '../../assets/header/search-icon.svg
 
 function Header({ onBurgerClick, isShow }) {
     const [burgerShow, setBurgerShow] = useState(isShow);
-    useEffect(() => {
-        setBurgerShow(isShow);
-    }, []);
+
     useEffect(() => {
         setBurgerShow(isShow);
     }, [isShow]);
+
     const handleClick = () => {
         onBurgerClick();
     };
+
+    const classNameButton = `${css.nav_burger} ${
+        burgerShow ? css.menu_button__active : ''
+    }`;
+
     return (
         <header className={css.header}>
             <button
-                className={`${css.nav_burger}
-                    ${burgerShow ? css.menu_button__active : ''}
-                    `}
+                className={classNameButton}
                 type="button"
                 onClick={handleClick}
             >
