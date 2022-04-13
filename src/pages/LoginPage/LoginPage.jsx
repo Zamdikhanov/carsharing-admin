@@ -1,8 +1,10 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import Input from '../../components/Input/Input';
 import css from './LoginPage.module.scss';
+import { login } from '../../store/authSlice';
 
 function LoginPage() {
     const {
@@ -11,9 +13,13 @@ function LoginPage() {
         formState: { errors },
     } = useForm({ mode: 'onBlur' });
 
+    const dispatch = useDispatch();
+
     const navigate = useNavigate();
     const onSubmit = (data) => {
-        console.log(data);
+        const data2 = { username: data['Почта'], password: data['Пароль'] };
+        console.log(data2);
+        dispatch(login(data2));
         navigate('/admin/order-list/');
     };
 

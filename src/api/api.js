@@ -11,21 +11,29 @@ function b64EncodeUnicode(str) {
     );
 }
 
-const basicToken = b64EncodeUnicode('a1y2r3a4t5:4cbcea96de');
+const basicToken = b64EncodeUnicode(
+    `a1y2r3a4t5:${process.env.REACT_APP_SECRET}`,
+);
 
 const instance = axios.create({
     baseURL: 'https://api-factory.simbirsoft1.com/api/',
-    headers: { 'X-Api-Factory-Application-Id': `5e25c641099b810b946c5d5b` },
-    Authorization: `Basic ${basicToken}`,
+    headers: {
+        'X-Api-Factory-Application-Id': `${process.env.REACT_APP_ID}`,
+        Authorization: `Basic ${basicToken}`,
+    },
 });
 
 const authAPI = {
     login(authData) {
         return instance
             .post(`/auth/login`, authData)
+            .then((response) => response);
+    },
+    logout() {
+        return instance
+            .post(`/auth/logout`)
             .then((response) => response.data.data);
     },
 };
 
-// eslint-disable-next-line prettier/prettier
 export default authAPI;
