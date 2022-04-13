@@ -1,7 +1,8 @@
 import { useForm } from 'react-hook-form';
-import css from './LoginPage.module.scss';
+import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import Input from '../../components/Input/Input';
+import css from './LoginPage.module.scss';
 
 function LoginPage() {
     const {
@@ -9,7 +10,12 @@ function LoginPage() {
         handleSubmit,
         formState: { errors },
     } = useForm({ mode: 'onBlur' });
-    const onSubmit = (data) => console.log(data);
+
+    const navigate = useNavigate();
+    const onSubmit = (data) => {
+        console.log(data);
+        navigate('/admin/order-list/');
+    };
 
     return (
         <div className={css.container}>
