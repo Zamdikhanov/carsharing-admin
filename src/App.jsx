@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import LoginPage from './pages/LoginPage/LoginPage';
 import TemplatePage from './pages/TemplatePage';
 import OrderListPage from './pages/SettingPages/OrderListPage/OrderListPage';
+import PageNotFound from './pages/PageNotFound/PageNotFound';
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                     <Route path="menu6" element={<div>menu6</div>} />
                     <Route path="menu7" element={<div>menu7</div>} />
                 </Route>
+                <Route path="/*" element={<PageNotFound />} />
             </Routes>
         </div>
     );
