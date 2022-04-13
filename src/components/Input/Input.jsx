@@ -1,14 +1,16 @@
 import css from './Input.module.scss';
 
 function Input({ label, placeholder, type, errors, register, ...rest }) {
+    const classNameInput = `${css.input} ${
+        errors && errors[label] && css.input_error
+    }`;
+
     return (
         <div className={css.input_container}>
             <label>
                 <div className={css.label}>{label}</div>
                 <input
-                    className={`${css.input} ${
-                        errors && errors[label] && css.input_error
-                    }`}
+                    className={classNameInput}
                     type={type}
                     placeholder={placeholder}
                     autoComplete="off"

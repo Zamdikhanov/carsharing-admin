@@ -1,0 +1,96 @@
+@import '../../styles/variables.scss';
+.container {
+    width: 100%;
+    background: #ffffff;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    height: 68.5px;
+    width: 285px;
+    background-color: #fff;
+    border-bottom: 1px solid $color_gray_light;
+    padding-left: 49px;
+    @media (max-width: 1023px) {
+        height: 49px;
+    }
+    &__logo {
+        fill: $color_main_accent;
+        height: 21.5px;
+        width: 21.5px;
+        margin-right: 7px;
+    }
+    &__title {
+        color: $color_title_text;
+        font-family: $font_title;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 18px;
+    }
+}
+
+.menu_list {
+    width: 100%;
+    padding: 0;
+    &__item {
+        height: 57.5px;
+        background: #ffffff;
+        box-shadow: inset 0px -1px 0px $color_gray_light;
+    }
+}
+
+.link {
+    color: $color_title_text;
+    font-family: $font_title;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 17px;
+    letter-spacing: -0.234375px;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding-left: 24px;
+    transition: all 0.3s ease-in-out;
+    outline: none;
+    @media (max-width: 1023px) {
+        padding-left: 48px;
+    }
+    &:focus,
+    &:hover {
+        color: $color_main_choice;
+        background: $color_background_hover;
+        box-shadow: inset 0px -1px 0px $color_input_border, inset 0px 1px 0px $color_input_border;
+        & .link_icon {
+            fill: $color_main_choice;
+        }
+    }
+    &:active {
+        color: $color_main_black;
+        & .link_icon {
+            fill: $color_main_black;
+        }
+    }
+    &.link_active {
+        color: $color_main_choice;
+        background-color: $color_background_hover;
+        box-shadow: inset 0px -1px 0px $color_gray_light, inset 4px 0px 0px $color_main_choice;
+        & .link_icon {
+            fill: $color_main_choice;
+        }
+    }
+    &_icon {
+        fill: $color_icon;
+        width: 20px;
+        margin-right: 8px;
+        transition: all 0.3s ease-in-out;
+    }
+    &_text {
+        font: inherit;
+        color: inherit;
+    }
+}
