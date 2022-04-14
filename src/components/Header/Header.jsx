@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import css from './Header.module.scss';
 import avatar from '../../assets/header/user-avatar.jpg';
 import { ReactComponent as DropdownSvg } from '../../assets/header/dropdown-icon.svg';
@@ -7,6 +8,9 @@ import { ReactComponent as SearchSvg } from '../../assets/header/search-icon.svg
 
 function Header({ onBurgerClick, isShow }) {
     const [burgerShow, setBurgerShow] = useState(isShow);
+    const [userMenuShow, setUserMenuShow] = useState(false);
+
+    const { user_name: userName } = useSelector((state) => state.auth);
 
     useEffect(() => {
         setBurgerShow(isShow);
@@ -15,6 +19,14 @@ function Header({ onBurgerClick, isShow }) {
     const handleClick = () => {
         onBurgerClick();
     };
+
+    const handleClickUser = () => {
+        setUserMenuShow(!userMenuShow);
+    };
+
+    const classNameUserMenu = `${css.user_menu} ${
+        userMenuShow ? css.user_menu_show : ''
+    }`;
 
     const classNameButton = `${css.nav_burger} ${
         burgerShow ? css.menu_button__active : ''
@@ -41,17 +53,26 @@ function Header({ onBurgerClick, isShow }) {
                 <NotificationsSvg className={css.notifications__svg} />
                 <div className={css.notifications__count}>2</div>
             </button>
-            <button className={css.user_details} type="button">
+            <button
+                className={css.user_details}
+                type="button"
+                onClick={handleClickUser}
+            >
                 <img
                     className={css.user_details__image}
                     src={avatar}
                     alt="avatar"
                 />
-                <div className={css.user_details__name}>Admin</div>
+                <div className={css.user_details__name}>{userName}</div>
                 <div className={css.user_details__dropdown}>
                     <DropdownSvg className={css.user_details__dropdown_svg} />
                 </div>
             </button>
+            <div className={classNameUserMenu}>
+                <button className={css.user_menu__button} type="button">
+                    Выйти
+                </button>
+            </div>
         </header>
     );
 }

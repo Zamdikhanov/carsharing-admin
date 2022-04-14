@@ -1,9 +1,11 @@
 @import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
 .header {
     display: flex;
     height: 100%;
     width: 100%;
     background-color: #fff;
+    position: relative;
 }
 
 .search_container {
@@ -182,6 +184,42 @@
     &:active .user_details__dropdown_svg {
         fill: $color_main_black;
     }
+}
+
+.user_menu {
+    display: none;
+    position: absolute;
+    z-index: -1;
+    right: 0;
+    top: 100%;
+    flex-direction: column;
+    align-items: center;
+    width: 217.5px;
+    background-color: #fff;
+    border: 0.5px solid $color_gray_light;
+    padding: 8px;
+    box-shadow: 0px 2.5px 9.5px rgba(90, 97, 105, 0.12);
+    @media (max-width: 1023px) {
+        width: 178px;
+    }
+    @media (max-width: 767px) {
+        width: 144px;
+    }
+    @media (max-width: 480px) {
+        width: 128px;
+    }
+    &__button {
+        @include button_success;
+        width: 100%;
+        margin-bottom: 10px;
+        &:last-child {
+            margin-bottom: 0px;
+        }
+    }
+}
+
+.user_menu_show {
+    display: flex;
 }
 
 .nav_burger {
