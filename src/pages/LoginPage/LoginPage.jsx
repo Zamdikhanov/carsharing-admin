@@ -17,9 +17,7 @@ function LoginPage() {
 
     const navigate = useNavigate();
     const onSubmit = (data) => {
-        const data2 = { username: data['Почта'], password: data['Пароль'] };
-        console.log(data2);
-        dispatch(login(data2));
+        dispatch(login({ username: data['Почта'], password: data['Пароль'] }));
         navigate('/admin/order-list/');
     };
 

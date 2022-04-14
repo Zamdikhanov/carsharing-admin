@@ -27,12 +27,20 @@ const authAPI = {
     login(authData) {
         return instance
             .post(`/auth/login`, authData)
-            .then((response) => response);
+            .then((response) => response)
+            .catch((error) => {
+                console.log(error);
+            });
     },
-    logout() {
+    logout(accessToken) {
         return instance
-            .post(`/auth/logout`)
-            .then((response) => response.data.data);
+            .post(`/auth/logout`, '', {
+                headers: { Authorization: `Bearer ${accessToken}` },
+            })
+            .then((response) => response.data.data)
+            .catch((error) => {
+                console.log(error);
+            });
     },
 };
 

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../store/authSlice';
 import css from './Header.module.scss';
 import avatar from '../../assets/header/user-avatar.jpg';
 import { ReactComponent as DropdownSvg } from '../../assets/header/dropdown-icon.svg';
@@ -10,7 +11,9 @@ function Header({ onBurgerClick, isShow }) {
     const [burgerShow, setBurgerShow] = useState(isShow);
     const [userMenuShow, setUserMenuShow] = useState(false);
 
-    const { user_name: userName } = useSelector((state) => state.auth);
+    const { user_name: userName, data } = useSelector((state) => state.auth);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setBurgerShow(isShow);
@@ -24,13 +27,16 @@ function Header({ onBurgerClick, isShow }) {
         setUserMenuShow(!userMenuShow);
     };
 
-    const classNameUserMenu = `${css.user_menu} ${
-        userMenuShow ? css.user_menu_show : ''
-    }`;
+    const handleClickExit = () => {
+        setUserMenuShow(!userMenuShow);
+        dispatch(logout(data.access_token));
+    };
 
-    const classNameButton = `${css.nav_burger} ${
-        burgerShow ? css.menu_button__active : ''
-    }`;
+    const classNameUserMenu = `${css.user_menu} ${userMenuShow ? css.user_menu_show : ''
+        }`;
+
+    const classNameButton = `${css.nav_burger} ${burgerShow ? css.menu_button__active : ''
+        }`;
 
     return (
         <header className={css.header}>
@@ -69,7 +75,10 @@ function Header({ onBurgerClick, isShow }) {
                 </div>
             </button>
             <div className={classNameUserMenu}>
-                <button className={css.user_menu__button} type="button">
+                <button
+                    className={css.user_menu__button}
+                    type="button"
+                    onClick={handleClickExit}>
                     Выйти
                 </button>
             </div>
