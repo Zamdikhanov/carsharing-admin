@@ -6,10 +6,14 @@ import avatar from '../../assets/header/user-avatar.jpg';
 import { ReactComponent as DropdownSvg } from '../../assets/header/dropdown-icon.svg';
 import { ReactComponent as NotificationsSvg } from '../../assets/header/notifications.svg';
 import { ReactComponent as SearchSvg } from '../../assets/header/search-icon.svg';
+import useComponentVisible from '../../hooks/useComponentVisible';
 
 function Header({ onBurgerClick, isShow }) {
     const [burgerShow, setBurgerShow] = useState(isShow);
-    const [userMenuShow, setUserMenuShow] = useState(false);
+    const [menuShow, setMenuShow] = useState(false);
+    // const [userMenuShow, setUserMenuShow] = useState(false);
+    const { ref, isComponentVisible, setIsComponentVisible } =
+        useComponentVisible(false);
 
     const { user_name: userName, data } = useSelector((state) => state.auth);
 
@@ -19,24 +23,36 @@ function Header({ onBurgerClick, isShow }) {
         setBurgerShow(isShow);
     }, [isShow]);
 
+    useEffect(() => {
+        setIsComponentVisible(menuShow);
+    }, [menuShow]);
+
     const handleClick = () => {
         onBurgerClick();
     };
 
     const handleClickUser = () => {
-        setUserMenuShow(!userMenuShow);
+        setMenuShow(!menuShow);
     };
 
     const handleClickExit = () => {
-        setUserMenuShow(!userMenuShow);
+        setMenuShow(false);
+        console.log('handleClickExit');
         dispatch(logout(data.access_token));
     };
 
-    const classNameUserMenu = `${css.user_menu} ${userMenuShow ? css.user_menu_show : ''
-        }`;
+    // const closeUserMenu = () => {
+    //     setUserMenuShow(!userMenuShow);
+    //     console.log('closeUserMenu');
+    // };
 
-    const classNameButton = `${css.nav_burger} ${burgerShow ? css.menu_button__active : ''
-        }`;
+    // const classNameUserMenu = `${css.user_menu} ${
+    //     isComponentVisible ? css.user_menu_show : ''
+    // }`;
+
+    const classNameButton = `${css.nav_burger} ${
+        burgerShow ? css.menu_button__active : ''
+    }`;
 
     return (
         <header className={css.header}>
@@ -74,14 +90,21 @@ function Header({ onBurgerClick, isShow }) {
                     <DropdownSvg className={css.user_details__dropdown_svg} />
                 </div>
             </button>
-            <div className={classNameUserMenu}>
-                <button
-                    className={css.user_menu__button}
-                    type="button"
-                    onClick={handleClickExit}>
-                    Выйти
-                </button>
-            </div>
+            {isComponentVisible && (
+                <div
+                    // className={classNameUserMenu}
+                    className={`${css.user_menu} ${css.user_menu_show}`}
+                    ref={ref}
+                >
+                    <button
+                        className={css.user_menu__button}
+                        type="button"
+                        onClick={handleClickExit}
+                    >
+                        Выйти
+                    </button>
+                </div>
+            )}
         </header>
     );
 }
