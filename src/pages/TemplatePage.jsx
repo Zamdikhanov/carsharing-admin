@@ -1,32 +1,38 @@
-import { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import Header from '../components/Header/Header';
 import SideBar from '../components/SideBar/SideBar';
+import useComponentVisible from '../hooks/useComponentVisible';
 import css from './TemplatePage.module.scss';
 
 function TemplatePage() {
-    const [isShow, setIsShow] = useState(false);
+
+    const { ref, isComponentVisible, setIsComponentVisible, ignoreRef: burgerRef } =
+        useComponentVisible(false);
 
     const handleClick = () => {
-        setIsShow(!isShow);
-        const back = document.querySelector('body');
-        back.classList.toggle('lock');
+        setIsComponentVisible(!isComponentVisible);
     };
+
+    const handleClickExit = () => {
+        setIsComponentVisible(false);
+    };
+
     return (
         <div className={css.bg}>
             <div className={css.wrapper}>
                 <div className={css.page}>
                     <nav
                         className={`${css.nav} 
-                        ${isShow ? css.nav_showOnMobile : ''}`}
+                        ${isComponentVisible ? css.nav_showOnMobile : ''}`}
                     >
-                        <SideBar onClick={handleClick} />
+                        <SideBar onClick={handleClickExit} ref={ref} />
                     </nav>
                     <div className={css.main_container}>
                         <div className={css.header}>
                             <Header
                                 onBurgerClick={handleClick}
-                                isShow={isShow}
+                                isShow={isComponentVisible}
+                                burgerRef={burgerRef}
                             />
                         </div>
                         <main className={css.main}>

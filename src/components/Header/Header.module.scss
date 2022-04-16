@@ -187,7 +187,7 @@
 }
 
 .user_menu {
-    display: none;
+    display: flex;
     position: absolute;
     z-index: -1;
     right: 0;
@@ -215,10 +215,6 @@
             margin-bottom: 0px;
         }
     }
-}
-
-.user_menu_show {
-    display: flex;
 }
 
 .nav_burger {

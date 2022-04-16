@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/authSlice';
 import css from './Header.module.scss';
@@ -8,51 +7,30 @@ import { ReactComponent as NotificationsSvg } from '../../assets/header/notifica
 import { ReactComponent as SearchSvg } from '../../assets/header/search-icon.svg';
 import useComponentVisible from '../../hooks/useComponentVisible';
 
-function Header({ onBurgerClick, isShow }) {
-    const [burgerShow, setBurgerShow] = useState(isShow);
-    const [menuShow, setMenuShow] = useState(false);
-    // const [userMenuShow, setUserMenuShow] = useState(false);
-    const { ref, isComponentVisible, setIsComponentVisible } =
+function Header({ onBurgerClick, isShow, burgerRef }) {
+
+    const { ref, isComponentVisible, setIsComponentVisible, ignoreRef: buttonRef } =
         useComponentVisible(false);
 
     const { user_name: userName, data } = useSelector((state) => state.auth);
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        setBurgerShow(isShow);
-    }, [isShow]);
-
-    useEffect(() => {
-        setIsComponentVisible(menuShow);
-    }, [menuShow]);
-
     const handleClick = () => {
         onBurgerClick();
     };
 
     const handleClickUser = () => {
-        setMenuShow(!menuShow);
+        setIsComponentVisible(!isComponentVisible);
     };
 
     const handleClickExit = () => {
-        setMenuShow(false);
-        console.log('handleClickExit');
+        setIsComponentVisible(false);
         dispatch(logout(data.access_token));
     };
 
-    // const closeUserMenu = () => {
-    //     setUserMenuShow(!userMenuShow);
-    //     console.log('closeUserMenu');
-    // };
-
-    // const classNameUserMenu = `${css.user_menu} ${
-    //     isComponentVisible ? css.user_menu_show : ''
-    // }`;
-
-    const classNameButton = `${css.nav_burger} ${
-        burgerShow ? css.menu_button__active : ''
-    }`;
+    const classNameButton = `${css.nav_burger} ${isShow ? css.menu_button__active : ''
+        }`;
 
     return (
         <header className={css.header}>
@@ -60,6 +38,7 @@ function Header({ onBurgerClick, isShow }) {
                 className={classNameButton}
                 type="button"
                 onClick={handleClick}
+                ref={burgerRef}
             >
                 <span />
             </button>
@@ -79,6 +58,7 @@ function Header({ onBurgerClick, isShow }) {
                 className={css.user_details}
                 type="button"
                 onClick={handleClickUser}
+                ref={buttonRef}
             >
                 <img
                     className={css.user_details__image}
@@ -92,8 +72,7 @@ function Header({ onBurgerClick, isShow }) {
             </button>
             {isComponentVisible && (
                 <div
-                    // className={classNameUserMenu}
-                    className={`${css.user_menu} ${css.user_menu_show}`}
+                    className={css.user_menu}
                     ref={ref}
                 >
                     <button
