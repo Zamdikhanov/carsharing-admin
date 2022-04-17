@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../components/Input/Input';
-import css from './LoginPage.module.scss';
-import { login } from '../../store/authSlice';
+import css from './RegistrationPage.module.scss';
+import { registration } from '../../store/authSlice';
 import AuthContainerBlock from '../../components/AuthContainerBlock/AuthContainerBlock';
 
-function LoginPage() {
+function RegistrationPage() {
     const {
         register,
         handleSubmit,
@@ -17,39 +17,39 @@ function LoginPage() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from || '/admin/order-list/';
 
     const { isAuth } = useSelector((state) => state.auth);
 
     useEffect(() => {
-        if (isAuth) navigate(from);
+        if (isAuth) navigate('/admin/order-list/');
     }, [isAuth]);
 
     const onSubmit = (data) => {
-        dispatch(login({ username: data['Почта'], password: data['Пароль'] }));
-        setTimeout(() => {
-            if (isAuth) {
-                navigate('/admin/order-list/');
-            } else {
-                setError(
-                    'Почта',
-                    { type: 'login', message: 'Неверный логин или пароль' },
-                    { shouldFocus: false },
-                );
-                setError(
-                    'Пароль',
-                    { type: 'login', message: 'Неверный логин или пароль' },
-                    { shouldFocus: false },
-                );
-            }
-        }, 300);
+        if (data['Пароль'] !== data['Повторите пароль']) {
+            setError(
+                'Пароль',
+                { type: 'login', message: 'Пароли не совпадают' },
+                { shouldFocus: false },
+            );
+            setError(
+                'Повторите пароль',
+                { type: 'login', message: 'Пароли не совпадают' },
+                { shouldFocus: false },
+            );
+        } else {
+            dispatch(
+                registration({
+                    username: data['Почта'],
+                    password: data['Пароль'],
+                }),
+            );
+        }
     };
 
     return (
         <AuthContainerBlock>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <h3 className={css.card_header}>Вход</h3>
+                <h3 className={css.card_header}>Регистрация</h3>
                 <Input
                     label="Почта"
                     type="text"
@@ -76,12 +76,25 @@ function LoginPage() {
                     }}
                     errors={errors}
                 />
+                <Input
+                    label="Повторите пароль"
+                    type="password"
+                    placeholder="Введите пароль"
+                    register={register}
+                    required
+                    setError={setError}
+                    minLength={{
+                        value: 3,
+                        message: 'Не менее 3-х символов',
+                    }}
+                    errors={errors}
+                />
                 <div className={css.card_footer}>
-                    <Link className={css.link} to="/registration">
-                        Запросить доступ
+                    <Link className={css.link} to={-1}>
+                        Отмена регистрации
                     </Link>
                     <button className={css.standart_button} type="submit">
-                        Войти
+                        Регистрация
                     </button>
                 </div>
             </form>
@@ -89,4 +102,4 @@ function LoginPage() {
     );
 }
 
-export default LoginPage;
+export default RegistrationPage;

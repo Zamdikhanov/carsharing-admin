@@ -1,21 +1,23 @@
 import { Link } from 'react-router-dom';
-import { ReactComponent as Logo } from '../../assets/logo.svg';
+import AuthContainerBlock from '../../components/AuthContainerBlock/AuthContainerBlock';
 import css from './PageNotFound.module.scss';
 
 function PageNotFound() {
     return (
-        <div className={css.container}>
+        <AuthContainerBlock>
             <div className={css.content_block}>
-                <Logo className={css.content_block__logo} />
                 <h3 className={css.content_block__code}>404</h3>
                 <div className={css.content_block__message}>
                     Страница не найдена
                 </div>
-                <Link className={css.content_block__link} to="/admin">
+                <Link className={css.content_block__link} to="/">
                     Перейти на главную
                 </Link>
+                <Link className={css.content_block__link} to={-1}>
+                    Вернуться назад
+                </Link>
             </div>
-        </div>
+        </AuthContainerBlock>
     );
 }
 

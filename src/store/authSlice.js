@@ -11,6 +11,7 @@ const initialState = {
         user_id: '',
     },
     user_name: 'Admin',
+    isAuth: false,
 };
 
 export const authSlice = createSlice({
@@ -26,24 +27,36 @@ export const authSlice = createSlice({
         resetAuthState: (state) => {
             state.data = initialState.data;
             state.user_name = initialState.user_name;
+            state.isAuth = initialState.isAuth;
         },
+        setIsAuth: (state, action) => {
+            state.isAuth = action.payload;
+        }
     },
 });
 
-export const { setUserName, setAuthServerResponce, resetAuthState } =
+export const { setUserName, setAuthServerResponce, resetAuthState, setIsAuth } =
 authSlice.actions;
 
 export const login = (loginData) => async(dispatch) => {
     const response = await authAPI.login(loginData);
-    dispatch(setAuthServerResponce(response.data));
-    dispatch(setUserName(loginData.username));
-    console.log('response', response);
+    if (response && response.status === 200) {
+        dispatch(setAuthServerResponce(response.data));
+        dispatch(setUserName(loginData.username));
+        dispatch(setIsAuth(true));
+    }
+};
+
+export const registration = (registrationData) => async(dispatch) => {
+    const response = await authAPI.registration(registrationData);
+    if (response && response.status === 200) {
+        dispatch(login(registrationData));
+    }
 };
 
 export const logout = (accessToken) => async(dispatch) => {
-    const response = await authAPI.logout(accessToken);
+    await authAPI.logout(accessToken);
     dispatch(resetAuthState());
-    console.log('logout', response);
 };
 
 export default authSlice.reducer;

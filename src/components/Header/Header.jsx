@@ -8,15 +8,18 @@ import { ReactComponent as SearchSvg } from '../../assets/header/search-icon.svg
 import useComponentVisible from '../../hooks/useComponentVisible';
 
 function Header({ onBurgerClick, isShow, burgerRef }) {
-
-    const { ref, isComponentVisible, setIsComponentVisible, ignoreRef: buttonRef } =
-        useComponentVisible(false);
+    const {
+        ref,
+        isComponentVisible,
+        setIsComponentVisible,
+        ignoreRef: buttonRef,
+    } = useComponentVisible(false);
 
     const { user_name: userName, data } = useSelector((state) => state.auth);
 
     const dispatch = useDispatch();
 
-    const handleClick = () => {
+    const handleClickBurger = () => {
         onBurgerClick();
     };
 
@@ -24,20 +27,21 @@ function Header({ onBurgerClick, isShow, burgerRef }) {
         setIsComponentVisible(!isComponentVisible);
     };
 
-    const handleClickExit = () => {
+    const handleClickLogout = () => {
         setIsComponentVisible(false);
         dispatch(logout(data.access_token));
     };
 
-    const classNameButton = `${css.nav_burger} ${isShow ? css.menu_button__active : ''
-        }`;
+    const classNameButton = `${css.nav_burger} ${
+        isShow ? css.menu_button__active : ''
+    }`;
 
     return (
         <header className={css.header}>
             <button
                 className={classNameButton}
                 type="button"
-                onClick={handleClick}
+                onClick={handleClickBurger}
                 ref={burgerRef}
             >
                 <span />
@@ -71,14 +75,11 @@ function Header({ onBurgerClick, isShow, burgerRef }) {
                 </div>
             </button>
             {isComponentVisible && (
-                <div
-                    className={css.user_menu}
-                    ref={ref}
-                >
+                <div className={css.user_menu} ref={ref}>
                     <button
                         className={css.user_menu__button}
                         type="button"
-                        onClick={handleClickExit}
+                        onClick={handleClickLogout}
                     >
                         Выйти
                     </button>

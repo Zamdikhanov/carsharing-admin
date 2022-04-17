@@ -32,14 +32,22 @@ const authAPI = {
                 console.log(error);
             });
     },
+    registration(authData) {
+        return instance
+            .post(`/auth/register`, authData)
+            .then((response) => response)
+            .catch((error) => {
+                console.log(error);
+            });
+    },
     logout(accessToken) {
         return instance
             .post(`/auth/logout`, '', {
                 headers: { Authorization: `Bearer ${accessToken}` },
             })
-            .then((response) => response.data.data)
+            .then((response) => response.data)
             .catch((error) => {
-                console.log(error);
+                console.log(error.message);
             });
     },
 };
