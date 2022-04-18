@@ -1,4 +1,5 @@
 import * as axios from 'axios';
+import { APPLICATION_ID, SECRET, BASE_URL } from './config';
 
 function b64EncodeUnicode(str) {
     return btoa(
@@ -11,45 +12,16 @@ function b64EncodeUnicode(str) {
     );
 }
 
-const basicToken = b64EncodeUnicode(
-    `a1y2r3a4t5:${process.env.REACT_APP_SECRET}`,
+const BASIC_TOKEN = b64EncodeUnicode(
+    `a1y2r3a4t5:${SECRET}`,
 );
 
 const instance = axios.create({
-    baseURL: 'https://api-factory.simbirsoft1.com/api/',
+    baseURL: `${BASE_URL}`,
     headers: {
-        'X-Api-Factory-Application-Id': `${process.env.REACT_APP_ID}`,
-        Authorization: `Basic ${basicToken}`,
+        'X-Api-Factory-Application-Id': `${APPLICATION_ID}`,
+        Authorization: `Basic ${BASIC_TOKEN}`,
     },
 });
 
-const authAPI = {
-    login(authData) {
-        return instance
-            .post(`/auth/login`, authData)
-            .then((response) => response)
-            .catch((error) => {
-                console.log(error);
-            });
-    },
-    registration(authData) {
-        return instance
-            .post(`/auth/register`, authData)
-            .then((response) => response)
-            .catch((error) => {
-                console.log(error);
-            });
-    },
-    logout(accessToken) {
-        return instance
-            .post(`/auth/logout`, '', {
-                headers: { Authorization: `Bearer ${accessToken}` },
-            })
-            .then((response) => response.data)
-            .catch((error) => {
-                console.log(error.message);
-            });
-    },
-};
-
-export default authAPI;
+export default instance;

@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
-import authAPI from '../api/api';
+import authAPI from '../api/authApi';
 
 const initialState = {
     data: {
@@ -12,6 +12,7 @@ const initialState = {
     },
     user_name: 'Admin',
     isAuth: false,
+    authError: '',
 };
 
 export const authSlice = createSlice({
@@ -24,39 +25,50 @@ export const authSlice = createSlice({
         setAuthServerResponce: (state, action) => {
             state.data = action.payload;
         },
+        setIsAuth: (state, action) => {
+            state.isAuth = action.payload;
+        },
+        setAuthError: (state, action) => {
+            state.authError = action.payload;
+        },
         resetAuthState: (state) => {
             state.data = initialState.data;
             state.user_name = initialState.user_name;
             state.isAuth = initialState.isAuth;
+            state.authError = initialState.authError;
         },
-        setIsAuth: (state, action) => {
-            state.isAuth = action.payload;
-        }
     },
 });
 
-export const { setUserName, setAuthServerResponce, resetAuthState, setIsAuth } =
+export const { setUserName, setAuthServerResponce, resetAuthState, setIsAuth, setAuthError } =
 authSlice.actions;
 
 export const login = (loginData) => async(dispatch) => {
-    const response = await authAPI.login(loginData);
-    if (response && response.status === 200) {
+    try {
+        const response = await authAPI.login(loginData);
         dispatch(setAuthServerResponce(response.data));
         dispatch(setUserName(loginData.username));
         dispatch(setIsAuth(true));
-    }
+        dispatch(setAuthError(''));
+    } catch { dispatch(setAuthError('Неверный логин или пароль')); };
 };
 
 export const registration = (registrationData) => async(dispatch) => {
-    const response = await authAPI.registration(registrationData);
-    if (response && response.status === 200) {
+    try {
+        await authAPI.registration(registrationData);
         dispatch(login(registrationData));
+    } catch {
+        dispatch(setAuthError('Что то пошло не так. Попробуйте позже'));
     }
 };
 
 export const logout = (accessToken) => async(dispatch) => {
-    await authAPI.logout(accessToken);
-    dispatch(resetAuthState());
+    try {
+        await authAPI.logout(accessToken);
+        dispatch(resetAuthState());
+    } catch {
+        dispatch(setAuthError('Что то пошло не так. Попробуйте позже'));
+    }
 };
 
 export default authSlice.reducer;
