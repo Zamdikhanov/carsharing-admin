@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import LoginPage from './pages/LoginPage/LoginPage';
 import TemplatePage from './pages/TemplatePage';
 import OrderListPage from './pages/SettingPages/OrderListPage/OrderListPage';
+import ErrorPage from './pages/SettingPages/ErrorPage/ErrorPage';
 
 function App() {
     return (
@@ -18,7 +19,7 @@ function App() {
                     <Route path="menu4" element={<div>menu4</div>} />
                     <Route path="menu5" element={<div>menu5</div>} />
                     <Route path="menu6" element={<div>menu6</div>} />
-                    <Route path="menu7" element={<div>menu7</div>} />
+                    <Route path="error" element={<ErrorPage />} />
                 </Route>
             </Routes>
         </div>
