@@ -24,9 +24,13 @@
         margin-bottom: 13px;
         @media (max-width: 1023px) {
             font-size: 64px;
-            line-height: 1.15em;
+            line-height: 1em;
             letter-spacing: -0.062464em;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
+        }
+        @media (max-width: 479px) {
+            font-size: 56px;
+            margin-bottom: 0px;
         }
     }
     &__message {

@@ -1,15 +1,27 @@
 import { Route, Routes } from 'react-router-dom';
 import LoginPage from './pages/LoginPage/LoginPage';
+import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
 import TemplatePage from './pages/TemplatePage';
 import OrderListPage from './pages/SettingPages/OrderListPage/OrderListPage';
 import ErrorPage from './pages/SettingPages/ErrorPage/ErrorPage';
+import PageNotFound from './pages/PageNotFound/PageNotFound';
+import RequireAuth from './hoc/RequireAuth';
 
 function App() {
     return (
         <div className="App">
             <Routes>
                 <Route path="/" element={<LoginPage />} />
-                <Route path="/admin/" element={<TemplatePage />}>
+                <Route path="/registration" element={<RegistrationPage />} />
+
+                <Route
+                    path="/admin/"
+                    element={
+                        <RequireAuth>
+                            <TemplatePage />
+                        </RequireAuth>
+                    }
+                >
                     <Route
                         path="car-setting"
                         element={<div>car-setting</div>}
@@ -21,6 +33,8 @@ function App() {
                     <Route path="menu6" element={<div>menu6</div>} />
                     <Route path="error" element={<ErrorPage />} />
                 </Route>
+
+                <Route path="/*" element={<PageNotFound />} />
             </Routes>
         </div>
     );

@@ -1,0 +1,42 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+.content_block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 180px;
+    &__code {
+        display: block;
+        font-family: $font_title;
+        font-size: 32px;
+        line-height: 40px;
+    }
+    &__message {
+        display: block;
+        font-family: $font_title;
+        font-size: 24px;
+        line-height: 36px;
+        margin-bottom: 16px;
+    }
+    &__link {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        font-family: $font_title;
+        font-size: 16px;
+        line-height: 24px;
+        color: $color_main_choice;
+        text-decoration: none;
+        margin-bottom: 8px;
+        &:last-child {
+            margin-bottom: 0px;
+        }
+        &:hover,
+        &:focus-visible {
+            box-shadow: inset 0 -2px 0 $color_main_choice;
+            outline: none;
+            border: none;
+        }
+    }
+}
