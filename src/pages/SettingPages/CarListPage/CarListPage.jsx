@@ -1,10 +1,10 @@
 import FilterForm from '../../../components/FilterForm/FilterForm';
-import OrderListRow from '../../../components/OrderListRow/OrderListRow';
+import CarListRow from '../../../components/CarListRow/CarListRow';
 import { PageMainCard, PageMainCardFooter, PageMainCardHeader, PageMainCardMain } from '../../../components/PageMainCard/PageMainCard';
 import Pagination from '../../../components/Pagination/Pagination';
-import { order, city } from './constants';
+import { order, city } from '../OrderListPage/constants';
 
-function OrderListPage() {
+function CarListPage() {
     const cities = city;
     const name = 'Города';
 
@@ -26,16 +26,16 @@ function OrderListPage() {
     ];
 
     return (
-        <PageMainCard pageTitle="Заказы">
+        <PageMainCard pageTitle="Список автомобилей">
             <PageMainCardHeader>
                 <FilterForm filterData={filterData} />
             </PageMainCardHeader>
             <PageMainCardMain>
-                <OrderListRow {...order} />
-                <OrderListRow {...order} />
-                <OrderListRow {...order} />
-                <OrderListRow {...order} />
-                <OrderListRow {...order} />
+                <CarListRow {...order} />
+                <CarListRow {...order} />
+                <CarListRow {...order} />
+                <CarListRow {...order} />
+                <CarListRow {...order} />
             </PageMainCardMain>
             <PageMainCardFooter>
                 <Pagination />
@@ -44,4 +44,4 @@ function OrderListPage() {
     );
 }
 
-export default OrderListPage;
+export default CarListPage;

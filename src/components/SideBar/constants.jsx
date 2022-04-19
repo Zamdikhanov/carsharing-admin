@@ -11,7 +11,7 @@ const links = [
     {
         id: 'link01',
         link: '/admin/order-list',
-        linkText: 'Список заказов',
+        linkText: 'Заказы',
         icon: () => <OrderSvg className={css.link_icon} />,
     },
     {
@@ -23,7 +23,7 @@ const links = [
     {
         id: 'link03',
         link: '/admin/car-list',
-        linkText: 'Список авто',
+        linkText: 'Список автомобилей',
         icon: () => <CarListSvg className={css.link_icon} />,
     },
     {

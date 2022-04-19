@@ -9,4 +9,28 @@ function PageMainCard({ pageTitle, children }) {
     );
 }
 
-export default PageMainCard;
+function PageMainCardHeader({ children }) {
+    return (
+        <div className={css.card__header}>
+            {children}
+        </div>
+    );
+}
+
+function PageMainCardMain({ children }) {
+    return (
+        <div className={css.card__main}>
+            {children}
+        </div>
+    );
+}
+
+function PageMainCardFooter({ children }) {
+    return (
+        <div className={css.card__footer}>
+            {children}
+        </div>
+    );
+}
+
+export { PageMainCard, PageMainCardHeader, PageMainCardMain, PageMainCardFooter };
