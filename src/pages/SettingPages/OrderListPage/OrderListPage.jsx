@@ -1,5 +1,6 @@
 import FilterForm from '../../../components/FilterForm/FilterForm';
 import OrderListRow from '../../../components/OrderListRow/OrderListRow';
+import PageMainCard from '../../../components/PageMainCard/PageMainCard';
 import Pagination from '../../../components/Pagination/Pagination';
 import { order, city } from './constants';
 import css from './OrderListPage.module.scss';
@@ -26,24 +27,21 @@ function OrderListPage() {
     ];
 
     return (
-        <div className={css.container}>
-            <h1 className={css.title}>Заказы</h1>
-            <div className={css.card}>
-                <div className={css.card__header}>
-                    <FilterForm filterData={filterData} />
-                </div>
-                <div className={css.card__main}>
-                    <OrderListRow {...order} />
-                    <OrderListRow {...order} />
-                    <OrderListRow {...order} />
-                    <OrderListRow {...order} />
-                    <OrderListRow {...order} />
-                </div>
-                <div className={css.card__footer}>
-                    <Pagination />
-                </div>
+        <PageMainCard pageTitle="Заказы">
+            <div className={css.card__header}>
+                <FilterForm filterData={filterData} />
             </div>
-        </div>
+            <div className={css.card__main}>
+                <OrderListRow {...order} />
+                <OrderListRow {...order} />
+                <OrderListRow {...order} />
+                <OrderListRow {...order} />
+                <OrderListRow {...order} />
+            </div>
+            <div className={css.card__footer}>
+                <Pagination />
+            </div>
+        </PageMainCard>
     );
 }
 

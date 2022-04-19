@@ -1,73 +1,31 @@
 @import '../../../styles/variables';
-.container {
-    height: 100%;
-    width: 100%;
-    padding: 28px;
-    @media (max-width: 1023px) {
-        padding: 16px 8px;
-    }
-    @media (max-width: 479px) {
-        padding: 16px 0px;
-    }
-}
-
-.title {
-    font-family: $font_title;
-    font-weight: 400;
-    font-size: 29px;
-    line-height: 33px;
-    letter-spacing: -0.725px;
-    color: $color_title_text;
-    margin-bottom: 28px;
-    @media (max-width: 1023px) {
-        margin-bottom: 16px;
-    }
+.card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 59px;
+    padding: 0 18px;
+    box-shadow: 0px 0.5px 0px $color_gray_light;
     @media (max-width: 479px) {
         padding: 0px 8px;
     }
 }
 
-.card {
-    background: #ffffff;
-    box-shadow: 0px 2px 0px rgba(90, 97, 105, 0.11), 0px 4px 8px rgba(90, 97, 105, 0.12), 0px 10px 10px rgba(90, 97, 105, 0.06), 0px 7px 70px rgba(90, 97, 105, 0.1);
-    border-radius: 9px;
+.card__main {
+    padding: 0 18px;
     @media (max-width: 479px) {
-        border-radius: 0px;
+        padding: 0px 8px;
     }
-    &::after {
-        position: relative;
-        content: '.';
-        color: transparent;
-        background-color: transparent;
-        height: 28px;
-        bottom: -28px;
-    }
-    &__header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        min-height: 59px;
-        padding: 0 18px;
-        box-shadow: 0px 0.5px 0px $color_gray_light;
-        @media (max-width: 479px) {
-            padding: 0px 8px;
-        }
-    }
-    &__main {
-        padding: 0 18px;
-        @media (max-width: 479px) {
-            padding: 0px 8px;
-        }
-    }
-    &__footer {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 59px;
-        padding: 0 18px;
-        box-shadow: 0px -0.5px 0px $color_gray_light;
-        @media (max-width: 479px) {
-            padding: 0px 8px;
-        }
+}
+
+.card__footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 59px;
+    padding: 0 18px;
+    box-shadow: 0px -0.5px 0px $color_gray_light;
+    @media (max-width: 479px) {
+        padding: 0px 8px;
     }
 }
