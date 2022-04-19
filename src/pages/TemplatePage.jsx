@@ -1,32 +1,44 @@
-import { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import Header from '../components/Header/Header';
 import SideBar from '../components/SideBar/SideBar';
+import useComponentVisible from '../hooks/useComponentVisible';
 import css from './TemplatePage.module.scss';
 
 function TemplatePage() {
-    const [isShow, setIsShow] = useState(false);
+    const {
+        ref: sidebarRef,
+        isComponentVisible: isNavMobileVisible,
+        setIsComponentVisible: setIsNavMobileVisible,
+        ignoreRef: burgerRef,
+    } = useComponentVisible(false);
 
     const handleClick = () => {
-        setIsShow(!isShow);
-        const back = document.querySelector('body');
-        back.classList.toggle('lock');
+        setIsNavMobileVisible(!isNavMobileVisible);
     };
+
+    const handleClickExit = () => {
+        setIsNavMobileVisible(false);
+    };
+
     return (
         <div className={css.bg}>
             <div className={css.wrapper}>
-                <div className={css.page}>
+                <div
+                    className={`${css.page}
+                    ${isNavMobileVisible ? css.page_shade : ''}`}
+                >
                     <nav
                         className={`${css.nav} 
-                        ${isShow ? css.nav_showOnMobile : ''}`}
+                        ${isNavMobileVisible ? css.nav_showOnMobile : ''}`}
                     >
-                        <SideBar onClick={handleClick} />
+                        <SideBar onClick={handleClickExit} ref={sidebarRef} />
                     </nav>
                     <div className={css.main_container}>
                         <div className={css.header}>
                             <Header
                                 onBurgerClick={handleClick}
-                                isShow={isShow}
+                                isShow={isNavMobileVisible}
+                                burgerRef={burgerRef}
                             />
                         </div>
                         <main className={css.main}>

@@ -1,23 +1,39 @@
-import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../store/authSlice';
 import css from './Header.module.scss';
 import avatar from '../../assets/header/user-avatar.jpg';
 import { ReactComponent as DropdownSvg } from '../../assets/header/dropdown-icon.svg';
 import { ReactComponent as NotificationsSvg } from '../../assets/header/notifications.svg';
 import { ReactComponent as SearchSvg } from '../../assets/header/search-icon.svg';
+import useComponentVisible from '../../hooks/useComponentVisible';
 
-function Header({ onBurgerClick, isShow }) {
-    const [burgerShow, setBurgerShow] = useState(isShow);
+function Header({ onBurgerClick, isShow, burgerRef }) {
+    const {
+        ref,
+        isComponentVisible,
+        setIsComponentVisible,
+        ignoreRef: buttonRef,
+    } = useComponentVisible(false);
 
-    useEffect(() => {
-        setBurgerShow(isShow);
-    }, [isShow]);
+    const { user_name: userName, data } = useSelector((state) => state.auth);
 
-    const handleClick = () => {
+    const dispatch = useDispatch();
+
+    const handleClickBurger = () => {
         onBurgerClick();
     };
 
+    const handleClickUser = () => {
+        setIsComponentVisible(!isComponentVisible);
+    };
+
+    const handleClickLogout = () => {
+        setIsComponentVisible(false);
+        dispatch(logout(data.access_token));
+    };
+
     const classNameButton = `${css.nav_burger} ${
-        burgerShow ? css.menu_button__active : ''
+        isShow ? css.menu_button__active : ''
     }`;
 
     return (
@@ -25,7 +41,8 @@ function Header({ onBurgerClick, isShow }) {
             <button
                 className={classNameButton}
                 type="button"
-                onClick={handleClick}
+                onClick={handleClickBurger}
+                ref={burgerRef}
             >
                 <span />
             </button>
@@ -41,17 +58,33 @@ function Header({ onBurgerClick, isShow }) {
                 <NotificationsSvg className={css.notifications__svg} />
                 <div className={css.notifications__count}>2</div>
             </button>
-            <button className={css.user_details} type="button">
+            <button
+                className={css.user_details}
+                type="button"
+                onClick={handleClickUser}
+                ref={buttonRef}
+            >
                 <img
                     className={css.user_details__image}
                     src={avatar}
                     alt="avatar"
                 />
-                <div className={css.user_details__name}>Admin</div>
+                <div className={css.user_details__name}>{userName}</div>
                 <div className={css.user_details__dropdown}>
                     <DropdownSvg className={css.user_details__dropdown_svg} />
                 </div>
             </button>
+            {isComponentVisible && (
+                <div className={css.user_menu} ref={ref}>
+                    <button
+                        className={css.user_menu__button}
+                        type="button"
+                        onClick={handleClickLogout}
+                    >
+                        Выйти
+                    </button>
+                </div>
+            )}
         </header>
     );
 }
