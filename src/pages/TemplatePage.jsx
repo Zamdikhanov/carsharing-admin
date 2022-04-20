@@ -20,6 +20,8 @@ function TemplatePage() {
         setIsNavMobileVisible(false);
     };
 
+    console.log('TemplatePage');
+
     return (
         <div className={css.bg}>
             <div className={css.wrapper}>

@@ -43,6 +43,7 @@ const initialState = {
         },
         id: '',
     }, ],
+    count: 0,
     isFetching: false,
 };
 
@@ -51,7 +52,8 @@ export const orderSlice = createSlice({
     initialState,
     reducers: {
         setOrder: (state, action) => {
-            state.orders = action.payload;
+            state.orders = action.payload.data;
+            state.count = action.payload.count;
         },
         setIsFetching: (state, action) => {
             state.isFetching = action.payload;
@@ -71,9 +73,9 @@ export const getOrder =
                 limit,
                 accessToken,
             });
-            dispatch(setOrder(response.data.data));
+            dispatch(setOrder(response.data));
         } catch {
-            console.log('getOrder slice error')
+            console.log('getOrder slice error');
         }
         dispatch(setIsFetching(false));
     };

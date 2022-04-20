@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FilterForm from '../../../components/FilterForm/FilterForm';
 import OrderListRow from '../../../components/OrderListRow/OrderListRow';
@@ -18,13 +18,23 @@ function OrderListPage() {
     const name = 'Города';
 
     const dispatch = useDispatch();
-    const { orders, isFetching } = useSelector((state) => state.order);
+
+    const limit = 10;
+    const [page, setPage] = useState(500);
+    const { orders, count: ordersCount, isFetching } = useSelector((state) => state.order);
+    const pageCount = Math.ceil(ordersCount / limit);
     const { data } = useSelector((state) => state.auth);
     useEffect(() => {
+        console.log('OrderListPage useEffect');
         dispatch(
-            getOrder({ offset: 150, limit: 1, accessToken: data.access_token }),
+            getOrder({ offset: page, limit, accessToken: data.access_token }),
         );
-    }, []);
+    }, [page]);
+
+    function handlePageChange(pageNumber) {
+        console.log('click on page', pageNumber);
+        setPage(pageNumber);
+    }
 
     const selectOption = {
         defaultValue: null,
@@ -43,6 +53,8 @@ function OrderListPage() {
         { ...selectOption, id: '004', name: '004', placeholder: 'Состояние' },
     ];
 
+    console.log('click on page');
+
     return (
         <PageMainCard pageTitle="Заказы">
             <PageMainCardHeader>
@@ -56,14 +68,13 @@ function OrderListPage() {
                         return <OrderListRow key={order.id} {...order} />;
                     })
                 )}
-                {/* <OrderListRow {...order} />
-                <OrderListRow {...order} />
-                <OrderListRow {...order} />
-                <OrderListRow {...order} />
-                <OrderListRow {...order} /> */}
             </PageMainCardMain>
             <PageMainCardFooter>
-                <Pagination />
+                <Pagination
+                    onPageChange={(selectedPage) => { handlePageChange(selectedPage) }}
+                    pageCount={pageCount}
+                    forcePage={page}
+                />
             </PageMainCardFooter>
         </PageMainCard>
     );

@@ -17,6 +17,7 @@ function OrderListRow(order) {
         isFullTank,
         isNeedChildChair,
         isRightWheel,
+        id,
     } = order;
     const [hasImageError, setHasImageError] = useState(false);
     console.log('order', order);
@@ -29,12 +30,11 @@ function OrderListRow(order) {
                     <img
                         onError={() => setHasImageError(true)}
                         className={css.carImage}
-                        src={
-                            hasImageError
-                                ? carStubPicture
-                                : carId?.thumbnail?.path
+                        src={hasImageError
+                            ? carStubPicture
+                            : carId?.thumbnail?.path || carStubPicture
                         }
-                        alt={carId?.name}
+                        alt={carId?.name || 'car image'}
                     />
                 </div>
                 <div className={css.details_list}>
@@ -54,12 +54,12 @@ function OrderListRow(order) {
                 </div>
             </div>
             <div className={css.checkboxes}>
-                <Checkbox {...{ checked: isFullTank, label: 'Полный бак' }} />
+                <Checkbox {...{ id, checked: isFullTank, label: 'Полный бак' }} />
                 <Checkbox
-                    {...{ checked: isNeedChildChair, label: 'Детское кресло' }}
+                    {...{ id, checked: isNeedChildChair, label: 'Детское кресло' }}
                 />
                 <Checkbox
-                    {...{ checked: isRightWheel, label: 'Правый руль' }}
+                    {...{ id, checked: isRightWheel, label: 'Правый руль' }}
                 />
             </div>
             <div className={css.price}>
