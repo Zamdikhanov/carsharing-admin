@@ -18,29 +18,38 @@ function OrderListRow(order) {
         isNeedChildChair,
         isRightWheel,
     } = order;
-    const [hasError, setHasError] = useState(false);
+    const [hasImageError, setHasImageError] = useState(false);
+    console.log('order', order);
+    const noDataMessage = 'нет данных';
 
     return (
         <div className={css.container}>
             <div className={css.aboutCar}>
                 <div className={css.imageContainer}>
                     <img
-                        onError={() => setHasError(true)}
+                        onError={() => setHasImageError(true)}
                         className={css.carImage}
-                        src={hasError ? carStubPicture : carId.thumbnail.path}
-                        alt={carId.name}
+                        src={
+                            hasImageError
+                                ? carStubPicture
+                                : carId?.thumbnail?.path
+                        }
+                        alt={carId?.name}
                     />
                 </div>
                 <div className={css.details_list}>
                     <div className={css.details_list__row}>
-                        <span>{carId.name}</span> в <span>{cityId.name}</span>,{' '}
-                        {pointId.address}
+                        <span>{carId?.name || noDataMessage}</span> в{' '}
+                        <span>{cityId?.name || noDataMessage}</span>,{' '}
+                        {pointId?.address || noDataMessage}
                     </div>
                     <div className={css.details_list__row}>
-                        {`${formatDate(dateFrom)} - ${formatDate(dateTo)}`}
+                        {`${formatDate(dateFrom || 0)} - ${formatDate(
+                            dateTo || 0,
+                        )}`}
                     </div>
                     <div className={css.details_list__row}>
-                        Цвет: <span>{color}</span>
+                        Цвет: <span>{color || noDataMessage}</span>
                     </div>
                 </div>
             </div>
@@ -54,7 +63,10 @@ function OrderListRow(order) {
                 />
             </div>
             <div className={css.price}>
-                {Intl.NumberFormat('ru', { useGrouping: true }).format(price)} ₽
+                {Intl.NumberFormat('ru', { useGrouping: true }).format(
+                    price || noDataMessage,
+                )}{' '}
+                ₽
             </div>
             <TripleButton />
         </div>

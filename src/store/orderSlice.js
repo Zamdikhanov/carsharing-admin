@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import orderApi from '../api/orderApi';
 
 const initialState = {
-    data: [{
+    orders: [{
         updatedAt: null,
         createdAt: null,
         cityId: null,
@@ -51,7 +51,7 @@ export const orderSlice = createSlice({
     initialState,
     reducers: {
         setOrder: (state, action) => {
-            state.data = action.payload;
+            state.orders = action.payload;
         },
         setIsFetching: (state, action) => {
             state.isFetching = action.payload;
@@ -64,18 +64,18 @@ export const { setOrder, setIsFetching } = orderSlice.actions;
 export const getOrder =
     ({ offset, limit, accessToken }) =>
     async(dispatch) => {
+        dispatch(setIsFetching(true));
         try {
-            dispatch(setIsFetching(true));
             const response = await orderApi.getOrder({
                 offset,
                 limit,
                 accessToken,
             });
-            dispatch(setOrder(response.data));
-            dispatch(setIsFetching(false));
+            dispatch(setOrder(response.data.data));
         } catch {
-            dispatch(setIsFetching(false));
+            console.log('getOrder slice error')
         }
+        dispatch(setIsFetching(false));
     };
 
 export default orderSlice.reducer;
