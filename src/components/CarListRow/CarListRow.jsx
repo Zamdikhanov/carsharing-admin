@@ -29,38 +29,38 @@ function CarListRow(car) {
                         alt={name}
                     />
                 </div>
-                <div className={css.details_list}>
-                    <div className={css.details_list__row}>
-                        {`Марка: ${name}`}
-                    </div>
-                    <div className={css.details_list__row}>
-                        {`Номер: ${number}`}
-                    </div>
-                    <div className={css.details_list__row}>
-                        {`Категория: ${categoryId.name}`}
-                    </div>
-                </div>
             </div>
             <div className={css.details_list}>
                 <div className={css.details_list__row}>
-                    {`Цена мин.: ${priceMin}`}
+                    <span>Марка: </span>{name}
                 </div>
                 <div className={css.details_list__row}>
-                    {`Цена макс.: ${priceMax}`}
+                    <span>Номер: </span>{number}
                 </div>
-                <div
-                    className={css.details_list__row}
-                >{`Топливо: ${tank}`}</div>
-                <div
-                    className={css.details_list__row}
-                >{`Цвета: ${colors}`}</div>
+                <div className={css.details_list__row}>
+                    <span>Категория: </span>{categoryId.name}
+                </div>
             </div>
-            <div className={css.price}>
+            <div className={`${css.details_list} ${css.section3}`}>
+                <div className={css.details_list__row}>
+                    <span>Цена мин.: </span>{priceMin}
+                </div>
+                <div className={css.details_list__row}>
+                    <span>Цена макс.: </span>{priceMax}
+                </div>
+                <div className={css.details_list__row} >
+                    <span>Топливо: </span>{tank ?? 'Нет данных'}</div>
+                <div className={css.details_list__row} >
+                    <span>Цвета: </span>{colors?.join(', ')}</div>
+            </div>
+            <div className={`${css.details_list} ${css.section4}`}>
                 <div
                     className={css.details_list__row}
-                >{`Описание: ${description}`}</div>
+                ><span>Описание: </span>{description}</div>
             </div>
-            <TripleButton />
+            <div className={css.buttons}>
+                <TripleButton />
+            </div>
         </div>
     );
 }

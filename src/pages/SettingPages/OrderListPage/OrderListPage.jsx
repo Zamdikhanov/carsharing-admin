@@ -20,7 +20,7 @@ function OrderListPage() {
     const dispatch = useDispatch();
 
     const limit = 10;
-    const [page, setPage] = useState(500);
+    const [page, setPage] = useState(499);
     const {
         orders,
         count: ordersCount,

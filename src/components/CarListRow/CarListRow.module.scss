@@ -7,6 +7,9 @@
     align-items: center;
     padding: 13px 0;
     box-shadow: inset 0 -0.5px 0 0 $color_input_border;
+    @media (max-width: 600px) {
+        justify-content: flex-start;
+    }
     &:last-child {
         box-shadow: none;
     }
@@ -16,6 +19,9 @@
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
+    @media (max-width: 600px) {
+        width: 100%;
+    }
 }
 
 .imageContainer {
@@ -27,7 +33,7 @@
     width: 100%;
     width: 138px;
     height: 63px;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .details_list {
@@ -47,16 +53,17 @@
     &__row+.details_list__row {
         margin-top: 6px;
     }
+    &.section3 {
+        width: 170px;
+    }
+    &.section4 {
+        width: 250px;
+        align-self: flex-start;
+        justify-self: start;
+        @media (max-width: 600px) {
+            width: 100%;
+        }
+    }
 }
 
-.price {
-    color: $color_main_black;
-    font-family: $font_title;
-    text-align: center;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 28px;
-    width: 131.5px;
-    letter-spacing: -0.754286px;
-}
+.buttons {}

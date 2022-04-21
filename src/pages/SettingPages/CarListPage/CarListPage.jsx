@@ -20,7 +20,7 @@ function CarListPage() {
     const dispatch = useDispatch();
 
     const limit = 5;
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const {
         cars,
         count: ordersCount,
