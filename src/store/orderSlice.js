@@ -64,12 +64,12 @@ export const orderSlice = createSlice({
 export const { setOrder, setIsFetching } = orderSlice.actions;
 
 export const getOrder =
-    ({ offset, limit, accessToken }) =>
+    ({ page, limit, accessToken }) =>
     async(dispatch) => {
         dispatch(setIsFetching(true));
         try {
             const response = await orderApi.getOrder({
-                offset,
+                page,
                 limit,
                 accessToken,
             });

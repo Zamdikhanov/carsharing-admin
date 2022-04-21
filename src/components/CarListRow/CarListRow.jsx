@@ -1,23 +1,21 @@
 import { useState } from 'react';
-import Checkbox from '../Checkbox/Checkbox';
 import TripleButton from '../TripleButton/TripleButton';
 import carStubPicture from '../../assets/images/car-stub-picture.png';
 import css from './CarListRow.module.scss';
-import formatDate from '../../utils/formatDate';
 
-function CarListRow(order) {
+function CarListRow(car) {
     const {
-        carId,
-        cityId,
-        pointId,
-        dateFrom,
-        dateTo,
-        color,
-        price,
-        isFullTank,
-        isNeedChildChair,
-        isRightWheel,
-    } = order;
+        name,
+        priceMax,
+        priceMin,
+        thumbnail,
+        description,
+        categoryId,
+        number,
+        tank,
+        colors,
+        // id,
+    } = car;
     const [hasError, setHasError] = useState(false);
 
     return (
@@ -27,34 +25,40 @@ function CarListRow(order) {
                     <img
                         onError={() => setHasError(true)}
                         className={css.carImage}
-                        src={hasError ? carStubPicture : carId.thumbnail.path}
-                        alt={carId.name}
+                        src={hasError ? carStubPicture : thumbnail.path}
+                        alt={name}
                     />
                 </div>
                 <div className={css.details_list}>
                     <div className={css.details_list__row}>
-                        <span>{carId.name}</span> в <span>{cityId.name}</span>,{' '}
-                        {pointId.address}
+                        {`Марка: ${name}`}
                     </div>
                     <div className={css.details_list__row}>
-                        {`${formatDate(dateFrom)} - ${formatDate(dateTo)}`}
+                        {`Номер: ${number}`}
                     </div>
                     <div className={css.details_list__row}>
-                        Цвет: <span>{color}</span>
+                        {`Категория: ${categoryId.name}`}
                     </div>
                 </div>
             </div>
-            <div className={css.checkboxes}>
-                <Checkbox {...{ checked: isFullTank, label: 'Полный бак' }} />
-                <Checkbox
-                    {...{ checked: isNeedChildChair, label: 'Детское кресло' }}
-                />
-                <Checkbox
-                    {...{ checked: isRightWheel, label: 'Правый руль' }}
-                />
+            <div className={css.details_list}>
+                <div className={css.details_list__row}>
+                    {`Цена мин.: ${priceMin}`}
+                </div>
+                <div className={css.details_list__row}>
+                    {`Цена макс.: ${priceMax}`}
+                </div>
+                <div
+                    className={css.details_list__row}
+                >{`Топливо: ${tank}`}</div>
+                <div
+                    className={css.details_list__row}
+                >{`Цвета: ${colors}`}</div>
             </div>
             <div className={css.price}>
-                {Intl.NumberFormat('ru', { useGrouping: true }).format(price)} ₽
+                <div
+                    className={css.details_list__row}
+                >{`Описание: ${description}`}</div>
             </div>
             <TripleButton />
         </div>

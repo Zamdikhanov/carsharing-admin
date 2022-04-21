@@ -15,6 +15,7 @@
 .aboutCar {
     display: flex;
     flex-wrap: wrap;
+    gap: 16px;
 }
 
 .imageContainer {
@@ -30,7 +31,7 @@
 }
 
 .details_list {
-    width: 286.5px;
+    width: 150px;
     font-family: $font_text;
     font-style: normal;
     font-weight: 400;

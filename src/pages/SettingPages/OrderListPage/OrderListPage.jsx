@@ -21,19 +21,27 @@ function OrderListPage() {
 
     const limit = 10;
     const [page, setPage] = useState(500);
-    const { orders, count: ordersCount, isFetching } = useSelector((state) => state.order);
+    const {
+        orders,
+        count: ordersCount,
+        isFetching,
+    } = useSelector((state) => state.order);
     const pageCount = Math.ceil(ordersCount / limit);
     const { data } = useSelector((state) => state.auth);
+
     useEffect(() => {
-        console.log('OrderListPage useEffect');
-        dispatch(
-            getOrder({ offset: page, limit, accessToken: data.access_token }),
-        );
-    }, [page]);
+        dispatch(getOrder({ page, limit, accessToken: data.access_token }));
+    }, []);
 
     function handlePageChange(pageNumber) {
-        console.log('click on page', pageNumber);
         setPage(pageNumber);
+        dispatch(
+            getOrder({
+                page: pageNumber,
+                limit,
+                accessToken: data.access_token,
+            }),
+        );
     }
 
     const selectOption = {
@@ -53,8 +61,6 @@ function OrderListPage() {
         { ...selectOption, id: '004', name: '004', placeholder: 'Состояние' },
     ];
 
-    console.log('click on page');
-
     return (
         <PageMainCard pageTitle="Заказы">
             <PageMainCardHeader>
@@ -71,7 +77,9 @@ function OrderListPage() {
             </PageMainCardMain>
             <PageMainCardFooter>
                 <Pagination
-                    onPageChange={(selectedPage) => { handlePageChange(selectedPage) }}
+                    onPageChange={(selectedPage) => {
+                        handlePageChange(selectedPage);
+                    }}
                     pageCount={pageCount}
                     forcePage={page}
                 />

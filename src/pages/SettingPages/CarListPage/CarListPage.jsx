@@ -1,12 +1,46 @@
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import FilterForm from '../../../components/FilterForm/FilterForm';
 import CarListRow from '../../../components/CarListRow/CarListRow';
-import { PageMainCard, PageMainCardFooter, PageMainCardHeader, PageMainCardMain } from '../../../components/PageMainCard/PageMainCard';
+import {
+    PageMainCard,
+    PageMainCardFooter,
+    PageMainCardHeader,
+    PageMainCardMain,
+} from '../../../components/PageMainCard/PageMainCard';
 import Pagination from '../../../components/Pagination/Pagination';
-import { order, city } from '../OrderListPage/constants';
+import { city } from '../OrderListPage/constants';
+import Preloader from '../../../components/Preloader/Preloader';
+import { getCar } from '../../../store/carSlice';
 
 function CarListPage() {
     const cities = city;
     const name = 'Города';
+
+    const dispatch = useDispatch();
+
+    const limit = 5;
+    const [page, setPage] = useState(1);
+    const {
+        cars,
+        count: ordersCount,
+        isFetching,
+    } = useSelector((state) => state.car);
+    const pageCount = Math.ceil(ordersCount / limit);
+
+    useEffect(() => {
+        dispatch(getCar({ page, limit }));
+    }, []);
+
+    function handlePageChange(pageNumber) {
+        setPage(pageNumber);
+        dispatch(
+            getCar({
+                page: pageNumber,
+                limit,
+            }),
+        );
+    }
 
     const selectOption = {
         defaultValue: null,
@@ -31,14 +65,22 @@ function CarListPage() {
                 <FilterForm filterData={filterData} />
             </PageMainCardHeader>
             <PageMainCardMain>
-                <CarListRow {...order} />
-                <CarListRow {...order} />
-                <CarListRow {...order} />
-                <CarListRow {...order} />
-                <CarListRow {...order} />
+                {isFetching ? (
+                    <Preloader />
+                ) : (
+                    cars.map((car) => {
+                        return <CarListRow key={car.id} {...car} />;
+                    })
+                )}
             </PageMainCardMain>
             <PageMainCardFooter>
-                <Pagination />
+                <Pagination
+                    onPageChange={(selectedPage) => {
+                        handlePageChange(selectedPage);
+                    }}
+                    pageCount={pageCount}
+                    forcePage={page}
+                />
             </PageMainCardFooter>
         </PageMainCard>
     );
