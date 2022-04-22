@@ -1,6 +1,6 @@
 import css from './Checkbox.module.scss';
 
-function Checkbox({ label, checked }) {
+function Checkbox({ label, checked, onChange = () => {} }) {
     return (
         <label className={css.checkbox} htmlFor={label} key={label}>
             <input
@@ -9,7 +9,7 @@ function Checkbox({ label, checked }) {
                 name={label}
                 id={label}
                 checked={checked}
-                onChange={() => console.log('press checkbox')}
+                onChange={(e) => onChange(e.target.checked)}
             />
             <div className={css.checkbox__label}>{label}</div>
         </label>
