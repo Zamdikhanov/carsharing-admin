@@ -8,6 +8,7 @@ import { ReactComponent as NotificationsSvg } from '../../assets/header/notifica
 import { ReactComponent as SearchSvg } from '../../assets/header/search-icon.svg';
 import useComponentVisible from '../../hooks/useComponentVisible';
 import Checkbox from '../Checkbox/Checkbox';
+import { setAppIsFullScreen } from '../../store/appSlice';
 
 function Header({ onBurgerClick, isShow, burgerRef }) {
     const {
@@ -40,18 +41,18 @@ function Header({ onBurgerClick, isShow, burgerRef }) {
         const localStorageItem =
             localStorage.getItem('isFullScreen') === 'true';
         setIsFullScreen(localStorageItem);
-        // dispatch(setIsFullScreen(localStorageItem));
+        dispatch(setAppIsFullScreen(localStorageItem));
     }, []);
 
     const changeContentWrapper = (booleanValue) => {
         setIsFullScreen(booleanValue);
         localStorage.setItem('isFullScreen', booleanValue.toString());
-        // dispatch(setIsFullScreen(booleanValue));
+        dispatch(setAppIsFullScreen(booleanValue));
+        setIsComponentVisible(false);
     };
 
-    const classNameButton = `${css.nav_burger} ${
-        isShow ? css.menu_button__active : ''
-    }`;
+    const classNameButton = `${css.nav_burger} ${isShow ? css.menu_button__active : ''
+        }`;
 
     return (
         <header className={css.header}>

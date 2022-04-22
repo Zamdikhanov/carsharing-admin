@@ -9,15 +9,15 @@ export const appSlice = createSlice({
     name: 'app',
     initialState,
     reducers: {
-        _setIsFullScreen: (state, action) => {
+        setIsFullScreen: (state, action) => {
             state.isFullScreen = action.payload;
         },
     },
 });
 
-export const { _setIsFullScreen } = appSlice.actions;
+export const { setIsFullScreen } = appSlice.actions;
 
-export const setIsFullScreen = (value) => async(dispatch) => {
+export const setAppIsFullScreen = (value) => async(dispatch) => {
     dispatch(setIsFullScreen(value));
 };
 

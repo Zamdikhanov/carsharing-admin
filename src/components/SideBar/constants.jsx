@@ -46,8 +46,8 @@ const links = [
     },
     {
         id: 'link07',
-        link: '/admin/error',
-        linkText: 'Ошибки',
+        link: '/admin/menu7',
+        linkText: 'Меню 7',
         icon: () => <Menu7Svg className={css.link_icon} />,
     },
 ];
