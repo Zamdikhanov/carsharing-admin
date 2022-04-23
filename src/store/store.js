@@ -3,6 +3,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import authSlice from './authSlice';
 import carSlice from './carSlice';
 import categorySlice from './categorySlice';
+import citySlice from './citySlice';
 import orderSlice from './orderSlice';
 
 const rootReduser = combineReducers({
@@ -10,6 +11,7 @@ const rootReduser = combineReducers({
     order: orderSlice,
     car: carSlice,
     category: categorySlice,
+    city: citySlice,
 });
 
 const store = configureStore({

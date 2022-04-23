@@ -34,8 +34,8 @@ const links = [
     },
     {
         id: 'link05',
-        link: '/admin/menu5',
-        linkText: 'Меню 5',
+        link: '/admin/city-list',
+        linkText: 'Города',
         icon: () => <Menu5Svg className={css.link_icon} />,
     },
     {
