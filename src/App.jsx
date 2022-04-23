@@ -6,6 +6,7 @@ import CarListPage from './pages/SettingPages/CarListPage/CarListPage';
 import OrderListPage from './pages/SettingPages/OrderListPage/OrderListPage';
 import PageNotFound from './pages/PageNotFound/PageNotFound';
 import RequireAuth from './hoc/RequireAuth';
+import CategoryListPage from './pages/SettingPages/CategoryListPage/CategoryListPage';
 
 function App() {
     return (
@@ -28,7 +29,10 @@ function App() {
                     />
                     <Route path="car-list" element={<CarListPage />} />
                     <Route path="order-list" element={<OrderListPage />} />
-                    <Route path="menu4" element={<div>menu4</div>} />
+                    <Route
+                        path="category-list"
+                        element={<CategoryListPage />}
+                    />
                     <Route path="menu5" element={<div>menu5</div>} />
                     <Route path="menu6" element={<div>menu6</div>} />
                     <Route path="menu7" element={<div>menu7</div>} />

@@ -32,31 +32,33 @@ function CarListRow(car) {
             </div>
             <div className={css.details_list}>
                 <div className={css.details_list__row}>
-                    <span>Марка: </span>{name}
+                    Марка: <span>{name}</span>
                 </div>
                 <div className={css.details_list__row}>
-                    <span>Номер: </span>{number}
+                    Номер: <span>{number}</span>
                 </div>
                 <div className={css.details_list__row}>
-                    <span>Категория: </span>{categoryId.name}
+                    Категория: <span>{categoryId.name}</span>
                 </div>
             </div>
             <div className={`${css.details_list} ${css.section3}`}>
                 <div className={css.details_list__row}>
-                    <span>Цена мин.: </span>{priceMin}
+                    Цена мин.: <span>{priceMin}</span> ₽
                 </div>
                 <div className={css.details_list__row}>
-                    <span>Цена макс.: </span>{priceMax}
+                    Цена макс.: <span>{priceMax}</span> ₽
                 </div>
-                <div className={css.details_list__row} >
-                    <span>Топливо: </span>{tank ?? 'Нет данных'}</div>
-                <div className={css.details_list__row} >
-                    <span>Цвета: </span>{colors?.join(', ')}</div>
+                <div className={css.details_list__row}>
+                    Топливо: <span>{tank ?? 'Нет данных'}</span>
+                </div>
+                <div className={css.details_list__row}>
+                    Цвета: <span>{colors?.join(', ')}</span>
+                </div>
             </div>
             <div className={`${css.details_list} ${css.section4}`}>
-                <div
-                    className={css.details_list__row}
-                ><span>Описание: </span>{description}</div>
+                <div className={css.details_list__row}>
+                    Описание: <span>{description}</span>
+                </div>
             </div>
             <div className={css.buttons}>
                 <TripleButton />

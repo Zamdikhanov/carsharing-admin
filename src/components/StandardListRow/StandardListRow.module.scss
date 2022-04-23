@@ -11,9 +11,6 @@
         background-color: $color_background_admin;
         box-shadow: inset 0 -0.5px 0 0 $color_input_border, 18px 0px 0px 0px $color_background_admin, -18px 0px 0px 0px $color_background_admin;
     }
-    @media (max-width: 600px) {
-        justify-content: flex-start;
-    }
     &:last-child {
         box-shadow: none;
         &:hover {
@@ -21,57 +18,41 @@
             box-shadow: 18px 0px 0px 0px $color_background_admin, -18px 0px 0px 0px $color_background_admin;
         }
     }
-}
-
-.aboutCar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
     @media (max-width: 600px) {
-        width: 100%;
+        justify-content: flex-start;
+    }
+    &.container_title {
+        background-color: $color_gray_light;
+        box-shadow: 18px 0px 0px 0px $color_gray_light, -18px 0px 0px 0px $color_gray_light;
+        @media (max-width: 600px) {
+            display: none;
+        }
     }
 }
 
-.imageContainer {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.carImage {
-    width: 100%;
-    width: 138px;
-    height: 63px;
-    object-fit: contain;
-}
-
 .details_list {
-    width: 150px;
+    flex: 1 1 150px;
+    // width: 150px;
     font-family: $font_text;
     font-style: normal;
     font-weight: 400;
     font-size: 13px;
     line-height: 15px;
     letter-spacing: -0.424914px;
-    &__row {
-        color: $color_gray_dark;
-    }
-    &__row span {
+    & span {
         color: $color_main_black;
     }
-    &__row+.details_list__row {
-        margin-top: 6px;
-    }
-    &.section3 {
-        width: 170px;
-    }
-    &.section4 {
-        width: 250px;
-        align-self: flex-start;
-        justify-self: start;
-        @media (max-width: 600px) {
-            width: 100%;
+    &.title {
+        span {
+            color: $color_main_black;
+            font-family: $font_title;
+            color: $color_title_text;
+            font-size: 16px;
+            line-height: 18px;
         }
     }
 }
 
-.buttons {}
+.buttons {
+    min-width: 214.5px;
+}

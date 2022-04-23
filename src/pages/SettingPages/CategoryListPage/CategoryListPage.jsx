@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FilterForm from '../../../components/FilterForm/FilterForm';
-import CarListRow from '../../../components/CarListRow/CarListRow';
+import StandardListRow from '../../../components/StandardListRow/StandardListRow';
 import {
     PageMainCard,
     PageMainCardFooter,
@@ -11,31 +11,31 @@ import {
 import Pagination from '../../../components/Pagination/Pagination';
 import { city } from '../OrderListPage/constants';
 import Preloader from '../../../components/Preloader/Preloader';
-import { getCar } from '../../../store/carSlice';
+import { getCategory } from '../../../store/categorySlice';
 
-function CarListPage() {
+function CategoryListPage() {
     const cities = city;
     const name = 'Города';
 
     const dispatch = useDispatch();
 
-    const limit = 5;
+    const limit = 10;
     const [page, setPage] = useState(0);
     const {
-        cars,
-        count: ordersCount,
+        categories,
+        count: categoryCount,
         isFetching,
-    } = useSelector((state) => state.car);
-    const pageCount = Math.ceil(ordersCount / limit);
+    } = useSelector((state) => state.category);
+    const pageCount = Math.ceil(categoryCount / limit);
 
     useEffect(() => {
-        dispatch(getCar({ page, limit }));
+        dispatch(getCategory({ page, limit }));
     }, []);
 
     function handlePageChange(pageNumber) {
         setPage(pageNumber);
         dispatch(
-            getCar({
+            getCategory({
                 page: pageNumber,
                 limit,
             }),
@@ -60,16 +60,22 @@ function CarListPage() {
     ];
 
     return (
-        <PageMainCard pageTitle="Автомобили">
+        <PageMainCard pageTitle="Категории автомобилей">
             <PageMainCardHeader>
                 <FilterForm filterData={filterData} />
             </PageMainCardHeader>
             <PageMainCardMain>
+                <StandardListRow row={['Категория', 'Описание']} isTitle />
                 {isFetching ? (
                     <Preloader />
                 ) : (
-                    cars.map((car) => {
-                        return <CarListRow key={car.id} {...car} />;
+                    categories.map((category) => {
+                        return (
+                            <StandardListRow
+                                key={category.id}
+                                row={[category.name, category.description]}
+                            />
+                        );
                     })
                 )}
             </PageMainCardMain>
@@ -86,4 +92,4 @@ function CarListPage() {
     );
 }
 
-export default CarListPage;
+export default CategoryListPage;

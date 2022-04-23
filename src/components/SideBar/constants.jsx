@@ -23,13 +23,13 @@ const links = [
     {
         id: 'link03',
         link: '/admin/car-list',
-        linkText: 'Список автомобилей',
+        linkText: 'Автомобили',
         icon: () => <CarListSvg className={css.link_icon} />,
     },
     {
         id: 'link04',
-        link: '/admin/menu4',
-        linkText: 'Меню 4',
+        link: '/admin/category-list',
+        linkText: 'Категории автомобилей',
         icon: () => <Menu4Svg className={css.link_icon} />,
     },
     {
