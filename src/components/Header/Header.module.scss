@@ -214,6 +214,9 @@
         align-items: center;
         height: 29px;
         margin-bottom: 8px;
+        @media (max-width: 1400px) {
+            display: none;
+        }
     }
     &__button {
         @include button_success;
