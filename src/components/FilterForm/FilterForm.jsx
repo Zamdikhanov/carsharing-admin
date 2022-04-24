@@ -21,7 +21,9 @@ function FilterForm({ filterData }) {
                         classNamePrefix={css.input}
                         {...item}
                         components={{ DropdownIndicator }}
-                        onChange={() => {}}
+                        onChange={(val) => {
+                            item.onChangeSelet(val.value);
+                        }}
                         noOptionsMessage={({ inputValue }) =>
                             inputValue ? 'не найдено' : 'не найдено'
                         }

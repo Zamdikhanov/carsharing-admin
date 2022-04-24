@@ -9,54 +9,62 @@ import {
     PageMainCardMain,
 } from '../../../components/PageMainCard/PageMainCard';
 import Pagination from '../../../components/Pagination/Pagination';
-import { city } from '../OrderListPage/constants';
 import Preloader from '../../../components/Preloader/Preloader';
-import { getRate } from '../../../store/rateSlice';
+import { getRate, setPageLimit, setSortPrice } from '../../../store/rateSlice';
+import { rateListPageCountFilter, rateListPriceFilter } from './constants';
 
 function RateListPage() {
-    const cities = city;
-    const name = 'Города';
+    const {
+        rate,
+        pageLimit,
+        count: rateCount,
+        sortPrice,
+        isFetching,
+    } = useSelector((state) => state.rate);
 
     const dispatch = useDispatch();
 
-    const limit = 10;
     const [page, setPage] = useState(0);
-    const {
-        rate,
-        count: rateCount,
-        isFetching,
-    } = useSelector((state) => state.rate);
-    const pageCount = Math.ceil(rateCount / limit);
+    const pageCount = Math.ceil(rateCount / pageLimit);
 
     useEffect(() => {
-        dispatch(getRate({ page, limit }));
-    }, []);
+        dispatch(getRate({ page, limit: pageLimit, sortPrice }));
+    }, [pageLimit, sortPrice]);
 
     function handlePageChange(pageNumber) {
         setPage(pageNumber);
         dispatch(
             getRate({
                 page: pageNumber,
-                limit,
+                limit: pageLimit,
             }),
         );
     }
 
-    const selectOption = {
-        defaultValue: null,
-        options: cities.map((item) => ({
-            value: item.id,
-            label: item.name,
-        })),
-        id: { name },
-        name: { name },
-    };
+    function onPageCountChange(pageLimitFilter) {
+        setPage((current) =>
+            Math.floor((current * pageLimit) / pageLimitFilter),
+        );
+        dispatch(setPageLimit(pageLimitFilter));
+    }
+
+    function onPriceChange(priceFilter) {
+        dispatch(setSortPrice(priceFilter));
+    }
 
     const filterData = [
-        { ...selectOption, id: '001', name: '001', placeholder: 'Период' },
-        { ...selectOption, id: '002', name: '002', placeholder: 'Машина' },
-        { ...selectOption, id: '003', name: '003', placeholder: 'Город' },
-        { ...selectOption, id: '004', name: '004', placeholder: 'Состояние' },
+        {
+            ...rateListPageCountFilter,
+            onChangeSelet: onPageCountChange,
+            defaultValue: {
+                value: 4,
+                label: 'по 4 на стр.',
+            },
+        },
+        {
+            ...rateListPriceFilter,
+            onChangeSelet: onPriceChange,
+        },
     ];
 
     return (
