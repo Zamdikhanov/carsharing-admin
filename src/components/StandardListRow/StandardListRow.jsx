@@ -1,16 +1,15 @@
 import DoubleButton from '../DoubleButton/DoubleButton';
 import css from './StandardListRow.module.scss';
 
-function StandardListRow({ row, rowTitles = [], isTitle = false }) {
+function StandardListRow({ row, rowTitles = [1, 2, 3, 4, 5], isTitle = false }) {
     const incommingArray = [...row];
-    const containerClassName = `${css.container} ${
-        isTitle ? css.container_title : ''
-    }`;
+    const containerClassName = `${css.container} ${isTitle ? css.container_title : ''
+        }`;
     const rowClassName = `${css.details_list} ${isTitle ? css.title : ''}`;
     return (
         <div className={containerClassName}>
             {incommingArray.map((rowItem, index) => (
-                <div className={rowClassName}>
+                <div className={rowClassName} key={rowTitles[index]}>
                     {rowItem ? (
                         <>
                             <div className={css.rowTitles}>

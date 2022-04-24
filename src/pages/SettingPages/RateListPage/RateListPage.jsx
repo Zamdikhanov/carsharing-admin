@@ -25,10 +25,10 @@ function RateListPage() {
     const dispatch = useDispatch();
 
     const [page, setPage] = useState(0);
-    const pageCount = Math.ceil(rateCount / pageLimit);
+    const pageCount = Math.ceil(rateCount / pageLimit.value);
 
     useEffect(() => {
-        dispatch(getRate({ page, limit: pageLimit, sortPrice }));
+        dispatch(getRate({ page, limit: pageLimit.value, sortPrice: sortPrice.value }));
     }, [pageLimit, sortPrice]);
 
     function handlePageChange(pageNumber) {
@@ -36,14 +36,15 @@ function RateListPage() {
         dispatch(
             getRate({
                 page: pageNumber,
-                limit: pageLimit,
+                limit: pageLimit.value,
+                sortPrice: sortPrice.value,
             }),
         );
     }
 
     function onPageCountChange(pageLimitFilter) {
         setPage((current) =>
-            Math.floor((current * pageLimit) / pageLimitFilter),
+            Math.floor((current * pageLimit.value) / pageLimitFilter.value),
         );
         dispatch(setPageLimit(pageLimitFilter));
     }
@@ -56,14 +57,12 @@ function RateListPage() {
         {
             ...rateListPageCountFilter,
             onChangeSelet: onPageCountChange,
-            defaultValue: {
-                value: 4,
-                label: 'по 4 на стр.',
-            },
+            defaultValue: pageLimit,
         },
         {
             ...rateListPriceFilter,
             onChangeSelet: onPriceChange,
+            defaultValue: sortPrice,
         },
     ];
 

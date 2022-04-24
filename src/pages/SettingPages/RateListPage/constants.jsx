@@ -3,23 +3,27 @@ export const rateListPageCountFilter = {
     options: [
         {
             value: 1,
-            label: 'по 1 на стр.',
+            label: 'по 1 на странице',
         },
         {
             value: 2,
-            label: 'по 2 на стр.',
+            label: 'по 2 на странице',
         },
         {
-            value: 4,
-            label: 'по 4 на стр.',
+            value: 3,
+            label: 'по 3 на странице',
+        },
+        {
+            value: 5,
+            label: 'по 5 на странице',
         },
         {
             value: 10,
-            label: 'по 10 на стр.',
+            label: 'по 10 на странице',
         },
         {
             value: 20,
-            label: 'по 20 на стр.',
+            label: 'по 20 на странице',
         },
     ],
     id: 'rateListPageCountFilter',
@@ -32,7 +36,7 @@ export const rateListPriceFilter = {
     options: [
         {
             value: 0,
-            label: 'без сорт. цены',
+            label: 'Цена (без сорт.)',
         },
         {
             value: 1,

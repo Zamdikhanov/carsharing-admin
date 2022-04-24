@@ -8,15 +8,21 @@ const initialState = {
         createdAt: null,
         price: null,
         rateTypeId: {
-            unit: "",
-            name: "",
-            id: ""
+            unit: '',
+            name: '',
+            id: '',
         },
-        id: ""
+        id: '',
     }, ],
-    pageLimit: 4,
+    pageLimit: {
+        value: 5,
+        label: 'по 5 на странице',
+    },
     count: 0,
-    sortPrice: 0,
+    sortPrice: {
+        value: 0,
+        label: 'Цена (без сорт.)',
+    },
     isFetching: false,
 };
 
@@ -40,7 +46,8 @@ export const rateSlice = createSlice({
     },
 });
 
-export const { setRate, setIsFetching, setPageLimit, setSortPrice } = rateSlice.actions;
+export const { setRate, setIsFetching, setPageLimit, setSortPrice } =
+rateSlice.actions;
 
 export const getRate =
     ({ page, limit, sortPrice }) =>
