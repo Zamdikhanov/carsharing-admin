@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FilterForm from '../../../components/FilterForm/FilterForm';
-import OrderListRow from '../../../components/OrderListRow/OrderListRow';
+import StandardListRow from '../../../components/StandardListRow/StandardListRow';
 import {
     PageMainCard,
     PageMainCardFooter,
@@ -9,12 +9,12 @@ import {
     PageMainCardMain,
 } from '../../../components/PageMainCard/PageMainCard';
 import Pagination from '../../../components/Pagination/Pagination';
+import { city } from '../OrderListPage/constants';
 import Preloader from '../../../components/Preloader/Preloader';
-import { getOrder } from '../../../store/orderSlice';
-import { city } from './constants';
+import { getPoint } from '../../../store/pointSlice';
 
-function OrderListPage() {
-    const cities = city;
+function PointListPage() {
+    const citiesOptions = city;
     const name = 'Города';
 
     const dispatch = useDispatch();
@@ -22,31 +22,29 @@ function OrderListPage() {
     const limit = 10;
     const [page, setPage] = useState(0);
     const {
-        orders,
-        count: ordersCount,
+        points,
+        count: pointCount,
         isFetching,
-    } = useSelector((state) => state.order);
-    const pageCount = Math.ceil(ordersCount / limit);
-    const { data } = useSelector((state) => state.auth);
+    } = useSelector((state) => state.point);
+    const pageCount = Math.ceil(pointCount / limit);
 
     useEffect(() => {
-        dispatch(getOrder({ page, limit, accessToken: data.access_token }));
+        dispatch(getPoint({ page, limit }));
     }, []);
 
     function handlePageChange(pageNumber) {
         setPage(pageNumber);
         dispatch(
-            getOrder({
+            getPoint({
                 page: pageNumber,
                 limit,
-                accessToken: data.access_token,
             }),
         );
     }
 
     const selectOption = {
         defaultValue: null,
-        options: cities.map((item) => ({
+        options: citiesOptions.map((item) => ({
             value: item.id,
             label: item.name,
         })),
@@ -62,16 +60,34 @@ function OrderListPage() {
     ];
 
     return (
-        <PageMainCard pageTitle="Заказы">
+        <PageMainCard pageTitle="Точки выдачи">
             <PageMainCardHeader>
                 <FilterForm filterData={filterData} />
             </PageMainCardHeader>
             <PageMainCardMain>
+                <StandardListRow
+                    row={['Город', 'Точка выдачи', 'Адрес']}
+                    isTitle
+                />
                 {isFetching ? (
                     <Preloader />
                 ) : (
-                    orders.map((order) => {
-                        return <OrderListRow key={order.id} {...order} />;
+                    points.map((pointItem) => {
+                        return (
+                            <StandardListRow
+                                key={pointItem.id}
+                                row={[
+                                    pointItem?.cityId?.name,
+                                    pointItem.name,
+                                    pointItem.address,
+                                ]}
+                                rowTitles={[
+                                    'Город:',
+                                    'Точка выдачи:',
+                                    'Адрес:',
+                                ]}
+                            />
+                        );
                     })
                 )}
             </PageMainCardMain>
@@ -88,4 +104,4 @@ function OrderListPage() {
     );
 }
 
-export default OrderListPage;
+export default PointListPage;

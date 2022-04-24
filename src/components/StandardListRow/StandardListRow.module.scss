@@ -32,15 +32,35 @@
 
 .details_list {
     flex: 1 1 150px;
-    // width: 150px;
+    color: $color_gray_dark;
     font-family: $font_text;
     font-style: normal;
     font-weight: 400;
     font-size: 13px;
     line-height: 15px;
     letter-spacing: -0.424914px;
+    @media (max-width: 767px) {
+        flex: 1 1 140px;
+    }
+    @media (max-width: 600px) {
+        width: 100%;
+        flex: 1 1 auto;
+    }
+    .rowTitles {
+        display: none;
+        @media (max-width: 600px) {
+            display: inline-block;
+            color: inherit;
+            font: inherit;
+            padding-right: 0.3em;
+        }
+    }
     & span {
         color: $color_main_black;
+        font-family: $font_text;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 15px;
     }
     &.title {
         span {
@@ -54,5 +74,11 @@
 }
 
 .buttons {
-    min-width: 214.5px;
+    min-width: 143px;
+    @media (max-width: 767px) {
+        min-width: 72px;
+    }
+    @media (max-width: 600px) {
+        min-width: 143px;
+    }
 }

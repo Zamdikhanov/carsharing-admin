@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FilterForm from '../../../components/FilterForm/FilterForm';
-import OrderListRow from '../../../components/OrderListRow/OrderListRow';
+import StandardListRow from '../../../components/StandardListRow/StandardListRow';
 import {
     PageMainCard,
     PageMainCardFooter,
@@ -9,11 +9,11 @@ import {
     PageMainCardMain,
 } from '../../../components/PageMainCard/PageMainCard';
 import Pagination from '../../../components/Pagination/Pagination';
+import { city } from '../OrderListPage/constants';
 import Preloader from '../../../components/Preloader/Preloader';
-import { getOrder } from '../../../store/orderSlice';
-import { city } from './constants';
+import { getRate } from '../../../store/rateSlice';
 
-function OrderListPage() {
+function RateListPage() {
     const cities = city;
     const name = 'Города';
 
@@ -22,24 +22,22 @@ function OrderListPage() {
     const limit = 10;
     const [page, setPage] = useState(0);
     const {
-        orders,
-        count: ordersCount,
+        rate,
+        count: rateCount,
         isFetching,
-    } = useSelector((state) => state.order);
-    const pageCount = Math.ceil(ordersCount / limit);
-    const { data } = useSelector((state) => state.auth);
+    } = useSelector((state) => state.rate);
+    const pageCount = Math.ceil(rateCount / limit);
 
     useEffect(() => {
-        dispatch(getOrder({ page, limit, accessToken: data.access_token }));
+        dispatch(getRate({ page, limit }));
     }, []);
 
     function handlePageChange(pageNumber) {
         setPage(pageNumber);
         dispatch(
-            getOrder({
+            getRate({
                 page: pageNumber,
                 limit,
-                accessToken: data.access_token,
             }),
         );
     }
@@ -62,16 +60,34 @@ function OrderListPage() {
     ];
 
     return (
-        <PageMainCard pageTitle="Заказы">
+        <PageMainCard pageTitle="Стоимость тарифа">
             <PageMainCardHeader>
                 <FilterForm filterData={filterData} />
             </PageMainCardHeader>
             <PageMainCardMain>
+                <StandardListRow
+                    row={['Название', 'Стоимость', 'Ед. измерения']}
+                    isTitle
+                />
                 {isFetching ? (
                     <Preloader />
                 ) : (
-                    orders.map((order) => {
-                        return <OrderListRow key={order.id} {...order} />;
+                    rate.map((rateItem) => {
+                        return (
+                            <StandardListRow
+                                key={rateItem.id}
+                                row={[
+                                    rateItem?.rateTypeId?.name,
+                                    rateItem.price,
+                                    rateItem?.rateTypeId?.unit,
+                                ]}
+                                rowTitles={[
+                                    'Название:',
+                                    'Стоимость:',
+                                    'Ед. измерения:',
+                                ]}
+                            />
+                        );
                     })
                 )}
             </PageMainCardMain>
@@ -88,4 +104,4 @@ function OrderListPage() {
     );
 }
 
-export default OrderListPage;
+export default RateListPage;

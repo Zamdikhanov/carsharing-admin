@@ -8,6 +8,9 @@ import PageNotFound from './pages/PageNotFound/PageNotFound';
 import RequireAuth from './hoc/RequireAuth';
 import CategoryListPage from './pages/SettingPages/CategoryListPage/CategoryListPage';
 import CityListPage from './pages/SettingPages/CityListPage/CityListPage';
+import PointListPage from './pages/SettingPages/PointListPage copy/PointListPage';
+import RateTypeListPage from './pages/SettingPages/RateTypeListPage/RateTypeListPage';
+import RateListPage from './pages/SettingPages/RateListPage/RateListPage';
 
 function App() {
     return (
@@ -24,10 +27,6 @@ function App() {
                         </RequireAuth>
                     }
                 >
-                    <Route
-                        path="car-setting"
-                        element={<div>car-setting</div>}
-                    />
                     <Route path="car-list" element={<CarListPage />} />
                     <Route path="order-list" element={<OrderListPage />} />
                     <Route
@@ -35,8 +34,12 @@ function App() {
                         element={<CategoryListPage />}
                     />
                     <Route path="city-list" element={<CityListPage />} />
-                    <Route path="menu6" element={<div>menu6</div>} />
-                    <Route path="menu7" element={<div>menu7</div>} />
+                    <Route path="point-list" element={<PointListPage />} />
+                    <Route
+                        path="rate-type-list"
+                        element={<RateTypeListPage />}
+                    />
+                    <Route path="rate-list" element={<RateListPage />} />
                 </Route>
 
                 <Route path="/*" element={<PageNotFound />} />

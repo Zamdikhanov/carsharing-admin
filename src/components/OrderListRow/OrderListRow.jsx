@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Checkbox from '../Checkbox/Checkbox';
-import TripleButton from '../TripleButton/TripleButton';
+import DoubleButton from '../DoubleButton/DoubleButton';
 import carStubPicture from '../../assets/images/car-stub-picture.png';
 import css from './OrderListRow.module.scss';
 import formatDate from '../../utils/formatDate';
@@ -75,7 +75,7 @@ function OrderListRow(order) {
                 )}{' '}
                 ₽
             </div>
-            <TripleButton />
+            <DoubleButton />
         </div>
     );
 }

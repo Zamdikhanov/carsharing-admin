@@ -65,7 +65,7 @@ function CityListPage() {
                 <FilterForm filterData={filterData} />
             </PageMainCardHeader>
             <PageMainCardMain>
-                <StandardListRow row={['Города']} isTitle />
+                <StandardListRow row={['Город']} isTitle />
                 {isFetching ? (
                     <Preloader />
                 ) : (
@@ -74,6 +74,7 @@ function CityListPage() {
                             <StandardListRow
                                 key={cityItem.id}
                                 row={[cityItem.name]}
+                                rowTitles={['Город:']}
                             />
                         );
                     })

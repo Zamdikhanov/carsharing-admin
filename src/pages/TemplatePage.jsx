@@ -57,6 +57,8 @@ function TemplatePage() {
                                     <a
                                         className={css.link}
                                         href="https://zamdikhanov.github.io/carsharing/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                     >
                                         Need for drive
                                     </a>

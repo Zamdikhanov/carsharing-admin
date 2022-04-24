@@ -74,6 +74,7 @@ function CategoryListPage() {
                             <StandardListRow
                                 key={category.id}
                                 row={[category.name, category.description]}
+                                rowTitles={['Категория:', 'Описание:']}
                             />
                         );
                     })

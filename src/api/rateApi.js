@@ -1,7 +1,7 @@
 import instance from './api';
 
 const rateApi = {
-    getPoint({ page, limit }) {
+    getRate({ page, limit }) {
         return instance.get(`/db/rate?page=${page}&limit=${limit}`);
     },
 };

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import TripleButton from '../TripleButton/TripleButton';
+import DoubleButton from '../DoubleButton/DoubleButton';
 import carStubPicture from '../../assets/images/car-stub-picture.png';
 import css from './CarListRow.module.scss';
 
@@ -61,7 +61,7 @@ function CarListRow(car) {
                 </div>
             </div>
             <div className={css.buttons}>
-                <TripleButton />
+                <DoubleButton />
             </div>
         </div>
     );
