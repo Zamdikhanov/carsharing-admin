@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/authSlice';
 import css from './Header.module.scss';
@@ -6,6 +7,8 @@ import { ReactComponent as DropdownSvg } from '../../assets/header/dropdown-icon
 import { ReactComponent as NotificationsSvg } from '../../assets/header/notifications.svg';
 import { ReactComponent as SearchSvg } from '../../assets/header/search-icon.svg';
 import useComponentVisible from '../../hooks/useComponentVisible';
+import Checkbox from '../Checkbox/Checkbox';
+import { setAppIsFullScreen } from '../../store/appSlice';
 
 function Header({ onBurgerClick, isShow, burgerRef }) {
     const {
@@ -30,6 +33,22 @@ function Header({ onBurgerClick, isShow, burgerRef }) {
     const handleClickLogout = () => {
         setIsComponentVisible(false);
         dispatch(logout(data.access_token));
+    };
+
+    const [isFullScreen, setIsFullScreen] = useState(false);
+
+    useEffect(() => {
+        const localStorageItem =
+            localStorage.getItem('isFullScreen') === 'true';
+        setIsFullScreen(localStorageItem);
+        dispatch(setAppIsFullScreen(localStorageItem));
+    }, []);
+
+    const changeContentWrapper = (booleanValue) => {
+        setIsFullScreen(booleanValue);
+        localStorage.setItem('isFullScreen', booleanValue.toString());
+        dispatch(setAppIsFullScreen(booleanValue));
+        setIsComponentVisible(false);
     };
 
     const classNameButton = `${css.nav_burger} ${
@@ -76,6 +95,14 @@ function Header({ onBurgerClick, isShow, burgerRef }) {
             </button>
             {isComponentVisible && (
                 <div className={css.user_menu} ref={ref}>
+                    <div className={css.user_menu__item}>
+                        <Checkbox
+                            id="headerMenuCheckbox"
+                            label="На весь экран"
+                            checked={isFullScreen}
+                            onChange={changeContentWrapper}
+                        />
+                    </div>
                     <button
                         className={css.user_menu__button}
                         type="button"

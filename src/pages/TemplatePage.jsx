@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { NavLink, Outlet } from 'react-router-dom';
 import Header from '../components/Header/Header';
 import SideBar from '../components/SideBar/SideBar';
@@ -20,11 +21,15 @@ function TemplatePage() {
         setIsNavMobileVisible(false);
     };
 
-    console.log('TemplatePage');
+    const { isFullScreen } = useSelector((state) => state.app);
+
+    const classNameWrapper = `${css.wrapper} ${
+        isFullScreen ? css.wrapper_fullscreen : ''
+    }`;
 
     return (
         <div className={css.bg}>
-            <div className={css.wrapper}>
+            <div className={classNameWrapper}>
                 <div
                     className={`${css.page}
                     ${isNavMobileVisible ? css.page_shade : ''}`}

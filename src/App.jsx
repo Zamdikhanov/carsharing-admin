@@ -4,6 +4,7 @@ import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
 import TemplatePage from './pages/TemplatePage';
 import CarListPage from './pages/SettingPages/CarListPage/CarListPage';
 import OrderListPage from './pages/SettingPages/OrderListPage/OrderListPage';
+import ErrorPage from './pages/SettingPages/ErrorPage/ErrorPage';
 import PageNotFound from './pages/PageNotFound/PageNotFound';
 import RequireAuth from './hoc/RequireAuth';
 import CategoryListPage from './pages/SettingPages/CategoryListPage/CategoryListPage';
@@ -40,6 +41,7 @@ function App() {
                         element={<RateTypeListPage />}
                     />
                     <Route path="rate-list" element={<RateListPage />} />
+                    <Route path="error" element={<ErrorPage />} />
                 </Route>
 
                 <Route path="/*" element={<PageNotFound />} />
