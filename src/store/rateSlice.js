@@ -19,9 +19,9 @@ const initialState = {
         label: 'по 5 на странице',
     },
     count: 0,
-    sortPrice: {
-        value: 0,
-        label: 'Цена (без сорт.)',
+    sortOption: {
+        value: 'unsorted',
+        label: 'Сортировка',
     },
     isFetching: false,
 };
@@ -40,24 +40,24 @@ export const rateSlice = createSlice({
         setPageLimit: (state, action) => {
             state.pageLimit = action.payload;
         },
-        setSortPrice: (state, action) => {
-            state.sortPrice = action.payload;
+        setSortOption: (state, action) => {
+            state.sortOption = action.payload;
         },
     },
 });
 
-export const { setRate, setIsFetching, setPageLimit, setSortPrice } =
+export const { setRate, setIsFetching, setPageLimit, setSortOption } =
 rateSlice.actions;
 
 export const getRate =
-    ({ page, limit, sortPrice }) =>
+    ({ page, limit, options }) =>
     async(dispatch) => {
         dispatch(setIsFetching(true));
         try {
             const response = await rateApi.getRate({
                 page,
                 limit,
-                sortPrice,
+                options,
             });
             dispatch(setRate(response.data));
         } catch {

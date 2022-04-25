@@ -193,20 +193,38 @@
     position: absolute;
     z-index: -1;
     right: 0;
-    top: 100%;
+    top: calc(100% + 1px);
     width: 217.5px;
     background-color: #fff;
     padding: 16px;
     box-shadow: 0px 2.5px 9.5px rgba(90, 97, 105, 0.12);
     @media (max-width: 1023px) {
-        width: 178px;
+        width: 226px;
     }
     @media (max-width: 767px) {
-        width: 144px;
+        width: 193px;
     }
     @media (max-width: 480px) {
-        width: 128px;
+        width: 193px;
         padding: 8px;
+    }
+    &:before {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: -1px;
+        height: 1px;
+        width: 217.5px;
+        background-color: $color_background_hover;
+        @media (max-width: 1023px) {
+            width: 178px;
+        }
+        @media (max-width: 767px) {
+            width: 144px;
+        }
+        @media (max-width: 480px) {
+            width: 48px;
+        }
     }
     &__item {
         display: flex;

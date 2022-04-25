@@ -10,26 +10,38 @@ import {
 } from '../../../components/PageMainCard/PageMainCard';
 import Pagination from '../../../components/Pagination/Pagination';
 import Preloader from '../../../components/Preloader/Preloader';
-import { getRate, setPageLimit, setSortPrice } from '../../../store/rateSlice';
-import { rateListPageCountFilter, rateListPriceFilter } from './constants';
+import { getRate, setPageLimit, setSortOption } from '../../../store/rateSlice';
+import { rateListPageCountFilter, rateListSortFilter } from './constants';
 
 function RateListPage() {
     const {
         rate,
         pageLimit,
         count: rateCount,
-        sortPrice,
+        sortOption,
         isFetching,
     } = useSelector((state) => state.rate);
 
     const dispatch = useDispatch();
 
     const [page, setPage] = useState(0);
+    const [queryParams, setQueryParams] = useState('');
     const pageCount = Math.ceil(rateCount / pageLimit.value);
 
     useEffect(() => {
-        dispatch(getRate({ page, limit: pageLimit.value, sortPrice: sortPrice.value }));
-    }, [pageLimit, sortPrice]);
+        let tempQueryParams = '';
+        switch (sortOption.value) {
+            case 'price ascending':
+                tempQueryParams = 'sort[price]=1&';
+                break;
+            case 'price descending':
+                tempQueryParams = 'sort[price]=-1&';
+                break;
+            default: tempQueryParams = '';
+        };
+        dispatch(getRate({ page, limit: pageLimit.value, options: tempQueryParams }));
+        setQueryParams(tempQueryParams);
+    }, [pageLimit, sortOption.value]);
 
     function handlePageChange(pageNumber) {
         setPage(pageNumber);
@@ -37,7 +49,7 @@ function RateListPage() {
             getRate({
                 page: pageNumber,
                 limit: pageLimit.value,
-                sortPrice: sortPrice.value,
+                options: queryParams,
             }),
         );
     }
@@ -49,8 +61,8 @@ function RateListPage() {
         dispatch(setPageLimit(pageLimitFilter));
     }
 
-    function onPriceChange(priceFilter) {
-        dispatch(setSortPrice(priceFilter));
+    function onSortChange(sortFilter) {
+        dispatch(setSortOption(sortFilter));
     }
 
     const filterData = [
@@ -60,9 +72,9 @@ function RateListPage() {
             defaultValue: pageLimit,
         },
         {
-            ...rateListPriceFilter,
-            onChangeSelet: onPriceChange,
-            defaultValue: sortPrice,
+            ...rateListSortFilter,
+            onChangeSelet: onSortChange,
+            defaultValue: sortOption,
         },
     ];
 

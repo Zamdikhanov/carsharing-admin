@@ -1,8 +1,8 @@
 import instance from './api';
 
 const rateApi = {
-        getRate({ page, limit, sortPrice }) {
-            return instance.get(`/db/rate?page=${page}&limit=${limit}${sortPrice ? (`&sort[price]=${sortPrice}`) : ''}`);
+    getRate({ page, limit, options }) {
+        return instance.get(`/db/rate?${options}page=${page}&limit=${limit}`);
     },
 };
 

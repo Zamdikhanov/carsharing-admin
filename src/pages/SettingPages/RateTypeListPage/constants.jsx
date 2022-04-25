@@ -32,18 +32,27 @@ export const rateListPageCountFilter = {
 };
 
 export const rateListSortFilter = {
+    defaultValue: null,
     options: [
         {
             value: 'unsorted',
             label: 'Сортировка',
         },
         {
-            value: 'price ascending',
-            label: 'Цена по возраст.',
+            value: 'unit A-Z',
+            label: 'Единицы А - Я',
         },
         {
-            value: 'price descending',
-            label: 'Цена по убыван.',
+            value: 'unit Z-A',
+            label: 'Единицы Я - А',
+        },
+        {
+            value: 'title A-Z',
+            label: 'Название А - Я',
+        },
+        {
+            value: 'title Z-A',
+            label: 'Название Я - А',
         },
     ],
     id: 'rateListSortFilter',
