@@ -188,15 +188,15 @@
 
 .user_menu {
     display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     position: absolute;
     z-index: -1;
     right: 0;
     top: 100%;
-    flex-direction: column;
-    align-items: center;
     width: 217.5px;
     background-color: #fff;
-    padding: 8px;
+    padding: 16px;
     box-shadow: 0px 2.5px 9.5px rgba(90, 97, 105, 0.12);
     @media (max-width: 1023px) {
         width: 178px;
@@ -206,6 +206,17 @@
     }
     @media (max-width: 480px) {
         width: 128px;
+        padding: 8px;
+    }
+    &__item {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 29px;
+        margin-bottom: 8px;
+        @media (max-width: 1400px) {
+            display: none;
+        }
     }
     &__button {
         @include button_success;
