@@ -22,7 +22,7 @@ function FilterForm({ filterData }) {
                         {...item}
                         components={{ DropdownIndicator }}
                         onChange={(val) => {
-                            item.onChangeSelet(val);
+                            item.onChangeSelect(val);
                         }}
                         noOptionsMessage={({ inputValue }) =>
                             inputValue ? 'не найдено' : 'не найдено'

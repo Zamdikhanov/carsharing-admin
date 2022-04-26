@@ -19,7 +19,7 @@ function OrderListPage() {
 
     const dispatch = useDispatch();
 
-    const limit = 10;
+    const limit = 3;
     const [page, setPage] = useState(0);
     const {
         orders,

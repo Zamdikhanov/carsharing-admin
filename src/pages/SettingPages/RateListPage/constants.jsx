@@ -1,52 +1,21 @@
-export const rateListPageCountFilter = {
-    defaultValue: null,
+const rateListSortFilter = {
     options: [
         {
-            value: 1,
-            label: 'по 1 на странице',
+            label: 'Без сортировки',
+            value: '',
         },
         {
-            value: 2,
-            label: 'по 2 на странице',
-        },
-        {
-            value: 3,
-            label: 'по 3 на странице',
-        },
-        {
-            value: 5,
-            label: 'по 5 на странице',
-        },
-        {
-            value: 10,
-            label: 'по 10 на странице',
-        },
-        {
-            value: 20,
-            label: 'по 20 на странице',
-        },
-    ],
-    id: 'rateListPageCountFilter',
-    name: 'rateListPageCountFilter',
-    placeholder: 'Вывод на стр.',
-};
-
-export const rateListSortFilter = {
-    options: [
-        {
-            value: 'unsorted',
-            label: 'Сортировка',
-        },
-        {
-            value: 'price ascending',
             label: 'Цена по возраст.',
+            value: 'sort[price]=1&',
         },
         {
-            value: 'price descending',
             label: 'Цена по убыван.',
+            value: 'sort[price]=-1&',
         },
     ],
     id: 'rateListSortFilter',
     name: 'rateListSortFilter',
     placeholder: 'Сортировка',
 };
+
+export default rateListSortFilter;

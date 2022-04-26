@@ -10,12 +10,19 @@ import {
 } from '../../../components/PageMainCard/PageMainCard';
 import Pagination from '../../../components/Pagination/Pagination';
 import Preloader from '../../../components/Preloader/Preloader';
-import { getRate, setPageLimit, setSortOption } from '../../../store/rateSlice';
-import { rateListPageCountFilter, rateListSortFilter } from './constants';
+import {
+    getRate,
+    setPageCount,
+    setPageLimit,
+    setSortOption,
+} from '../../../store/rateSlice';
+import rateListSortFilter from './constants';
+import filterFormNumberOnPage from '../../../components/FilterForm/constants';
 
 function RateListPage() {
     const {
         rate,
+        pageCount,
         pageLimit,
         count: rateCount,
         sortOption,
@@ -24,27 +31,21 @@ function RateListPage() {
 
     const dispatch = useDispatch();
 
-    const [page, setPage] = useState(0);
     const [queryParams, setQueryParams] = useState('');
-    const pageCount = Math.ceil(rateCount / pageLimit.value);
+    const paginationPageCount = Math.ceil(rateCount / pageLimit.value);
 
     useEffect(() => {
-        let tempQueryParams = '';
-        switch (sortOption.value) {
-            case 'price ascending':
-                tempQueryParams = 'sort[price]=1&';
-                break;
-            case 'price descending':
-                tempQueryParams = 'sort[price]=-1&';
-                break;
-            default: tempQueryParams = '';
-        };
-        dispatch(getRate({ page, limit: pageLimit.value, options: tempQueryParams }));
-        setQueryParams(tempQueryParams);
-    }, [pageLimit, sortOption.value]);
+        dispatch(
+            getRate({
+                page: pageCount,
+                limit: pageLimit.value,
+                options: sortOption.value,
+            }),
+        );
+        setQueryParams(sortOption.value);
+    }, [pageCount, pageLimit, sortOption.value]);
 
     function handlePageChange(pageNumber) {
-        setPage(pageNumber);
         dispatch(
             getRate({
                 page: pageNumber,
@@ -52,28 +53,33 @@ function RateListPage() {
                 options: queryParams,
             }),
         );
+        dispatch(setPageCount(pageNumber));
     }
 
-    function onPageCountChange(pageLimitFilter) {
-        setPage((current) =>
-            Math.floor((current * pageLimit.value) / pageLimitFilter.value),
+    function onFilterPageCountChange(pageLimitFilter) {
+        dispatch(
+            setPageCount(
+                Math.floor(
+                    (pageCount * pageLimit.value) / pageLimitFilter.value,
+                ),
+            ),
         );
         dispatch(setPageLimit(pageLimitFilter));
     }
 
-    function onSortChange(sortFilter) {
+    function onFilterSortChange(sortFilter) {
         dispatch(setSortOption(sortFilter));
     }
 
     const filterData = [
         {
-            ...rateListPageCountFilter,
-            onChangeSelet: onPageCountChange,
+            ...filterFormNumberOnPage,
+            onChangeSeleсt: onFilterPageCountChange,
             defaultValue: pageLimit,
         },
         {
             ...rateListSortFilter,
-            onChangeSelet: onSortChange,
+            onChangeSeleсt: onFilterSortChange,
             defaultValue: sortOption,
         },
     ];
@@ -115,8 +121,8 @@ function RateListPage() {
                     onPageChange={(selectedPage) => {
                         handlePageChange(selectedPage);
                     }}
-                    pageCount={pageCount}
-                    forcePage={page}
+                    pageCount={paginationPageCount}
+                    forcePage={pageCount}
                 />
             </PageMainCardFooter>
         </PageMainCard>
