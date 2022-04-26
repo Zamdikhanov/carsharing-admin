@@ -1,8 +1,8 @@
 import instance from './api';
 
 const pointApi = {
-    getPoint({ page, limit }) {
-        return instance.get(`/db/point?page=${page}&limit=${limit}`);
+    getPoint({ page, limit, options }) {
+        return instance.get(`/db/point?${options}page=${page}&limit=${limit}`);
     },
 };
 

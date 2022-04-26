@@ -9,54 +9,74 @@ import {
     PageMainCardMain,
 } from '../../../components/PageMainCard/PageMainCard';
 import Pagination from '../../../components/Pagination/Pagination';
-import { city } from '../OrderListPage/constants';
 import Preloader from '../../../components/Preloader/Preloader';
-import { getCategory } from '../../../store/categorySlice';
+import { getCategory, setPageLimit, setPageNumber, setSortOption } from '../../../store/categorySlice';
+import listSortFilter from './constants';
+import filterFormNumberOnPage from '../../../components/FilterForm/constants';
 
 function CategoryListPage() {
-    const cities = city;
-    const name = 'Города';
+    const {
+        categories,
+        pageNumber,
+        pageLimit,
+        count: rateCount,
+        sortOption,
+        isFetching,
+    } = useSelector((state) => state.category);
 
     const dispatch = useDispatch();
 
-    const limit = 10;
-    const [page, setPage] = useState(0);
-    const {
-        categories,
-        count: categoryCount,
-        isFetching,
-    } = useSelector((state) => state.category);
-    const pageCount = Math.ceil(categoryCount / limit);
+    const [queryParams, setQueryParams] = useState('');
+    const paginationPageCount = Math.ceil(rateCount / pageLimit.value);
 
     useEffect(() => {
-        dispatch(getCategory({ page, limit }));
-    }, []);
-
-    function handlePageChange(pageNumber) {
-        setPage(pageNumber);
         dispatch(
             getCategory({
                 page: pageNumber,
-                limit,
+                limit: pageLimit.value,
+                options: sortOption.value,
             }),
         );
+        setQueryParams(sortOption.value);
+    }, [pageNumber, pageLimit, sortOption.value]);
+
+    function handlePageChange(newPageNumber) {
+        dispatch(
+            getCategory({
+                page: newPageNumber,
+                limit: pageLimit.value,
+                options: queryParams,
+            }),
+        );
+        dispatch(setPageNumber(newPageNumber));
     }
 
-    const selectOption = {
-        defaultValue: null,
-        options: cities.map((item) => ({
-            value: item.id,
-            label: item.name,
-        })),
-        id: { name },
-        name: { name },
-    };
+    function onFilterPageCountChange(pageLimitFilter) {
+        dispatch(
+            setPageNumber(
+                Math.floor(
+                    (pageNumber * pageLimit.value) / pageLimitFilter.value,
+                ),
+            ),
+        );
+        dispatch(setPageLimit(pageLimitFilter));
+    }
+
+    function onFilterSortChange(sortFilter) {
+        dispatch(setSortOption(sortFilter));
+    }
 
     const filterData = [
-        { ...selectOption, id: '001', name: '001', placeholder: 'Период' },
-        { ...selectOption, id: '002', name: '002', placeholder: 'Машина' },
-        { ...selectOption, id: '003', name: '003', placeholder: 'Город' },
-        { ...selectOption, id: '004', name: '004', placeholder: 'Состояние' },
+        {
+            ...filterFormNumberOnPage,
+            onChangeSeleсt: onFilterPageCountChange,
+            defaultValue: pageLimit,
+        },
+        {
+            ...listSortFilter,
+            onChangeSeleсt: onFilterSortChange,
+            defaultValue: sortOption,
+        },
     ];
 
     return (
@@ -85,8 +105,8 @@ function CategoryListPage() {
                     onPageChange={(selectedPage) => {
                         handlePageChange(selectedPage);
                     }}
-                    pageCount={pageCount}
-                    forcePage={page}
+                    pageCount={paginationPageCount}
+                    forcePage={pageNumber}
                 />
             </PageMainCardFooter>
         </PageMainCard>

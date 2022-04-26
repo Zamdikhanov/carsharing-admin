@@ -4,11 +4,20 @@ import rateTypeApi from '../api/rateTypeApi';
 
 const initialState = {
     rateType: [{
-        unit: "",
-        name: "",
-        id: ""
+        unit: '',
+        name: '',
+        id: '',
     }, ],
+    pageNumber: 0,
+    pageLimit: {
+        value: 5,
+        label: 'по 5 на странице',
+    },
     count: 0,
+    sortOption: {
+        label: 'Без сортировки',
+        value: '',
+    },
     isFetching: false,
 };
 
@@ -23,19 +32,35 @@ export const rateTypeSlice = createSlice({
         setIsFetching: (state, action) => {
             state.isFetching = action.payload;
         },
+        setPageNumber: (state, action) => {
+            state.pageNumber = action.payload;
+        },
+        setPageLimit: (state, action) => {
+            state.pageLimit = action.payload;
+        },
+        setSortOption: (state, action) => {
+            state.sortOption = action.payload;
+        },
     },
 });
 
-export const { setRateType, setIsFetching } = rateTypeSlice.actions;
+export const {
+    setRateType,
+    setIsFetching,
+    setPageNumber,
+    setPageLimit,
+    setSortOption,
+} = rateTypeSlice.actions;
 
 export const getRateType =
-    ({ page, limit }) =>
+    ({ page, limit, options }) =>
     async(dispatch) => {
         dispatch(setIsFetching(true));
         try {
             const response = await rateTypeApi.getRateType({
                 page,
                 limit,
+                options,
             });
             dispatch(setRateType(response.data));
         } catch {

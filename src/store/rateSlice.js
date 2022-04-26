@@ -14,10 +14,10 @@ const initialState = {
         },
         id: '',
     }, ],
-    pageCount: 1,
+    pageNumber: 0,
     pageLimit: {
-        value: 5,
         label: 'по 5 на странице',
+        value: 5,
     },
     count: 0,
     sortOption: {
@@ -38,8 +38,8 @@ export const rateSlice = createSlice({
         setIsFetching: (state, action) => {
             state.isFetching = action.payload;
         },
-        setPageCount: (state, action) => {
-            state.pageCount = action.payload;
+        setPageNumber: (state, action) => {
+            state.pageNumber = action.payload;
         },
         setPageLimit: (state, action) => {
             state.pageLimit = action.payload;
@@ -50,8 +50,13 @@ export const rateSlice = createSlice({
     },
 });
 
-export const { setRate, setIsFetching, setPageCount, setPageLimit, setSortOption } =
-rateSlice.actions;
+export const {
+    setRate,
+    setIsFetching,
+    setPageNumber,
+    setPageLimit,
+    setSortOption,
+} = rateSlice.actions;
 
 export const getRate =
     ({ page, limit, options }) =>

@@ -9,7 +9,16 @@ const initialState = {
         name: '',
         id: '',
     }, ],
+    pageNumber: 0,
+    pageLimit: {
+        label: 'по 5 на странице',
+        value: 5,
+    },
     count: 0,
+    sortOption: {
+        label: 'Без сортировки',
+        value: '',
+    },
     isFetching: false,
 };
 
@@ -24,19 +33,35 @@ export const citySlice = createSlice({
         setIsFetching: (state, action) => {
             state.isFetching = action.payload;
         },
+        setPageNumber: (state, action) => {
+            state.pageNumber = action.payload;
+        },
+        setPageLimit: (state, action) => {
+            state.pageLimit = action.payload;
+        },
+        setSortOption: (state, action) => {
+            state.sortOption = action.payload;
+        },
     },
 });
 
-export const { setCity, setIsFetching } = citySlice.actions;
+export const {
+    setCity,
+    setIsFetching,
+    setPageNumber,
+    setPageLimit,
+    setSortOption,
+} = citySlice.actions;
 
 export const getCity =
-    ({ page, limit }) =>
+    ({ page, limit, options }) =>
     async(dispatch) => {
         dispatch(setIsFetching(true));
         try {
             const response = await cityApi.getCity({
                 page,
                 limit,
+                options,
             });
             dispatch(setCity(response.data));
         } catch {

@@ -108,7 +108,7 @@ function RegistrationPage() {
                 <div className={css.card_footer}>
                     <Link
                         className={css.link}
-                        to={-1}
+                        to='/'
                         onClick={() => dispatch(setAuthError(''))}
                     >
                         Отмена регистрации

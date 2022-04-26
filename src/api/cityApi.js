@@ -1,8 +1,8 @@
 import instance from './api';
 
 const cityApi = {
-    getCity({ page, limit }) {
-        return instance.get(`/db/city?page=${page}&limit=${limit}`);
+    getCity({ page, limit, options }) {
+        return instance.get(`/db/city?${options}page=${page}&limit=${limit}`);
     },
 };
 

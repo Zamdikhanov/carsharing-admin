@@ -12,7 +12,7 @@ import Pagination from '../../../components/Pagination/Pagination';
 import Preloader from '../../../components/Preloader/Preloader';
 import {
     getRate,
-    setPageCount,
+    setPageNumber,
     setPageLimit,
     setSortOption,
 } from '../../../store/rateSlice';
@@ -22,7 +22,7 @@ import filterFormNumberOnPage from '../../../components/FilterForm/constants';
 function RateListPage() {
     const {
         rate,
-        pageCount,
+        pageNumber,
         pageLimit,
         count: rateCount,
         sortOption,
@@ -37,30 +37,30 @@ function RateListPage() {
     useEffect(() => {
         dispatch(
             getRate({
-                page: pageCount,
+                page: pageNumber,
                 limit: pageLimit.value,
                 options: sortOption.value,
             }),
         );
         setQueryParams(sortOption.value);
-    }, [pageCount, pageLimit, sortOption.value]);
+    }, [pageNumber, pageLimit, sortOption.value]);
 
-    function handlePageChange(pageNumber) {
+    function handlePageChange(newPageNumber) {
         dispatch(
             getRate({
-                page: pageNumber,
+                page: newPageNumber,
                 limit: pageLimit.value,
                 options: queryParams,
             }),
         );
-        dispatch(setPageCount(pageNumber));
+        dispatch(setPageNumber(newPageNumber));
     }
 
     function onFilterPageCountChange(pageLimitFilter) {
         dispatch(
-            setPageCount(
+            setPageNumber(
                 Math.floor(
-                    (pageCount * pageLimit.value) / pageLimitFilter.value,
+                    (pageNumber * pageLimit.value) / pageLimitFilter.value,
                 ),
             ),
         );
@@ -122,7 +122,7 @@ function RateListPage() {
                         handlePageChange(selectedPage);
                     }}
                     pageCount={paginationPageCount}
-                    forcePage={pageCount}
+                    forcePage={pageNumber}
                 />
             </PageMainCardFooter>
         </PageMainCard>

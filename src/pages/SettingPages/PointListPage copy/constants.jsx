@@ -6,20 +6,20 @@ const listSortFilter = {
             value: '',
         },
         {
-            label: 'Название А - Я',
+            label: 'Точки А - Я',
             value: 'sort[name]=1&',
         },
         {
-            label: 'Название Я - А',
+            label: 'Точки Я - А',
             value: 'sort[name]=-1&',
         },
         {
-            label: 'Единицы А - Я',
-            value: 'sort[unit]=1&',
+            label: 'Адрес А - Я',
+            value: 'sort[address]=1&',
         },
         {
-            label: 'Единицы Я - А',
-            value: 'sort[unit]=-1&',
+            label: 'Адрес Я - А',
+            value: 'sort[address]=-1&',
         },
     ],
     id: 'listSortFilter',

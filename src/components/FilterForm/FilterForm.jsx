@@ -21,9 +21,7 @@ function FilterForm({ filterData }) {
                         classNamePrefix={css.input}
                         {...item}
                         components={{ DropdownIndicator }}
-                        onChange={(val) => {
-                            item.onChangeSelect(val);
-                        }}
+                        onChange={val => { item.onChangeSeleсt(val) }}
                         noOptionsMessage={({ inputValue }) =>
                             inputValue ? 'не найдено' : 'не найдено'
                         }
@@ -32,7 +30,7 @@ function FilterForm({ filterData }) {
             </div>
             <div className={css.wrap_buttons}>
                 <button className={css.button} type="button">
-                    Применить
+                    Добавить новый
                 </button>
             </div>
         </div>

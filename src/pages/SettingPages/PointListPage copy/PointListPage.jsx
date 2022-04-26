@@ -9,54 +9,74 @@ import {
     PageMainCardMain,
 } from '../../../components/PageMainCard/PageMainCard';
 import Pagination from '../../../components/Pagination/Pagination';
-import { city } from '../OrderListPage/constants';
 import Preloader from '../../../components/Preloader/Preloader';
-import { getPoint } from '../../../store/pointSlice';
+import { getPoint, setPageLimit, setPageNumber, setSortOption } from '../../../store/pointSlice';
+import listSortFilter from './constants';
+import filterFormNumberOnPage from '../../../components/FilterForm/constants';
 
 function PointListPage() {
-    const citiesOptions = city;
-    const name = 'Города';
+    const {
+        points,
+        pageNumber,
+        pageLimit,
+        count: rateCount,
+        sortOption,
+        isFetching,
+    } = useSelector((state) => state.point);
 
     const dispatch = useDispatch();
 
-    const limit = 10;
-    const [page, setPage] = useState(0);
-    const {
-        points,
-        count: pointCount,
-        isFetching,
-    } = useSelector((state) => state.point);
-    const pageCount = Math.ceil(pointCount / limit);
+    const [queryParams, setQueryParams] = useState('');
+    const paginationPageCount = Math.ceil(rateCount / pageLimit.value);
 
     useEffect(() => {
-        dispatch(getPoint({ page, limit }));
-    }, []);
-
-    function handlePageChange(pageNumber) {
-        setPage(pageNumber);
         dispatch(
             getPoint({
                 page: pageNumber,
-                limit,
+                limit: pageLimit.value,
+                options: sortOption.value,
             }),
         );
+        setQueryParams(sortOption.value);
+    }, [pageNumber, pageLimit, sortOption.value]);
+
+    function handlePageChange(newPageNumber) {
+        dispatch(
+            getPoint({
+                page: newPageNumber,
+                limit: pageLimit.value,
+                options: queryParams,
+            }),
+        );
+        dispatch(setPageNumber(newPageNumber));
     }
 
-    const selectOption = {
-        defaultValue: null,
-        options: citiesOptions.map((item) => ({
-            value: item.id,
-            label: item.name,
-        })),
-        id: { name },
-        name: { name },
-    };
+    function onFilterPageCountChange(pageLimitFilter) {
+        dispatch(
+            setPageNumber(
+                Math.floor(
+                    (pageNumber * pageLimit.value) / pageLimitFilter.value,
+                ),
+            ),
+        );
+        dispatch(setPageLimit(pageLimitFilter));
+    }
+
+    function onFilterSortChange(sortFilter) {
+        dispatch(setSortOption(sortFilter));
+    }
 
     const filterData = [
-        { ...selectOption, id: '001', name: '001', placeholder: 'Период' },
-        { ...selectOption, id: '002', name: '002', placeholder: 'Машина' },
-        { ...selectOption, id: '003', name: '003', placeholder: 'Город' },
-        { ...selectOption, id: '004', name: '004', placeholder: 'Состояние' },
+        {
+            ...filterFormNumberOnPage,
+            onChangeSeleсt: onFilterPageCountChange,
+            defaultValue: pageLimit,
+        },
+        {
+            ...listSortFilter,
+            onChangeSeleсt: onFilterSortChange,
+            defaultValue: sortOption,
+        },
     ];
 
     return (
@@ -96,8 +116,8 @@ function PointListPage() {
                     onPageChange={(selectedPage) => {
                         handlePageChange(selectedPage);
                     }}
-                    pageCount={pageCount}
-                    forcePage={page}
+                    pageCount={paginationPageCount}
+                    forcePage={pageNumber}
                 />
             </PageMainCardFooter>
         </PageMainCard>
