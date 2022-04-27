@@ -12,9 +12,7 @@ function b64EncodeUnicode(str) {
     );
 }
 
-const BASIC_TOKEN = b64EncodeUnicode(
-    `a1y2r3a4t5:${SECRET}`,
-);
+const BASIC_TOKEN = b64EncodeUnicode(`a1y2r3a4t5:${SECRET}`);
 
 const instance = axios.create({
     baseURL: `${BASE_URL}`,

@@ -26,7 +26,16 @@ const initialState = {
         colors: [],
         id: '',
     }, ],
+    pageNumber: 0,
+    pageLimit: {
+        label: 'по 3 на странице',
+        value: 3,
+    },
     count: 0,
+    sortOption: {
+        label: 'Без сортировки',
+        value: '',
+    },
     isFetching: false,
 };
 
@@ -41,19 +50,35 @@ export const carSlice = createSlice({
         setIsFetching: (state, action) => {
             state.isFetching = action.payload;
         },
+        setPageNumber: (state, action) => {
+            state.pageNumber = action.payload;
+        },
+        setPageLimit: (state, action) => {
+            state.pageLimit = action.payload;
+        },
+        setSortOption: (state, action) => {
+            state.sortOption = action.payload;
+        },
     },
 });
 
-export const { setCar, setIsFetching } = carSlice.actions;
+export const {
+    setCar,
+    setIsFetching,
+    setPageNumber,
+    setPageLimit,
+    setSortOption,
+} = carSlice.actions;
 
 export const getCar =
-    ({ page, limit }) =>
+    ({ page, limit, options }) =>
     async(dispatch) => {
         dispatch(setIsFetching(true));
         try {
             const response = await carApi.getCar({
                 page,
                 limit,
+                options,
             });
             dispatch(setCar(response.data));
         } catch {

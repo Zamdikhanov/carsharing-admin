@@ -43,7 +43,16 @@ const initialState = {
         },
         id: '',
     }, ],
+    pageNumber: 0,
+    pageLimit: {
+        label: 'по 3 на странице',
+        value: 3,
+    },
     count: 0,
+    sortOption: {
+        label: 'Без сортировки',
+        value: '',
+    },
     isFetching: false,
 };
 
@@ -58,19 +67,35 @@ export const orderSlice = createSlice({
         setIsFetching: (state, action) => {
             state.isFetching = action.payload;
         },
+        setPageNumber: (state, action) => {
+            state.pageNumber = action.payload;
+        },
+        setPageLimit: (state, action) => {
+            state.pageLimit = action.payload;
+        },
+        setSortOption: (state, action) => {
+            state.sortOption = action.payload;
+        },
     },
 });
 
-export const { setOrder, setIsFetching } = orderSlice.actions;
+export const {
+    setOrder,
+    setIsFetching,
+    setPageNumber,
+    setPageLimit,
+    setSortOption,
+} = orderSlice.actions;
 
 export const getOrder =
-    ({ page, limit, accessToken }) =>
+    ({ page, limit, options, accessToken }) =>
     async(dispatch) => {
         dispatch(setIsFetching(true));
         try {
             const response = await orderApi.getOrder({
                 page,
                 limit,
+                options,
                 accessToken,
             });
             dispatch(setOrder(response.data));

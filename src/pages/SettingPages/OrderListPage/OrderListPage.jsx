@@ -10,57 +10,76 @@ import {
 } from '../../../components/PageMainCard/PageMainCard';
 import Pagination from '../../../components/Pagination/Pagination';
 import Preloader from '../../../components/Preloader/Preloader';
-import { getOrder } from '../../../store/orderSlice';
-import { city } from './constants';
+import listSortFilter from './constants';
+import filterFormNumberOnPage from '../../../components/FilterForm/constants';
+import { getOrder, setPageLimit, setPageNumber, setSortOption } from '../../../store/orderSlice';
 
 function OrderListPage() {
-    const cities = city;
-    const name = 'Города';
+    const accessToken = useSelector(state => state.auth.data.access_token);
+    const {
+        orders,
+        pageNumber,
+        pageLimit,
+        count: orderCount,
+        sortOption,
+        isFetching,
+    } = useSelector((state) => state.order);
 
     const dispatch = useDispatch();
 
-    const limit = 3;
-    const [page, setPage] = useState(0);
-    const {
-        orders,
-        count: ordersCount,
-        isFetching,
-    } = useSelector((state) => state.order);
-    const pageCount = Math.ceil(ordersCount / limit);
-    const { data } = useSelector((state) => state.auth);
+    const [queryParams, setQueryParams] = useState('');
+    const paginationPageCount = Math.ceil(orderCount / pageLimit.value);
 
     useEffect(() => {
-        dispatch(getOrder({ page, limit, accessToken: data.access_token }));
-    }, []);
-
-    function handlePageChange(pageNumber) {
-        setPage(pageNumber);
         dispatch(
             getOrder({
                 page: pageNumber,
-                limit,
-                accessToken: data.access_token,
+                limit: pageLimit.value,
+                options: sortOption.value,
+                accessToken,
             }),
         );
+        setQueryParams(sortOption.value);
+    }, [pageNumber, pageLimit, sortOption.value]);
+
+    function handlePageChange(newPageNumber) {
+        dispatch(
+            getOrder({
+                page: newPageNumber,
+                limit: pageLimit.value,
+                options: queryParams,
+            }),
+        );
+        dispatch(setPageNumber(newPageNumber));
     }
 
-    const selectOption = {
-        defaultValue: null,
-        options: cities.map((item) => ({
-            value: item.id,
-            label: item.name,
-        })),
-        id: { name },
-        name: { name },
-    };
+    function onFilterPageCountChange(pageLimitFilter) {
+        dispatch(
+            setPageNumber(
+                Math.floor(
+                    (pageNumber * pageLimit.value) / pageLimitFilter.value,
+                ),
+            ),
+        );
+        dispatch(setPageLimit(pageLimitFilter));
+    }
+
+    function onFilterSortChange(sortFilter) {
+        dispatch(setSortOption(sortFilter));
+    }
 
     const filterData = [
-        { ...selectOption, id: '001', name: '001', placeholder: 'Период' },
-        { ...selectOption, id: '002', name: '002', placeholder: 'Машина' },
-        { ...selectOption, id: '003', name: '003', placeholder: 'Город' },
-        { ...selectOption, id: '004', name: '004', placeholder: 'Состояние' },
+        {
+            ...filterFormNumberOnPage,
+            onChangeSeleсt: onFilterPageCountChange,
+            defaultValue: pageLimit,
+        },
+        {
+            ...listSortFilter,
+            onChangeSeleсt: onFilterSortChange,
+            defaultValue: sortOption,
+        },
     ];
-
     return (
         <PageMainCard pageTitle="Заказы">
             <PageMainCardHeader>
@@ -80,8 +99,8 @@ function OrderListPage() {
                     onPageChange={(selectedPage) => {
                         handlePageChange(selectedPage);
                     }}
-                    pageCount={pageCount}
-                    forcePage={page}
+                    pageCount={paginationPageCount}
+                    forcePage={pageNumber}
                 />
             </PageMainCardFooter>
         </PageMainCard>

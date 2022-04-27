@@ -11,6 +11,7 @@ function DropdownIndicator(props) {
 }
 
 function FilterForm({ filterData }) {
+
     return (
         <div className={css.container}>
             <div className={css.wrap_select}>
@@ -21,7 +22,9 @@ function FilterForm({ filterData }) {
                         classNamePrefix={css.input}
                         {...item}
                         components={{ DropdownIndicator }}
-                        onChange={val => { item.onChangeSeleсt(val) }}
+                        onChange={val => {
+                            item.onChangeSeleсt(val)
+                        }}
                         noOptionsMessage={({ inputValue }) =>
                             inputValue ? 'не найдено' : 'не найдено'
                         }
