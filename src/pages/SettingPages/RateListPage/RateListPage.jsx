@@ -15,6 +15,7 @@ import {
     setPageNumber,
     setPageLimit,
     setSortOption,
+    resetFilters,
 } from '../../../store/rateSlice';
 import rateListSortFilter from './constants';
 import filterFormNumberOnPage from '../../../components/FilterForm/constants';
@@ -87,7 +88,7 @@ function RateListPage() {
     return (
         <PageMainCard pageTitle="Стоимость тарифа">
             <PageMainCardHeader>
-                <FilterForm filterData={filterData} />
+                <FilterForm filterData={filterData} reset={() => dispatch(resetFilters())} />
             </PageMainCardHeader>
             <PageMainCardMain>
                 <StandardListRow

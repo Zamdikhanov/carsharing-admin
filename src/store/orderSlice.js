@@ -53,6 +53,10 @@ const initialState = {
         label: 'Без сортировки',
         value: '',
     },
+    cityOption: {
+        label: 'Все города',
+        value: '',
+    },
     isFetching: false,
 };
 
@@ -76,6 +80,16 @@ export const orderSlice = createSlice({
         setSortOption: (state, action) => {
             state.sortOption = action.payload;
         },
+        setСityOption: (state, action) => {
+            state.cityOption = action.payload;
+            state.pageNumber = 0;
+        },
+        resetFilters: (state) => {
+            state.pageNumber = 0;
+            state.pageLimit = initialState.pageLimit;
+            state.sortOption = initialState.sortOption;
+            state.cityOption = initialState.cityOption;
+        },
     },
 });
 
@@ -85,6 +99,8 @@ export const {
     setPageNumber,
     setPageLimit,
     setSortOption,
+    setСityOption,
+    resetFilters,
 } = orderSlice.actions;
 
 export const getOrder =

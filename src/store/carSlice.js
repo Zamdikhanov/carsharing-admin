@@ -33,7 +33,7 @@ const initialState = {
     },
     count: 0,
     sortOption: {
-        label: 'Без сортировки',
+        label: 'Сортировка',
         value: '',
     },
     categoryOption: {
@@ -65,6 +65,13 @@ export const carSlice = createSlice({
         },
         setСategoryOption: (state, action) => {
             state.categoryOption = action.payload;
+            state.pageNumber = 0;
+        },
+        resetFilters: (state) => {
+            state.pageNumber = 0;
+            state.pageLimit = initialState.pageLimit;
+            state.sortOption = initialState.sortOption;
+            state.categoryOption = initialState.categoryOption;
         },
     },
 });
@@ -76,6 +83,7 @@ export const {
     setPageLimit,
     setSortOption,
     setСategoryOption,
+    resetFilters,
 } = carSlice.actions;
 
 export const getCar =

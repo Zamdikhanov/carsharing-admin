@@ -10,7 +10,7 @@ import {
 } from '../../../components/PageMainCard/PageMainCard';
 import Pagination from '../../../components/Pagination/Pagination';
 import Preloader from '../../../components/Preloader/Preloader';
-import { getCategory, setPageLimit, setPageNumber, setSortOption } from '../../../store/categorySlice';
+import { getCategory, setPageLimit, setPageNumber, setSortOption, resetFilters } from '../../../store/categorySlice';
 import listSortFilter from './constants';
 import filterFormNumberOnPage from '../../../components/FilterForm/constants';
 
@@ -82,7 +82,7 @@ function CategoryListPage() {
     return (
         <PageMainCard pageTitle="Категории автомобилей">
             <PageMainCardHeader>
-                <FilterForm filterData={filterData} />
+                <FilterForm filterData={filterData} reset={() => dispatch(resetFilters())} />
             </PageMainCardHeader>
             <PageMainCardMain>
                 <StandardListRow row={['Категория', 'Описание']} isTitle />

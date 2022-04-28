@@ -10,7 +10,7 @@ import {
 } from '../../../components/PageMainCard/PageMainCard';
 import Pagination from '../../../components/Pagination/Pagination';
 import Preloader from '../../../components/Preloader/Preloader';
-import { getRateType, setPageLimit, setPageNumber, setSortOption } from '../../../store/rateTypeSlice';
+import { getRateType, setPageLimit, setPageNumber, setSortOption, resetFilters } from '../../../store/rateTypeSlice';
 import listSortFilter from './constants';
 import filterFormNumberOnPage from '../../../components/FilterForm/constants';
 
@@ -82,7 +82,7 @@ function RateTypeListPage() {
     return (
         <PageMainCard pageTitle="Тарифы">
             <PageMainCardHeader>
-                <FilterForm filterData={filterData} />
+                <FilterForm filterData={filterData} reset={() => dispatch(resetFilters())} />
             </PageMainCardHeader>
             <PageMainCardMain>
                 <StandardListRow row={['Название', 'Ед. измерения']} isTitle />

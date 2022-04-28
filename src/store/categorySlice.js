@@ -43,6 +43,11 @@ export const categorySlice = createSlice({
         setSortOption: (state, action) => {
             state.sortOption = action.payload;
         },
+        resetFilters: (state) => {
+            state.pageNumber = 0;
+            state.pageLimit = initialState.pageLimit;
+            state.sortOption = initialState.sortOption;
+        },
     },
 });
 
@@ -52,6 +57,7 @@ export const {
     setPageNumber,
     setPageLimit,
     setSortOption,
+    resetFilters,
 } = categorySlice.actions;
 
 export const getCategory =

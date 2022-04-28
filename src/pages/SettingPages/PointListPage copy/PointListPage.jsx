@@ -10,7 +10,7 @@ import {
 } from '../../../components/PageMainCard/PageMainCard';
 import Pagination from '../../../components/Pagination/Pagination';
 import Preloader from '../../../components/Preloader/Preloader';
-import { getPoint, setPageLimit, setPageNumber, setSortOption } from '../../../store/pointSlice';
+import { getPoint, setPageLimit, setPageNumber, setSortOption, resetFilters } from '../../../store/pointSlice';
 import listSortFilter from './constants';
 import filterFormNumberOnPage from '../../../components/FilterForm/constants';
 
@@ -82,7 +82,7 @@ function PointListPage() {
     return (
         <PageMainCard pageTitle="Точки выдачи">
             <PageMainCardHeader>
-                <FilterForm filterData={filterData} />
+                <FilterForm filterData={filterData} reset={() => dispatch(resetFilters())} />
             </PageMainCardHeader>
             <PageMainCardMain>
                 <StandardListRow

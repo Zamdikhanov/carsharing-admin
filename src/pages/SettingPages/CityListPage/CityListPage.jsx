@@ -10,7 +10,7 @@ import {
 } from '../../../components/PageMainCard/PageMainCard';
 import Pagination from '../../../components/Pagination/Pagination';
 import Preloader from '../../../components/Preloader/Preloader';
-import { getCity, setPageLimit, setPageNumber, setSortOption } from '../../../store/citySlice';
+import { getCity, setPageLimit, setPageNumber, setSortOption, resetFilters } from '../../../store/citySlice';
 import listSortFilter from './constants';
 import filterFormNumberOnPage from '../../../components/FilterForm/constants';
 
@@ -83,7 +83,7 @@ function CityListPage() {
     return (
         <PageMainCard pageTitle="Города">
             <PageMainCardHeader>
-                <FilterForm filterData={filterData} />
+                <FilterForm filterData={filterData} reset={() => dispatch(resetFilters())} />
             </PageMainCardHeader>
             <PageMainCardMain>
                 <StandardListRow row={['Город']} isTitle />

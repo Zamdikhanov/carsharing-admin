@@ -12,6 +12,7 @@ import Pagination from '../../../components/Pagination/Pagination';
 import Preloader from '../../../components/Preloader/Preloader';
 import {
     getCar,
+    resetFilters,
     setPageLimit,
     setPageNumber,
     setSortOption,
@@ -33,10 +34,7 @@ function CarListPage() {
 
     const { categories } = useSelector((state) => state.filter);
     const categoriesFilter = {
-        defaultValue: {
-            label: 'Все категории',
-            value: '',
-        },
+        defaultValue: categoryOption,
         options: [
             {
                 label: 'Все категории',
@@ -66,10 +64,9 @@ function CarListPage() {
             getCar({
                 page: pageNumber,
                 limit: pageLimit.value,
-                options: `${sortOption.value}${
-                    categoryOption.value &&
+                options: `${sortOption.value}${categoryOption.value &&
                     `categoryId[id]=${categoryOption.value}&`
-                }`,
+                    }`,
             }),
         );
         setQueryParams(sortOption.value);
@@ -125,7 +122,7 @@ function CarListPage() {
     return (
         <PageMainCard pageTitle="Автомобили">
             <PageMainCardHeader>
-                <FilterForm filterData={filterData} />
+                <FilterForm filterData={filterData} reset={() => dispatch(resetFilters())} />
             </PageMainCardHeader>
             <PageMainCardMain>
                 {isFetching ? (
