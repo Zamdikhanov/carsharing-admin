@@ -1,8 +1,10 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Outlet } from 'react-router-dom';
 import Header from '../components/Header/Header';
 import SideBar from '../components/SideBar/SideBar';
 import useComponentVisible from '../hooks/useComponentVisible';
+import { getFilters } from '../store/filterSlice';
 import css from './TemplatePage.module.scss';
 
 function TemplatePage() {
@@ -12,6 +14,12 @@ function TemplatePage() {
         setIsComponentVisible: setIsNavMobileVisible,
         ignoreRef: burgerRef,
     } = useComponentVisible(false);
+
+    const dispath = useDispatch();
+
+    useEffect(() => {
+        dispath(getFilters());
+    }, []);
 
     const handleClick = () => {
         setIsNavMobileVisible(!isNavMobileVisible);

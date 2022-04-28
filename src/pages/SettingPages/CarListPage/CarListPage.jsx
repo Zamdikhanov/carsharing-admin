@@ -10,7 +10,13 @@ import {
 } from '../../../components/PageMainCard/PageMainCard';
 import Pagination from '../../../components/Pagination/Pagination';
 import Preloader from '../../../components/Preloader/Preloader';
-import { getCar, setPageLimit, setPageNumber, setSortOption } from '../../../store/carSlice';
+import {
+    getCar,
+    setPageLimit,
+    setPageNumber,
+    setSortOption,
+    setСategoryOption,
+} from '../../../store/carSlice';
 import listSortFilter from './constants';
 import filterFormNumberOnPage from '../../../components/FilterForm/constants';
 
@@ -21,8 +27,34 @@ function CarListPage() {
         pageLimit,
         count: rateCount,
         sortOption,
+        categoryOption,
         isFetching,
     } = useSelector((state) => state.car);
+
+    const { categories } = useSelector((state) => state.filter);
+    const categoriesFilter = {
+        defaultValue: {
+            label: 'Все категории',
+            value: '',
+        },
+        options: [
+            {
+                label: 'Все категории',
+                value: '',
+            },
+        ],
+        id: 'categoriesFilter',
+        name: 'categoriesFilter',
+        placeholder: 'Все категории',
+    };
+    const categoriesOptions = categories.map((categoryItem) => ({
+        label: categoryItem.name,
+        value: categoryItem.id,
+    }));
+    categoriesFilter.options = [
+        ...categoriesFilter.options,
+        ...categoriesOptions,
+    ];
 
     const dispatch = useDispatch();
 
@@ -34,11 +66,14 @@ function CarListPage() {
             getCar({
                 page: pageNumber,
                 limit: pageLimit.value,
-                options: sortOption.value,
+                options: `${sortOption.value}${
+                    categoryOption.value &&
+                    `categoryId[id]=${categoryOption.value}&`
+                }`,
             }),
         );
         setQueryParams(sortOption.value);
-    }, [pageNumber, pageLimit, sortOption.value]);
+    }, [pageNumber, pageLimit, sortOption.value, categoryOption.value]);
 
     function handlePageChange(newPageNumber) {
         dispatch(
@@ -66,6 +101,10 @@ function CarListPage() {
         dispatch(setSortOption(sortFilter));
     }
 
+    function onCategoryChange(categoryFilter) {
+        dispatch(setСategoryOption(categoryFilter));
+    }
+
     const filterData = [
         {
             ...filterFormNumberOnPage,
@@ -76,6 +115,10 @@ function CarListPage() {
             ...listSortFilter,
             onChangeSeleсt: onFilterSortChange,
             defaultValue: sortOption,
+        },
+        {
+            ...categoriesFilter,
+            onChangeSeleсt: onCategoryChange,
         },
     ];
 

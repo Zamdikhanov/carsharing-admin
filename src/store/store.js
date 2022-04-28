@@ -5,6 +5,7 @@ import authSlice from './authSlice';
 import carSlice from './carSlice';
 import categorySlice from './categorySlice';
 import citySlice from './citySlice';
+import filterSlice from './filterSlice';
 import orderSlice from './orderSlice';
 import pointSlice from './pointSlice';
 import rateSlice from './rateSlice';
@@ -20,6 +21,7 @@ const rootReduser = combineReducers({
     rateType: rateTypeSlice,
     rate: rateSlice,
     app: appSlice,
+    filter: filterSlice,
 });
 
 const store = configureStore({

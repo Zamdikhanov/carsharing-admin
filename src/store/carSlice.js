@@ -36,6 +36,10 @@ const initialState = {
         label: 'Без сортировки',
         value: '',
     },
+    categoryOption: {
+        label: 'Все категории',
+        value: '',
+    },
     isFetching: false,
 };
 
@@ -59,6 +63,9 @@ export const carSlice = createSlice({
         setSortOption: (state, action) => {
             state.sortOption = action.payload;
         },
+        setСategoryOption: (state, action) => {
+            state.categoryOption = action.payload;
+        },
     },
 });
 
@@ -68,6 +75,7 @@ export const {
     setPageNumber,
     setPageLimit,
     setSortOption,
+    setСategoryOption,
 } = carSlice.actions;
 
 export const getCar =
