@@ -64,9 +64,10 @@ function CarListPage() {
             getCar({
                 page: pageNumber,
                 limit: pageLimit.value,
-                options: `${sortOption.value}${categoryOption.value &&
+                options: `${sortOption.value}${
+                    categoryOption.value &&
                     `categoryId[id]=${categoryOption.value}&`
-                    }`,
+                }`,
             }),
         );
         setQueryParams(sortOption.value);
@@ -119,19 +120,24 @@ function CarListPage() {
         },
     ];
 
+    const tableData = cars.length ? (
+        cars.map((car) => {
+            return <CarListRow key={car.id} {...car} />;
+        })
+    ) : (
+        <div style={{ padding: '16px 0px', fontSize: '20px' }}>Нет данных</div>
+    );
+
     return (
         <PageMainCard pageTitle="Автомобили">
             <PageMainCardHeader>
-                <FilterForm filterData={filterData} reset={() => dispatch(resetFilters())} />
+                <FilterForm
+                    filterData={filterData}
+                    reset={() => dispatch(resetFilters())}
+                />
             </PageMainCardHeader>
             <PageMainCardMain>
-                {isFetching ? (
-                    <Preloader />
-                ) : (
-                    cars.map((car) => {
-                        return <CarListRow key={car.id} {...car} />;
-                    })
-                )}
+                {isFetching ? <Preloader /> : tableData}
             </PageMainCardMain>
             <PageMainCardFooter>
                 <Pagination

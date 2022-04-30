@@ -158,6 +158,15 @@ function OrderListPage() {
             onChangeSeleсt: onOrderStatusChange,
         },
     ];
+
+    const tableData = orders.length ? (
+        orders.map((order) => {
+            return <OrderListRow key={order.id} {...order} />;
+        })
+    ) : (
+        <div style={{ padding: '16px 0px', fontSize: '20px' }}>Нет данных</div>
+    );
+
     return (
         <PageMainCard pageTitle="Заказы">
             <PageMainCardHeader>
@@ -167,13 +176,7 @@ function OrderListPage() {
                 />
             </PageMainCardHeader>
             <PageMainCardMain>
-                {isFetching ? (
-                    <Preloader />
-                ) : (
-                    orders.map((order) => {
-                        return <OrderListRow key={order.id} {...order} />;
-                    })
-                )}
+                {isFetching ? <Preloader /> : tableData}
             </PageMainCardMain>
             <PageMainCardFooter>
                 <Pagination
