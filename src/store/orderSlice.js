@@ -57,6 +57,10 @@ const initialState = {
         label: 'Все города',
         value: '',
     },
+    orderStatusOption: {
+        label: 'Все заказы',
+        value: '',
+    },
     isFetching: false,
 };
 
@@ -84,11 +88,16 @@ export const orderSlice = createSlice({
             state.cityOption = action.payload;
             state.pageNumber = 0;
         },
+        setOrderStatusOption: (state, action) => {
+            state.orderStatusOption = action.payload;
+            state.pageNumber = 0;
+        },
         resetFilters: (state) => {
             state.pageNumber = 0;
             state.pageLimit = initialState.pageLimit;
             state.sortOption = initialState.sortOption;
             state.cityOption = initialState.cityOption;
+            state.orderStatusOption = initialState.orderStatusOption;
         },
     },
 });
@@ -100,6 +109,7 @@ export const {
     setPageLimit,
     setSortOption,
     setСityOption,
+    setOrderStatusOption,
     resetFilters,
 } = orderSlice.actions;
 

@@ -33,7 +33,7 @@ const initialState = {
     },
     count: 0,
     sortOption: {
-        label: 'Сортировка',
+        label: 'Без сортировки',
         value: '',
     },
     categoryOption: {

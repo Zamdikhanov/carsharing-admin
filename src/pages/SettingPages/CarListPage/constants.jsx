@@ -2,7 +2,7 @@ const listSortFilter = {
     defaultValue: null,
     options: [
         {
-            label: 'Сортировка',
+            label: 'Без сортировки',
             value: '',
         },
         {

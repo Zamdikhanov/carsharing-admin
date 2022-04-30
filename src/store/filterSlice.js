@@ -2,6 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import categoryApi from '../api/categoryApi';
 import cityApi from '../api/cityApi';
+import orderStatusApi from '../api/orderStatusApi';
 
 const initialState = {
     categories: [{
@@ -17,6 +18,10 @@ const initialState = {
         name: '',
         id: '',
     }, ],
+    orderStatus: [{
+        name: "",
+        id: ""
+    }, ],
     isFetching: false,
 };
 
@@ -27,11 +32,14 @@ export const filterSlice = createSlice({
         setFilterCategory: (state, action) => {
             state.categories = action.payload.data;
         },
-        setFilterIsFetching: (state, action) => {
-            state.isFetching = action.payload;
-        },
         setFilterCity: (state, action) => {
             state.cities = action.payload.data;
+        },
+        setOrderStatus: (state, action) => {
+            state.orderStatus = action.payload.data;
+        },
+        setFilterIsFetching: (state, action) => {
+            state.isFetching = action.payload;
         },
     },
 });
@@ -39,6 +47,7 @@ export const filterSlice = createSlice({
 export const {
     setFilterCategory,
     setFilterCity,
+    setOrderStatus,
     setFilterIsFetching,
 } = filterSlice.actions;
 
@@ -46,18 +55,12 @@ export const getFilters = () =>
     async(dispatch) => {
         dispatch(setFilterIsFetching(true));
         try {
-            const categoryResponse = await categoryApi.getCategory({
-                page: 0,
-                limit: 0,
-                options: '',
-            });
-            const cityResponse = await cityApi.getCity({
-                page: 0,
-                limit: 0,
-                options: '',
-            });
+            const categoryResponse = await categoryApi.getCategory({});
             dispatch(setFilterCategory(categoryResponse.data));
+            const cityResponse = await cityApi.getCity({});
             dispatch(setFilterCity(cityResponse.data));
+            const orderStatusResponse = await orderStatusApi.getOrderStatus({});
+            dispatch(setOrderStatus(orderStatusResponse.data));
         } catch {
             console.log('filter slice error');
         }

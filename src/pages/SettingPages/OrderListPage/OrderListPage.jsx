@@ -12,10 +12,18 @@ import Pagination from '../../../components/Pagination/Pagination';
 import Preloader from '../../../components/Preloader/Preloader';
 import listSortFilter from './constants';
 import filterFormNumberOnPage from '../../../components/FilterForm/constants';
-import { getOrder, setPageLimit, setPageNumber, setSortOption, resetFilters, setСityOption } from '../../../store/orderSlice';
+import {
+    getOrder,
+    setPageLimit,
+    setPageNumber,
+    setSortOption,
+    resetFilters,
+    setСityOption,
+    setOrderStatusOption,
+} from '../../../store/orderSlice';
 
 function OrderListPage() {
-    const accessToken = useSelector(state => state.auth.data.access_token);
+    const accessToken = useSelector((state) => state.auth.data.access_token);
     const {
         orders,
         pageNumber,
@@ -23,6 +31,7 @@ function OrderListPage() {
         count: orderCount,
         sortOption,
         cityOption,
+        orderStatusOption,
         isFetching,
     } = useSelector((state) => state.order);
 
@@ -36,14 +45,23 @@ function OrderListPage() {
             getOrder({
                 page: pageNumber,
                 limit: pageLimit.value,
-                options: `${sortOption.value}${cityOption.value &&
-                    `cityId[id]=${cityOption.value}&`
-                    }`,
+                options: `${
+                    cityOption.value && `cityId[id]=${cityOption.value}&`
+                }${
+                    orderStatusOption.value &&
+                    `orderStatusId[id]=${orderStatusOption.value}&`
+                }${sortOption.value}`,
                 accessToken,
             }),
         );
         setQueryParams(sortOption.value);
-    }, [pageNumber, pageLimit, sortOption.value, cityOption.value]);
+    }, [
+        pageNumber,
+        pageLimit,
+        sortOption.value,
+        cityOption.value,
+        orderStatusOption.value,
+    ]);
 
     function handlePageChange(newPageNumber) {
         dispatch(
@@ -71,8 +89,8 @@ function OrderListPage() {
         dispatch(setSortOption(sortFilter));
     }
 
+    const { cities, orderStatus } = useSelector((state) => state.filter);
 
-    const { cities } = useSelector((state) => state.filter);
     const citiesFilter = {
         defaultValue: cityOption,
         options: [
@@ -89,14 +107,35 @@ function OrderListPage() {
         label: cityItem.name,
         value: cityItem.id,
     }));
-    citiesFilter.options = [
-        ...citiesFilter.options,
-        ...citiesOptions,
-    ];
+    citiesFilter.options = [...citiesFilter.options, ...citiesOptions];
 
+    const orderStatusFilter = {
+        defaultValue: orderStatusOption,
+        options: [
+            {
+                label: 'Все заказы',
+                value: '',
+            },
+        ],
+        id: 'orderStatusFilter',
+        name: 'orderStatusFilter',
+        placeholder: 'Все заказы',
+    };
+    const orderStatusOptions = orderStatus.map((orderStatusItem) => ({
+        label: orderStatusItem.name,
+        value: orderStatusItem.id,
+    }));
+    orderStatusFilter.options = [
+        ...orderStatusFilter.options,
+        ...orderStatusOptions,
+    ];
 
     function onCityChange(cityFilter) {
         dispatch(setСityOption(cityFilter));
+    }
+
+    function onOrderStatusChange(newOrderStatusFilter) {
+        dispatch(setOrderStatusOption(newOrderStatusFilter));
     }
 
     const filterData = [
@@ -114,11 +153,18 @@ function OrderListPage() {
             ...citiesFilter,
             onChangeSeleсt: onCityChange,
         },
+        {
+            ...orderStatusFilter,
+            onChangeSeleсt: onOrderStatusChange,
+        },
     ];
     return (
         <PageMainCard pageTitle="Заказы">
             <PageMainCardHeader>
-                <FilterForm filterData={filterData} reset={() => dispatch(resetFilters())} />
+                <FilterForm
+                    filterData={filterData}
+                    reset={() => dispatch(resetFilters())}
+                />
             </PageMainCardHeader>
             <PageMainCardMain>
                 {isFetching ? (
