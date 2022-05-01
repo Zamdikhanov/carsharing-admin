@@ -88,7 +88,10 @@ function RateListPage() {
     return (
         <PageMainCard pageTitle="Стоимость тарифа">
             <PageMainCardHeader>
-                <FilterForm filterData={filterData} reset={() => dispatch(resetFilters())} />
+                <FilterForm
+                    filterData={filterData}
+                    reset={() => dispatch(resetFilters())}
+                />
             </PageMainCardHeader>
             <PageMainCardMain>
                 <StandardListRow

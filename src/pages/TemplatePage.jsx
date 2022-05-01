@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Outlet } from 'react-router-dom';
+import { ErrorBoundary } from 'react-error-boundary';
 import Header from '../components/Header/Header';
 import SideBar from '../components/SideBar/SideBar';
 import useComponentVisible from '../hooks/useComponentVisible';
 import { getFilters } from '../store/filterSlice';
 import css from './TemplatePage.module.scss';
+import ErrorPage from './SettingPages/ErrorPage/ErrorPage';
 
 function TemplatePage() {
     const {
@@ -57,7 +59,9 @@ function TemplatePage() {
                             />
                         </div>
                         <main className={css.main}>
-                            <Outlet />
+                            <ErrorBoundary FallbackComponent={ErrorPage}>
+                                <Outlet />
+                            </ErrorBoundary>
                         </main>
                         <footer className={css.footer}>
                             <ul className={css.link_list}>
