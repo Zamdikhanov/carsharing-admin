@@ -93,13 +93,14 @@
             padding: 0 27.5px;
             @media (max-width: 1023px) {
                 flex: 0 0 48px;
-                padding: 8px 27.5px;
+                padding: 8px 16px;
             }
             @media (max-width: 767px) {
                 flex: 0 1 auto;
             }
-            @media (max-width: 480px) {
+            @media (max-width: 479px) {
                 flex-direction: column;
+                padding: 8px 8px;
             }
         }
     }
