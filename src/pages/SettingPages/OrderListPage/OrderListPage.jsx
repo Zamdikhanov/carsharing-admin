@@ -23,7 +23,6 @@ import {
 } from '../../../store/orderSlice';
 
 function OrderListPage() {
-    const accessToken = useSelector((state) => state.auth.data.access_token);
     const {
         orders,
         pageNumber,
@@ -51,7 +50,6 @@ function OrderListPage() {
                     orderStatusOption.value &&
                     `orderStatusId[id]=${orderStatusOption.value}&`
                 }${sortOption.value}`,
-                accessToken,
             }),
         );
         setQueryParams(sortOption.value);

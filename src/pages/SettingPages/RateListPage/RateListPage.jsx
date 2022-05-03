@@ -86,7 +86,7 @@ function RateListPage() {
     ];
 
     return (
-        <PageMainCard pageTitle="Стоимость тарифа">
+        <PageMainCard pageTitle="Стоимость тарифа" addButton>
             <PageMainCardHeader>
                 <FilterForm
                     filterData={filterData}

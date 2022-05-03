@@ -1,10 +1,8 @@
-import instance from './api';
+import { instanceWithToken } from './api';
 
 const orderApi = {
-    getOrder({ page = 0, limit = 0, options = '', accessToken }) {
-        return instance.get(`/db/order?${options}page=${page}&limit=${limit}`, {
-            headers: { Authorization: `Bearer ${accessToken}` },
-        });
+    getOrder({ page = 0, limit = 0, options = '' }) {
+        return instanceWithToken.get(`/db/order?${options}page=${page}&limit=${limit}`);
     },
 };
 

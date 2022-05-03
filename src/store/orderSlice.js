@@ -114,7 +114,7 @@ export const {
 } = orderSlice.actions;
 
 export const getOrder =
-    ({ page, limit, options, accessToken }) =>
+    ({ page, limit, options, }) =>
     async(dispatch) => {
         dispatch(setIsFetching(true));
         try {
@@ -122,7 +122,6 @@ export const getOrder =
                 page,
                 limit,
                 options,
-                accessToken,
             });
             dispatch(setOrder(response.data));
         } catch {
