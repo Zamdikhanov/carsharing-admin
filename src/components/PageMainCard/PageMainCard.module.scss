@@ -17,9 +17,12 @@
     }
     .button {
         @include button_secondary;
-        margin: 0px 8px 16px;
+        margin: 0px 8px 22px;
         border: 1px solid $color_input_border;
         background-color: transparent;
+        @media (max-width: 1023px) {
+            margin-bottom: 12px;
+        }
     }
 }
 

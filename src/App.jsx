@@ -12,6 +12,7 @@ import CityListPage from './pages/SettingPages/CityListPage/CityListPage';
 import PointListPage from './pages/SettingPages/PointListPage copy/PointListPage';
 import RateTypeListPage from './pages/SettingPages/RateTypeListPage/RateTypeListPage';
 import RateListPage from './pages/SettingPages/RateListPage/RateListPage';
+import RateListEditPage from './pages/SettingPages/RateListEditPage/RateListEditPage';
 
 function App() {
     return (
@@ -41,6 +42,10 @@ function App() {
                         element={<RateTypeListPage />}
                     />
                     <Route path="rate-list" element={<RateListPage />} />
+                    <Route
+                        path="rate-list/edit"
+                        element={<RateListEditPage />}
+                    />
                     <Route path="error" element={<ErrorPage />} />
                 </Route>
 

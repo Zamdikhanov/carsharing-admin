@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import css from './PageMainCard.module.scss';
 
 function PageMainCard({ pageTitle, children, addButton }) {
@@ -6,9 +7,9 @@ function PageMainCard({ pageTitle, children, addButton }) {
             <div className={css.title_block}>
                 <h1 className={css.title}>{pageTitle}</h1>
                 {addButton && (
-                    <button className={css.button} type="button">
+                    <Link className={css.button} to="edit">
                         Добавить
-                    </button>
+                    </Link>
                 )}
             </div>
             <div className={css.card}>{children}</div>
