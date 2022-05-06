@@ -10,9 +10,8 @@ function StandardListRow({
 }) {
     const navigate = useNavigate();
     const incommingArray = [...row];
-    const containerClassName = `${css.container} ${
-        isTitle ? css.container_title : ''
-    }`;
+    const containerClassName = `${css.container} ${isTitle ? css.container_title : ''
+        }`;
     const rowClassName = `${css.details_list} ${isTitle ? css.title : ''}`;
 
     function onChangeButton() {
@@ -23,6 +22,7 @@ function StandardListRow({
     function onDeleteButton() {
         console.log('delete', id);
     }
+
 
     return (
         <div className={containerClassName}>
@@ -49,7 +49,7 @@ function StandardListRow({
                 {!isTitle && (
                     <DoubleButton
                         onChangeButton={() => onChangeButton()}
-                        onDeleteButton={() => onDeleteButton(id)}
+                        onDeleteButton={() => onDeleteButton()}
                     />
                 )}
             </div>

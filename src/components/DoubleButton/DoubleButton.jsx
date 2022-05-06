@@ -1,15 +1,23 @@
+import { useState } from 'react';
 import { ReactComponent as RejectSvg } from '../../assets/icons/reject.svg';
 import { ReactComponent as EditSvg } from '../../assets/icons/edit.svg';
 import css from './DoubleButton.module.scss';
+import Modal from '../Modal/Modal';
 
 function DoubleButton({ onChangeButton, onDeleteButton }) {
-    function onClickDeleteButton() {
-        if (window.confirm('Действительно хотите удалить?')) {
-            onDeleteButton();
-        }
+
+    const [isOpenModule, setIsOpenModule] = useState(false);
+
+    function handleModuleSubmit() {
+        setIsOpenModule(false);
+        onDeleteButton();
     }
 
-    return (
+    function handleModuleCancel() {
+        setIsOpenModule(false);
+    }
+
+    return (<>
         <div className={css.container}>
             <button
                 className={css.button}
@@ -22,12 +30,21 @@ function DoubleButton({ onChangeButton, onDeleteButton }) {
             <button
                 className={css.button}
                 type="button"
-                onClick={onClickDeleteButton}
+                onClick={() => setIsOpenModule(true)}
             >
                 <RejectSvg className={css.svg} />
                 <span>Удалить</span>
             </button>
         </div>
+        <Modal
+            title="Подтверждение операции"
+            isOpen={isOpenModule}
+            onCancel={() => handleModuleCancel()}
+            onSubmit={() => handleModuleSubmit()}
+        >
+            Вы действительно хотите удалить &ldquo;Стоимость тарифа&ldquo; ?
+        </Modal>
+    </>
     );
 }
 
