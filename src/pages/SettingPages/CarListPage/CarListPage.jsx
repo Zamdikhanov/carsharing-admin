@@ -129,21 +129,21 @@ function CarListPage() {
                 />
             </PageMainCardHeader>
             <PageMainCardMain>
-                <CarListRow
-                    key="carTitle"
-                    car={{
-                        name: 'Марка',
-                        priceMin: 'Цена мин',
-                        priceMax: 'макс',
-                        description: 'Описание',
-                        categoryId: { name: 'Категория' },
-                        number: 'Номер',
-                        tank: 'Топливо %',
-                        colors: ['Цвета'],
-                    }}
-                    isTitle
-                />
                 <div className={css.table_container}>
+                    <CarListRow
+                        key="carTitle"
+                        car={{
+                            name: 'Марка',
+                            priceMin: 'Цена мин',
+                            priceMax: 'макс',
+                            description: 'Описание',
+                            categoryId: { name: 'Категория' },
+                            number: 'Номер',
+                            tank: 'Топливо %',
+                            colors: ['Цвета'],
+                        }}
+                        isTitle
+                    />
                     {isFetching ? <Preloader /> : tableData}
                 </div>
             </PageMainCardMain>

@@ -42,7 +42,7 @@ function CarListRow({ car, isTitle = false }) {
                 <div className={css.imageContainer}>
                     {isTitle ? (
                         <div className={css.details_list__row}>
-                            <span>Изображение</span>
+                            <span> &nbsp;&nbsp; Изображение</span>
                         </div>
                     ) : (
                         <img
