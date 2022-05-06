@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
-import orderApi from '../api/orderApi';
+import entityApi from '../api/entityApi';
 
 const initialState = {
     orders: [{
@@ -118,7 +118,8 @@ export const getOrder =
     async(dispatch) => {
         dispatch(setIsFetching(true));
         try {
-            const response = await orderApi.getOrder({
+            const response = await entityApi.getEntity({
+                entity: 'order',
                 page,
                 limit,
                 options,

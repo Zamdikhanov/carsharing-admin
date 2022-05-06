@@ -1,8 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
-import categoryApi from '../api/categoryApi';
-import cityApi from '../api/cityApi';
-import orderStatusApi from '../api/orderStatusApi';
+import entityApi from '../api/entityApi';
 
 const initialState = {
     categories: [{
@@ -55,11 +53,11 @@ export const getFilters = () =>
     async(dispatch) => {
         dispatch(setFilterIsFetching(true));
         try {
-            const categoryResponse = await categoryApi.getCategory({});
+            const categoryResponse = await entityApi.getEntity({ enity: 'category' });
             dispatch(setFilterCategory(categoryResponse.data));
-            const cityResponse = await cityApi.getCity({});
+            const cityResponse = await entityApi.getEntity({ enity: 'city' });
             dispatch(setFilterCity(cityResponse.data));
-            const orderStatusResponse = await orderStatusApi.getOrderStatus({});
+            const orderStatusResponse = await entityApi.getEntity({ enity: 'orderStatus' });
             dispatch(setOrderStatus(orderStatusResponse.data));
         } catch {
             console.log('filter slice error');

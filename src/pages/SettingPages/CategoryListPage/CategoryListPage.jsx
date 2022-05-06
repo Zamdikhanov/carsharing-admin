@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FilterForm from '../../../components/FilterForm/FilterForm';
 import StandardListRow from '../../../components/StandardListRow/StandardListRow';
@@ -10,7 +10,13 @@ import {
 } from '../../../components/PageMainCard/PageMainCard';
 import Pagination from '../../../components/Pagination/Pagination';
 import Preloader from '../../../components/Preloader/Preloader';
-import { getCategory, setPageLimit, setPageNumber, setSortOption, resetFilters } from '../../../store/categorySlice';
+import {
+    getCategory,
+    setPageLimit,
+    setPageNumber,
+    setSortOption,
+    resetFilters,
+} from '../../../store/categorySlice';
 import listSortFilter from './constants';
 import filterFormNumberOnPage from '../../../components/FilterForm/constants';
 
@@ -26,7 +32,6 @@ function CategoryListPage() {
 
     const dispatch = useDispatch();
 
-    const [queryParams, setQueryParams] = useState('');
     const paginationPageCount = Math.ceil(rateCount / pageLimit.value);
 
     useEffect(() => {
@@ -37,17 +42,9 @@ function CategoryListPage() {
                 options: sortOption.value,
             }),
         );
-        setQueryParams(sortOption.value);
     }, [pageNumber, pageLimit, sortOption.value]);
 
     function handlePageChange(newPageNumber) {
-        dispatch(
-            getCategory({
-                page: newPageNumber,
-                limit: pageLimit.value,
-                options: queryParams,
-            }),
-        );
         dispatch(setPageNumber(newPageNumber));
     }
 
@@ -82,7 +79,10 @@ function CategoryListPage() {
     return (
         <PageMainCard pageTitle="Категории автомобилей">
             <PageMainCardHeader>
-                <FilterForm filterData={filterData} reset={() => dispatch(resetFilters())} />
+                <FilterForm
+                    filterData={filterData}
+                    reset={() => dispatch(resetFilters())}
+                />
             </PageMainCardHeader>
             <PageMainCardMain>
                 <StandardListRow row={['Категория', 'Описание']} isTitle />

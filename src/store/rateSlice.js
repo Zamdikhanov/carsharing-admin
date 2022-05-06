@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
-import rateApi from '../api/rateApi';
+import entityApi from '../api/entityApi';
 
 const initialState = {
     rate: [{
@@ -69,7 +69,8 @@ export const getRate =
     async(dispatch) => {
         dispatch(setIsFetching(true));
         try {
-            const response = await rateApi.getRate({
+            const response = await entityApi.getEntity({
+                entity: 'rate',
                 page,
                 limit,
                 options,

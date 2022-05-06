@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
-import categoryApi from '../api/categoryApi';
+import entityApi from '../api/entityApi';
 
 const initialState = {
     categories: [{
@@ -65,7 +65,8 @@ export const getCategory =
     async(dispatch) => {
         dispatch(setIsFetching(true));
         try {
-            const response = await categoryApi.getCategory({
+            const response = await entityApi.getEntity({
+                entity: 'category',
                 page,
                 limit,
                 options,
