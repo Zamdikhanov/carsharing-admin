@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FilterForm from '../../../components/FilterForm/FilterForm';
 import CarListRow from '../../../components/CarListRow/CarListRow';
@@ -20,6 +20,7 @@ import {
 } from '../../../store/carSlice';
 import listSortFilter from './constants';
 import filterFormNumberOnPage from '../../../components/FilterForm/constants';
+import css from './CarListPage.module.scss';
 
 function CarListPage() {
     const {
@@ -56,7 +57,6 @@ function CarListPage() {
 
     const dispatch = useDispatch();
 
-    const [queryParams, setQueryParams] = useState('');
     const paginationPageCount = Math.ceil(rateCount / pageLimit.value);
 
     useEffect(() => {
@@ -70,17 +70,9 @@ function CarListPage() {
                 }`,
             }),
         );
-        setQueryParams(sortOption.value);
     }, [pageNumber, pageLimit, sortOption.value, categoryOption.value]);
 
     function handlePageChange(newPageNumber) {
-        dispatch(
-            getCar({
-                page: newPageNumber,
-                limit: pageLimit.value,
-                options: queryParams,
-            }),
-        );
         dispatch(setPageNumber(newPageNumber));
     }
 
@@ -122,7 +114,7 @@ function CarListPage() {
 
     const tableData = cars.length ? (
         cars.map((car) => {
-            return <CarListRow key={car.id} {...car} />;
+            return <CarListRow key={car.id} car={car} />;
         })
     ) : (
         <div style={{ padding: '16px 0px', fontSize: '20px' }}>Нет данных</div>
@@ -137,7 +129,23 @@ function CarListPage() {
                 />
             </PageMainCardHeader>
             <PageMainCardMain>
-                {isFetching ? <Preloader /> : tableData}
+                <div className={css.table_container}>
+                    <CarListRow
+                        key="carTitle"
+                        car={{
+                            name: 'Марка',
+                            priceMin: 'Цена мин',
+                            priceMax: 'макс',
+                            description: 'Описание',
+                            categoryId: { name: 'Категория' },
+                            number: 'Номер',
+                            tank: 'Топливо %',
+                            colors: ['Цвета'],
+                        }}
+                        isTitle
+                    />
+                    {isFetching ? <Preloader /> : tableData}
+                </div>
             </PageMainCardMain>
             <PageMainCardFooter>
                 <Pagination

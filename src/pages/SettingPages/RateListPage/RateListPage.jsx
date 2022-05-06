@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FilterForm from '../../../components/FilterForm/FilterForm';
 import StandardListRow from '../../../components/StandardListRow/StandardListRow';
@@ -32,7 +32,6 @@ function RateListPage() {
 
     const dispatch = useDispatch();
 
-    const [queryParams, setQueryParams] = useState('');
     const paginationPageCount = Math.ceil(rateCount / pageLimit.value);
 
     useEffect(() => {
@@ -43,17 +42,9 @@ function RateListPage() {
                 options: sortOption.value,
             }),
         );
-        setQueryParams(sortOption.value);
     }, [pageNumber, pageLimit, sortOption.value]);
 
     function handlePageChange(newPageNumber) {
-        dispatch(
-            getRate({
-                page: newPageNumber,
-                limit: pageLimit.value,
-                options: queryParams,
-            }),
-        );
         dispatch(setPageNumber(newPageNumber));
     }
 
@@ -105,6 +96,7 @@ function RateListPage() {
                         return (
                             <StandardListRow
                                 key={rateItem.id}
+                                id={rateItem.id}
                                 row={[
                                     rateItem?.rateTypeId?.name,
                                     rateItem.price,

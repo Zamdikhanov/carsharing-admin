@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
-import carApi from '../api/carApi';
+import entityApi from '../api/entityApi';
 
 const initialState = {
     cars: [{
@@ -91,7 +91,8 @@ export const getCar =
     async(dispatch) => {
         dispatch(setIsFetching(true));
         try {
-            const response = await carApi.getCar({
+            const response = await entityApi.getEntity({
+                entity: 'car',
                 page,
                 limit,
                 options,

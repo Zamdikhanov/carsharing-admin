@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import rateTypeApi from '../../../api/rateTypeApi';
+import entityApi from '../../../api/entityApi';
 import {
     PageMainCard,
     PageMainCardMain,
@@ -16,7 +16,11 @@ function RateListEditPage() {
     useEffect(() => {
         let response;
         async function fetchData() {
-            response = await rateTypeApi.getRateType({ page: 0, limit: 0 });
+            response = await entityApi.getEntity({
+                entity: 'rateType',
+                page: 0,
+                limit: 0,
+            });
             const responseOptions = response.data.data.map((item) => ({
                 value: item.id,
                 label: item.name,
@@ -42,7 +46,6 @@ function RateListEditPage() {
     });
 
     const resetError = () => {
-        console.log('reset clicked');
         clearErrors('Тариф');
     };
 
@@ -108,7 +111,10 @@ function RateListEditPage() {
                             <button className={css.button} type="submit">
                                 Сохранить
                             </button>
-                            <Link className={css.button_secondary} to={-1}>
+                            <Link
+                                className={css.button_secondary}
+                                to="/admin/rate-list"
+                            >
                                 Отменить
                             </Link>
                         </div>

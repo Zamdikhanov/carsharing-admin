@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import FilterForm from '../../../components/FilterForm/FilterForm';
 import OrderListRow from '../../../components/OrderListRow/OrderListRow';
@@ -36,7 +36,6 @@ function OrderListPage() {
 
     const dispatch = useDispatch();
 
-    const [queryParams, setQueryParams] = useState('');
     const paginationPageCount = Math.ceil(orderCount / pageLimit.value);
 
     useEffect(() => {
@@ -52,7 +51,6 @@ function OrderListPage() {
                 }${sortOption.value}`,
             }),
         );
-        setQueryParams(sortOption.value);
     }, [
         pageNumber,
         pageLimit,
@@ -62,13 +60,6 @@ function OrderListPage() {
     ]);
 
     function handlePageChange(newPageNumber) {
-        dispatch(
-            getOrder({
-                page: newPageNumber,
-                limit: pageLimit.value,
-                options: queryParams,
-            }),
-        );
         dispatch(setPageNumber(newPageNumber));
     }
 

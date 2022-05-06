@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
-import cityApi from '../api/cityApi';
+import entityApi from '../api/entityApi';
 
 const initialState = {
     cities: [{
@@ -64,7 +64,8 @@ export const getCity =
     async(dispatch) => {
         dispatch(setIsFetching(true));
         try {
-            const response = await cityApi.getCity({
+            const response = await entityApi.getEntity({
+                entity: 'city',
                 page,
                 limit,
                 options,

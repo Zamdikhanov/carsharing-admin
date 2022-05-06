@@ -1,11 +1,29 @@
+import { useNavigate } from 'react-router-dom';
 import DoubleButton from '../DoubleButton/DoubleButton';
 import css from './StandardListRow.module.scss';
 
-function StandardListRow({ row, rowTitles = [1, 2, 3, 4, 5], isTitle = false }) {
+function StandardListRow({
+    id,
+    row,
+    rowTitles = [1, 2, 3, 4, 5],
+    isTitle = false,
+}) {
+    const navigate = useNavigate();
     const incommingArray = [...row];
-    const containerClassName = `${css.container} ${isTitle ? css.container_title : ''
-        }`;
+    const containerClassName = `${css.container} ${
+        isTitle ? css.container_title : ''
+    }`;
     const rowClassName = `${css.details_list} ${isTitle ? css.title : ''}`;
+
+    function onChangeButton() {
+        console.log('change', id);
+        navigate('edit', id);
+    }
+
+    function onDeleteButton() {
+        console.log('delete', id);
+    }
+
     return (
         <div className={containerClassName}>
             {incommingArray.map((rowItem, index) => (
@@ -27,7 +45,14 @@ function StandardListRow({ row, rowTitles = [1, 2, 3, 4, 5], isTitle = false }) 
                     )}
                 </div>
             ))}
-            <div className={css.buttons}>{!isTitle && <DoubleButton />}</div>
+            <div className={css.buttons}>
+                {!isTitle && (
+                    <DoubleButton
+                        onChangeButton={() => onChangeButton()}
+                        onDeleteButton={() => onDeleteButton(id)}
+                    />
+                )}
+            </div>
         </div>
     );
 }
