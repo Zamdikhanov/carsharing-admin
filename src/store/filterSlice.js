@@ -53,11 +53,11 @@ export const getFilters = () =>
     async(dispatch) => {
         dispatch(setFilterIsFetching(true));
         try {
-            const categoryResponse = await entityApi.getEntity({ enity: 'category' });
+            const categoryResponse = await entityApi.getEntity({ entity: 'category' });
             dispatch(setFilterCategory(categoryResponse.data));
-            const cityResponse = await entityApi.getEntity({ enity: 'city' });
+            const cityResponse = await entityApi.getEntity({ entity: 'city' });
             dispatch(setFilterCity(cityResponse.data));
-            const orderStatusResponse = await entityApi.getEntity({ enity: 'orderStatus' });
+            const orderStatusResponse = await entityApi.getEntity({ entity: 'orderStatus' });
             dispatch(setOrderStatus(orderStatusResponse.data));
         } catch {
             console.log('filter slice error');
