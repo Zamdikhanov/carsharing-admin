@@ -29,6 +29,7 @@ function RateListPage() {
         sortOption,
         isFetching,
     } = useSelector((state) => state.rate);
+    const { manualRerender } = useSelector((state) => state.app);
 
     const dispatch = useDispatch();
 
@@ -42,7 +43,7 @@ function RateListPage() {
                 options: sortOption.value,
             }),
         );
-    }, [pageNumber, pageLimit, sortOption.value]);
+    }, [pageNumber, pageLimit, sortOption.value, manualRerender]);
 
     function handlePageChange(newPageNumber) {
         dispatch(setPageNumber(newPageNumber));
@@ -97,6 +98,7 @@ function RateListPage() {
                             <StandardListRow
                                 key={rateItem.id}
                                 id={rateItem.id}
+                                entityName="rate"
                                 row={[
                                     rateItem?.rateTypeId?.name,
                                     rateItem.price,

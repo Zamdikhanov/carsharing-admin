@@ -29,6 +29,7 @@ function PointListPage() {
         sortOption,
         isFetching,
     } = useSelector((state) => state.point);
+    const { manualRerender } = useSelector((state) => state.app);
 
     const dispatch = useDispatch();
 
@@ -42,7 +43,7 @@ function PointListPage() {
                 options: sortOption.value,
             }),
         );
-    }, [pageNumber, pageLimit, sortOption.value]);
+    }, [pageNumber, pageLimit, sortOption.value, manualRerender]);
 
     function handlePageChange(newPageNumber) {
         dispatch(setPageNumber(newPageNumber));
@@ -77,7 +78,7 @@ function PointListPage() {
     ];
 
     return (
-        <PageMainCard pageTitle="Точки выдачи">
+        <PageMainCard pageTitle="Точки выдачи" addButton>
             <PageMainCardHeader>
                 <FilterForm
                     filterData={filterData}
@@ -96,6 +97,8 @@ function PointListPage() {
                         return (
                             <StandardListRow
                                 key={pointItem.id}
+                                id={pointItem.id}
+                                entityName="point"
                                 row={[
                                     pointItem?.cityId?.name,
                                     pointItem.name,

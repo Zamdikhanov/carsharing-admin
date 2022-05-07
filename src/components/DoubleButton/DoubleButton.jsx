@@ -5,7 +5,6 @@ import css from './DoubleButton.module.scss';
 import Modal from '../Modal/Modal';
 
 function DoubleButton({ onChangeButton, onDeleteButton }) {
-
     const [isOpenModule, setIsOpenModule] = useState(false);
 
     function handleModuleSubmit() {
@@ -17,34 +16,35 @@ function DoubleButton({ onChangeButton, onDeleteButton }) {
         setIsOpenModule(false);
     }
 
-    return (<>
-        <div className={css.container}>
-            <button
-                className={css.button}
-                type="button"
-                onClick={onChangeButton}
+    return (
+        <>
+            <div className={css.container}>
+                <button
+                    className={css.button}
+                    type="button"
+                    onClick={onChangeButton}
+                >
+                    <EditSvg className={css.svg} />
+                    <span>Изменить</span>
+                </button>
+                <button
+                    className={css.button}
+                    type="button"
+                    onClick={() => setIsOpenModule(true)}
+                >
+                    <RejectSvg className={css.svg} />
+                    <span>Удалить</span>
+                </button>
+            </div>
+            <Modal
+                title="Подтверждение операции"
+                isOpen={isOpenModule}
+                onCancel={() => handleModuleCancel()}
+                onSubmit={() => handleModuleSubmit()}
             >
-                <EditSvg className={css.svg} />
-                <span>Изменить</span>
-            </button>
-            <button
-                className={css.button}
-                type="button"
-                onClick={() => setIsOpenModule(true)}
-            >
-                <RejectSvg className={css.svg} />
-                <span>Удалить</span>
-            </button>
-        </div>
-        <Modal
-            title="Подтверждение операции"
-            isOpen={isOpenModule}
-            onCancel={() => handleModuleCancel()}
-            onSubmit={() => handleModuleSubmit()}
-        >
-            Вы действительно хотите удалить &ldquo;Стоимость тарифа&ldquo; ?
-        </Modal>
-    </>
+                Вы действительно хотите удалить ?
+            </Modal>
+        </>
     );
 }
 

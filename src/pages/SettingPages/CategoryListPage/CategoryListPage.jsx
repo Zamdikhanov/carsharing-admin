@@ -29,6 +29,7 @@ function CategoryListPage() {
         sortOption,
         isFetching,
     } = useSelector((state) => state.category);
+    const { manualRerender } = useSelector((state) => state.app);
 
     const dispatch = useDispatch();
 
@@ -42,7 +43,7 @@ function CategoryListPage() {
                 options: sortOption.value,
             }),
         );
-    }, [pageNumber, pageLimit, sortOption.value]);
+    }, [pageNumber, pageLimit, sortOption.value, manualRerender]);
 
     function handlePageChange(newPageNumber) {
         dispatch(setPageNumber(newPageNumber));
@@ -77,7 +78,7 @@ function CategoryListPage() {
     ];
 
     return (
-        <PageMainCard pageTitle="Категории автомобилей">
+        <PageMainCard pageTitle="Категории автомобилей" addButton>
             <PageMainCardHeader>
                 <FilterForm
                     filterData={filterData}
@@ -93,6 +94,8 @@ function CategoryListPage() {
                         return (
                             <StandardListRow
                                 key={category.id}
+                                id={category.id}
+                                entityName="category"
                                 row={[category.name, category.description]}
                                 rowTitles={['Категория:', 'Описание:']}
                             />

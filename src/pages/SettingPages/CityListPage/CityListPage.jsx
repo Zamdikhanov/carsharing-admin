@@ -29,6 +29,7 @@ function CityListPage() {
         sortOption,
         isFetching,
     } = useSelector((state) => state.city);
+    const { manualRerender } = useSelector((state) => state.app);
 
     const dispatch = useDispatch();
 
@@ -42,7 +43,7 @@ function CityListPage() {
                 options: sortOption.value,
             }),
         );
-    }, [pageNumber, pageLimit, sortOption.value]);
+    }, [pageNumber, pageLimit, sortOption.value, manualRerender]);
 
     function handlePageChange(newPageNumber) {
         dispatch(setPageNumber(newPageNumber));
@@ -77,7 +78,7 @@ function CityListPage() {
     ];
 
     return (
-        <PageMainCard pageTitle="Города">
+        <PageMainCard pageTitle="Города" addButton>
             <PageMainCardHeader>
                 <FilterForm
                     filterData={filterData}
@@ -93,6 +94,8 @@ function CityListPage() {
                         return (
                             <StandardListRow
                                 key={cityItem.id}
+                                id={cityItem.id}
+                                entityName="city"
                                 row={[cityItem.name]}
                                 rowTitles={['Город:']}
                             />

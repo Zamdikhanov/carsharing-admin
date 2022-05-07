@@ -29,6 +29,7 @@ function RateTypeListPage() {
         sortOption,
         isFetching,
     } = useSelector((state) => state.rateType);
+    const { manualRerender } = useSelector((state) => state.app);
 
     const dispatch = useDispatch();
 
@@ -42,7 +43,7 @@ function RateTypeListPage() {
                 options: sortOption.value,
             }),
         );
-    }, [pageNumber, pageLimit, sortOption.value]);
+    }, [pageNumber, pageLimit, sortOption.value, manualRerender]);
 
     function handlePageChange(newPageNumber) {
         dispatch(setPageNumber(newPageNumber));
@@ -77,7 +78,7 @@ function RateTypeListPage() {
     ];
 
     return (
-        <PageMainCard pageTitle="Тарифы">
+        <PageMainCard pageTitle="Тарифы" addButton>
             <PageMainCardHeader>
                 <FilterForm
                     filterData={filterData}
@@ -93,6 +94,8 @@ function RateTypeListPage() {
                         return (
                             <StandardListRow
                                 key={rateTypeItem.id}
+                                id={rateTypeItem.id}
+                                entityName="rateType"
                                 row={[rateTypeItem.name, rateTypeItem.unit]}
                                 rowTitles={['Название:', 'Ед. измерения:']}
                             />

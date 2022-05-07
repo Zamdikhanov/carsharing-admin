@@ -11,11 +11,20 @@ function DropdownIndicator(props) {
 }
 
 function SelectWithLabel(props) {
-    const { label, placeholder, id, errors, options, type, field, onChange } =
-        props;
+    const {
+        label,
+        name,
+        placeholder,
+        id,
+        errors,
+        options,
+        type,
+        field,
+        onChange,
+    } = props;
 
     const classNameSelect = `${css.input} ${
-        errors && errors[label] && css.input_error
+        errors && errors[name] && css.input_error
     }`;
 
     return (
@@ -39,8 +48,8 @@ function SelectWithLabel(props) {
                     required
                 />
             </label>
-            {errors && errors[label] && (
-                <div className={css.error}>{errors[label].message}</div>
+            {errors && errors[name] && (
+                <div className={css.error}>{errors[name].message}</div>
             )}
         </div>
     );

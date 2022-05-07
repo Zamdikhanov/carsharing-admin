@@ -12,7 +12,11 @@ import CityListPage from './pages/SettingPages/CityListPage/CityListPage';
 import PointListPage from './pages/SettingPages/PointListPage copy/PointListPage';
 import RateTypeListPage from './pages/SettingPages/RateTypeListPage/RateTypeListPage';
 import RateListPage from './pages/SettingPages/RateListPage/RateListPage';
-import RateListEditPage from './pages/SettingPages/RateListEditPage/RateListEditPage';
+import RateListEditPage from './pages/SettingPages/RateListPage/RateListEditPage/RateListEditPage';
+import RateTypeListEditPage from './pages/SettingPages/RateTypeListPage/RateTypeListEditPage/RateTypeListEditPage';
+import CityListEditPage from './pages/SettingPages/CityListPage/CityListEditPage/CityListEditPage';
+import PointListEditPage from './pages/SettingPages/PointListPage copy/PointListEditPage/PointListEditPage';
+import CategoryListEditPage from './pages/SettingPages/CategoryListPage/CategoryListEditPage/CategoryListEditPage';
 
 function App() {
     return (
@@ -35,11 +39,27 @@ function App() {
                         path="category-list"
                         element={<CategoryListPage />}
                     />
+                    <Route
+                        path="category-list/edit"
+                        element={<CategoryListEditPage />}
+                    />
                     <Route path="city-list" element={<CityListPage />} />
+                    <Route
+                        path="city-list/edit"
+                        element={<CityListEditPage />}
+                    />
                     <Route path="point-list" element={<PointListPage />} />
+                    <Route
+                        path="point-list/edit"
+                        element={<PointListEditPage />}
+                    />
                     <Route
                         path="rate-type-list"
                         element={<RateTypeListPage />}
+                    />
+                    <Route
+                        path="rate-type-list/edit"
+                        element={<RateTypeListEditPage />}
                     />
                     <Route path="rate-list" element={<RateListPage />} />
                     <Route
