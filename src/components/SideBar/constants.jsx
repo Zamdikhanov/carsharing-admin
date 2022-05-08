@@ -41,7 +41,7 @@ const links = [
     {
         id: 'link07',
         link: '/admin/rate-type-list',
-        linkText: 'Тарифы',
+        linkText: 'Типы тарифов',
         icon: () => <CreditCardSvg className={css.link_icon} />,
     },
     {

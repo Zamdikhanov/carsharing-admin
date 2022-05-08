@@ -51,6 +51,9 @@ function SelectWithLabel(props) {
             {errors && errors[name] && (
                 <div className={css.error}>{errors[name].message}</div>
             )}
+            {errors && errors[label]?.type === 'required' && (
+                <div className={css.error}>Обязательное поле</div>
+            )}
         </div>
     );
 }

@@ -1,0 +1,102 @@
+@import '../../../../styles/variables.scss';
+@import '../../../../styles/mixins.scss';
+.container {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    padding: 28px;
+    @media (max-width: 1023px) {
+        padding: 16px 16px 8px;
+    }
+    @media (max-width: 479px) {
+        padding: 16px 0px 8px;
+    }
+    .title_block {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        .title {
+            display: inline-flex;
+            font-family: $font_title;
+            font-weight: 400;
+            font-size: 29px;
+            line-height: 33px;
+            letter-spacing: -0.725px;
+            color: $color_title_text;
+            margin-bottom: 28px;
+            @media (max-width: 1023px) {
+                margin-bottom: 16px;
+            }
+            @media (max-width: 479px) {
+                padding: 0px 8px;
+            }
+        }
+    }
+    .content_section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 28px;
+        width: 100%;
+        @media (max-width: 1023px) {
+            gap: 16px;
+        }
+    }
+}
+
+.card {
+    align-self: flex-start;
+    background: #ffffff;
+    box-shadow: 0px 2px 0px rgba(90, 97, 105, 0.11), 0px 4px 8px rgba(90, 97, 105, 0.12), 0px 10px 10px rgba(90, 97, 105, 0.06), 0px 7px 70px rgba(90, 97, 105, 0.1);
+    border-radius: 9px;
+    flex: 1 1 334px;
+    @media (max-width: 479px) {
+        border-radius: 0px;
+    }
+    &::after {
+        position: relative;
+        display: block;
+        content: '';
+        color: transparent;
+        background-color: transparent;
+        height: 0.1px;
+        bottom: -28px;
+        @media (max-width: 1023px) {
+            height: 0px;
+        }
+    }
+    &.card2 {
+        flex: 1 1 697px;
+    }
+}
+
+.central_container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 16px 0px;
+    column-gap: 21px;
+    .element_container {
+        flex: 1 1 250px;
+    }
+}
+
+.button_block {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 16px;
+}
+
+.button {
+    @include button_success;
+    justify-self: normal;
+    margin-right: 12.5px;
+}
+
+.button_reset {
+    @include button_danger;
+}
+
+.button_secondary {
+    @include button_secondary;
+    justify-self: flex-start;
+}

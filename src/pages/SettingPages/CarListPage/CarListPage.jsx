@@ -33,6 +33,8 @@ function CarListPage() {
         isFetching,
     } = useSelector((state) => state.car);
 
+    const { manualRerender } = useSelector((state) => state.app);
+
     const { categories } = useSelector((state) => state.filter);
     const categoriesFilter = {
         defaultValue: categoryOption,
@@ -70,7 +72,13 @@ function CarListPage() {
                 }`,
             }),
         );
-    }, [pageNumber, pageLimit, sortOption.value, categoryOption.value]);
+    }, [
+        pageNumber,
+        pageLimit,
+        sortOption.value,
+        categoryOption.value,
+        manualRerender,
+    ]);
 
     function handlePageChange(newPageNumber) {
         dispatch(setPageNumber(newPageNumber));
@@ -121,7 +129,7 @@ function CarListPage() {
     );
 
     return (
-        <PageMainCard pageTitle="Автомобили">
+        <PageMainCard pageTitle="Автомобили" addButton>
             <PageMainCardHeader>
                 <FilterForm
                     filterData={filterData}

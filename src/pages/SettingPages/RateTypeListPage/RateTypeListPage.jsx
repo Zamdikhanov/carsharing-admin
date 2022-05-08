@@ -78,7 +78,7 @@ function RateTypeListPage() {
     ];
 
     return (
-        <PageMainCard pageTitle="Тарифы" addButton>
+        <PageMainCard pageTitle="Типы тарифов" addButton>
             <PageMainCardHeader>
                 <FilterForm
                     filterData={filterData}

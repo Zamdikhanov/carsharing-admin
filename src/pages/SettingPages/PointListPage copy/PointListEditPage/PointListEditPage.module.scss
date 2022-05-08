@@ -4,7 +4,7 @@
     display: flex;
     flex-wrap: wrap;
     padding: 16px 0px;
-    gap: 21px;
+    column-gap: 21px;
     .element_container {
         flex: 1 1 250px;
     }

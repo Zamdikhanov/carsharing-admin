@@ -1,7 +1,11 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import DoubleButton from '../DoubleButton/DoubleButton';
 import carStubPicture from '../../assets/images/car-stub-picture.png';
 import css from './CarListRow.module.scss';
+import entityApi from '../../api/entityApi';
+import { setManualRerender } from '../../store/appSlice';
 
 function CarListRow({ car, isTitle = false }) {
     const {
@@ -14,10 +18,22 @@ function CarListRow({ car, isTitle = false }) {
         number,
         tank,
         colors,
-        // id,
+        id,
     } = car;
 
     const [hasError, setHasError] = useState(false);
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    function onChangeButton() {
+        navigate(`edit?id=${id}`);
+    }
+
+    async function onDeleteButton() {
+        await entityApi.deleteEntity({ entity: 'car', id });
+        setTimeout(dispatch(setManualRerender()), 100);
+    }
 
     const containerClassName = `${css.container} ${
         isTitle ? css.container_title : ''
@@ -69,7 +85,12 @@ function CarListRow({ car, isTitle = false }) {
                 </div>
             </div>
             <div className={css.buttons}>
-                {isTitle ? null : <DoubleButton />}
+                {isTitle ? null : (
+                    <DoubleButton
+                        onChangeButton={() => onChangeButton()}
+                        onDeleteButton={() => onDeleteButton()}
+                    />
+                )}
             </div>
         </div>
     );
