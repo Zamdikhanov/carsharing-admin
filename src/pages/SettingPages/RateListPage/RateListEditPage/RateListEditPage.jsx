@@ -107,6 +107,7 @@ function RateListEditPage() {
                             <Controller
                                 name="rate"
                                 control={control}
+                                rules={{ required: 'Обязательное поле' }}
                                 render={({ field }) => (
                                     <SelectWithLabel
                                         errors={errors}

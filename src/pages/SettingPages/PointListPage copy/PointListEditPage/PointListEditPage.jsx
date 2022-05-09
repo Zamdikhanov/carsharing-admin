@@ -108,6 +108,7 @@ function PointListEditPage() {
                             <Controller
                                 name="city"
                                 control={control}
+                                rules={{ required: 'Обязательное поле' }}
                                 render={({ field }) => (
                                     <SelectWithLabel
                                         errors={errors}
