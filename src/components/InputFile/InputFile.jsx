@@ -6,11 +6,11 @@ function InputFile({
     placeholder,
     errors,
     register,
+    onChange,
     ...rest
 }) {
-    const classNameLabel = `${css.label} ${
-        errors && errors[label] && css.label_error
-    }`;
+    const classNameLabel = `${css.label} ${errors && errors[label] && css.label_error
+        }`;
 
     return (
         <div className={css.input_container}>
@@ -24,6 +24,7 @@ function InputFile({
                     placeholder={placeholder}
                     autoComplete="off"
                     {...register(label, { ...rest })}
+                    onChange={onChange}
                 />
             </label>
             {errors && errors[label]?.message && (

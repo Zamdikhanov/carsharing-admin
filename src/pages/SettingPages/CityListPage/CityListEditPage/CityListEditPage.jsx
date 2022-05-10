@@ -57,7 +57,7 @@ function CityListEditPage() {
                 data: resultData,
             });
         }
-        navigate('/admin/city-list');
+        setTimeout(navigate('/admin/city-list'), 100);
     };
 
     const pageTitle = id ? 'Изменение города' : 'Добавление города';

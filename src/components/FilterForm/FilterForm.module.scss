@@ -63,6 +63,7 @@
         min-height: auto;
         border: none;
         cursor: pointer;
+        background-color: inherit;
     }
     [class*='-ValueContainer'] {
         color: $color_gray_dark;

@@ -19,7 +19,7 @@
         cursor: pointer;
         font-size: 11px;
         line-height: 13px;
-        letter-spacing: -0.175px;
+        letter-spacing: -0.17px;
         height: 30px;
         width: 232px;
         border: 0.5px solid $color_input_border;
@@ -48,6 +48,11 @@
         .placeholder {
             padding: 8px 11px;
             flex: 1 0 calc(100% - 65.5px);
+            font: inherit;
+            span {
+                color: $color_gray_dark;
+                font: inherit;
+            }
         }
         .button_text {
             display: flex;
@@ -60,6 +65,7 @@
             border-bottom-right-radius: 3px;
             border-top-right-radius: 3px;
             background-color: $color_gray_light;
+            color: $color_main_text;
         }
     }
     & .input {
@@ -75,7 +81,7 @@
         width: calc(100% - 12px);
         font-size: 10px;
         line-height: 11px;
-        letter-spacing: -0.175439px;
+        letter-spacing: -0.17px;
         color: $color_alert;
     }
     &+.input_container {

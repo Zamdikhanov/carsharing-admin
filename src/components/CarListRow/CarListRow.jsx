@@ -32,12 +32,11 @@ function CarListRow({ car, isTitle = false }) {
 
     async function onDeleteButton() {
         await entityApi.deleteEntity({ entity: 'car', id });
-        setTimeout(dispatch(setManualRerender()), 100);
+        setTimeout(dispatch(setManualRerender()), 0);
     }
 
-    const containerClassName = `${css.container} ${
-        isTitle ? css.container_title : ''
-    }`;
+    const containerClassName = `${css.container} ${isTitle ? css.container_title : ''
+        }`;
 
     return (
         <div className={containerClassName}>

@@ -109,7 +109,7 @@
         font-size: 12.5px;
         line-height: 14px;
         text-align: center;
-        letter-spacing: -0.3px;
+        letter-spacing: -0.17px;
         color: $color_gray_dark;
         margin-bottom: 10px;
     }
@@ -124,7 +124,7 @@
         font-weight: 500;
         font-size: 13px;
         line-height: 15px;
-        letter-spacing: -0.4px;
+        letter-spacing: -0.17px;
         color: $color_gray_dark;
         margin-bottom: 13.5px;
     }
@@ -136,6 +136,7 @@
         line-height: 20px;
         letter-spacing: -0.4px;
         color: $color_main_text;
+        min-height: 40px;
     }
 }
 

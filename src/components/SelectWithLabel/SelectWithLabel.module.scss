@@ -16,7 +16,7 @@
         display: block;
         font-size: 10.5px;
         line-height: 12px;
-        letter-spacing: -0.18421px;
+        letter-spacing: -0.17px;
         margin-bottom: 8px;
         @media (max-width: 1023px) {
             margin-bottom: 6px;
@@ -30,7 +30,7 @@
         width: calc(100% - 12px);
         font-size: 10px;
         line-height: 11px;
-        letter-spacing: -0.175439px;
+        letter-spacing: -0.17px;
         color: $color_alert;
     }
     &+.input_container {
@@ -65,6 +65,7 @@
         min-height: auto;
         border: none;
         cursor: pointer;
+        background-color: inherit;
     }
     [class*='-ValueContainer'] {
         color: $color_gray_dark;
@@ -80,7 +81,7 @@
         font-weight: 400;
         font-size: 11px;
         line-height: 13px;
-        letter-spacing: -0.345714px;
+        letter-spacing: -0.17px;
         &:hover {
             color: $color_main_choice;
         }
@@ -107,11 +108,17 @@
         font-weight: 400;
         font-size: 11px;
         line-height: 13px;
-        letter-spacing: -0.345714px;
+        letter-spacing: -0.17px;
     }
     [class*='-placeholder'] {
         margin: 0;
         padding: 0;
+        font-family: $font_title;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 11px;
+        line-height: 13px;
+        letter-spacing: -0.17px;
     }
     [class*='__menu'] {
         margin-top: 3px;
