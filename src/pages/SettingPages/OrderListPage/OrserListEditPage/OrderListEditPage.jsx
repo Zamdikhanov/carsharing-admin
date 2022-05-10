@@ -153,7 +153,6 @@ function OrderListEditPage() {
     }, []);
 
     useEffect(() => {
-        setValue('point', null);
         async function fetchData() {
             if (formData.city.value) {
                 const responsePoint = await entityApi.getEntity({
@@ -169,13 +168,14 @@ function OrderListEditPage() {
                     }),
                 );
                 setPointOptions(responsePointOptions);
+                const res = responsePointOptions.some(el => el.value === formData.point.value);
+                if (!res) setValue('point', null);
             }
         }
         fetchData();
     }, [formData.city]);
 
     useEffect(() => {
-        setValue('color', null);
         async function fetchData() {
             if (formData.car.value) {
                 const responseColor = await entityApi.getEntity({
@@ -190,6 +190,8 @@ function OrderListEditPage() {
                     }),
                 );
                 setColorOptions([...responseColorOptions, { value: null, label: 'Любой' }]);
+                const res = responseColorOptions.some(el => el.value === formData.color.value);
+                if (!res) setValue('color', null);
             }
         }
         fetchData();
