@@ -10,10 +10,15 @@ import css from './CarListEditPage.module.scss';
 import TextArea from '../../../../components/TextArea/TextArea';
 import InputFile from '../../../../components/InputFile/InputFile';
 import { setManualRerender } from '../../../../store/appSlice';
+import Checkbox from '../../../../components/Checkbox/Checkbox';
+import InputWithButton from '../../../../components/InputWithButton/InputWithButton';
 
 function CarListEditPage() {
     const [categoryOptions, setCategoryOptions] = useState([]);
+    const [colors, setColors] = useState([]);
+    const [preview, setPreview] = useState();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [searchParams] = useSearchParams();
     const id = searchParams.get('id');
 
@@ -31,12 +36,12 @@ function CarListEditPage() {
         defaultValues: {
             category: null,
             [`Модель автомобиля`]: null,
-            // [`Фото автомобиля`]: {
-            //     path: '',
-            //     mimetype: '',
-            //     originalname: '',
-            //     size: 0,
-            // },
+            [`Фото автомобиля`]: {
+                path: '',
+                mimetype: '',
+                originalname: '',
+                size: 0,
+            },
             [`Номер автомобиля`]: null,
             [`Описание`]: null,
             [`Минимальная цена`]: null,
@@ -45,9 +50,6 @@ function CarListEditPage() {
         },
         rules: { required: true },
     });
-
-    // const [hasError, setHasError] = useState(false);
-    // const [carData, setCarData] = useState(null);
 
     const formData = watch();
 
@@ -72,7 +74,6 @@ function CarListEditPage() {
                     page: 0,
                     limit: 0,
                 });
-                // setCarData(responseCar.data.data);
                 const car = responseCar.data.data;
                 setValue('Модель автомобиля', car.name);
                 setValue('Номер автомобиля', car.number);
@@ -86,10 +87,17 @@ function CarListEditPage() {
                     originalname: car.thumbnail.originalname,
                     size: car.thumbnail.size,
                 });
+                setPreview({
+                    path: car.thumbnail.path,
+                    mimetype: car.thumbnail.mimetype,
+                    originalname: car.thumbnail.originalname,
+                    size: car.thumbnail.size,
+                });
                 setValue('category', {
                     label: car.categoryId.name,
                     value: car.categoryId.id,
                 });
+                setColors(car.colors);
             }
         }
         fetchData();
@@ -99,8 +107,8 @@ function CarListEditPage() {
         clearErrors('category');
     };
 
-    const [preview, setPreview] = useState();
     const convert = async (e) => {
+        clearErrors('Фото автомобиля');
         const file = e.target.files[0];
         const reader = new FileReader();
         await reader.readAsDataURL(file);
@@ -111,57 +119,64 @@ function CarListEditPage() {
                 originalname: file.name,
                 mimetype: file.type,
             });
-        }
+        };
     };
 
-    const dispatch = useDispatch();
-
-
     const onSubmit = (data) => {
-        const resultData = {
-            categoryId: { id: data.category.value },
-            name: data['Модель автомобиля'],
-            number: data['Номер автомобиля'],
-            description: data['Описание'],
-            priceMin: data['Минимальная цена'],
-            priceMax: data['Максимальная цена'],
-            tank: data['Количество топлива'],
-            colors: [],
-            thumbnail: preview,
-            // thumbnail: {
-            // size: data[`Фото автомобиля`][0].size,
-            // originalname: data[`Фото автомобиля`][0].name,
-            // mimetype: data[`Фото автомобиля`][0].type,
-            // path: data[`Фото автомобиля`][0].webkitRelativePath,
-            // },
-        };
-        console.log('data ', data);
-        console.log('preview ', preview);
-        console.log('resultData ', resultData);
-        if (id) {
-            (async function () {
-                await entityApi.putEntity({
-                    entity: 'car',
-                    id,
-                    data: resultData,
-                });
-                setTimeout(dispatch(setManualRerender()), 0);
-            })();
+        if (!preview?.path) {
+            setError(
+                'Фото автомобиля',
+                { type: 'file', message: 'Фото не выбрано' },
+                { shouldFocus: true },
+            );
         } else {
-            (async function () {
-                await entityApi.postEntity({
-                    entity: 'car',
-                    data: resultData,
-                });
-                setTimeout(dispatch(setManualRerender()), 0);
-            })();
+            const resultData = {
+                categoryId: { id: data.category.value },
+                name: data['Модель автомобиля'],
+                number: data['Номер автомобиля'],
+                description: data['Описание'],
+                priceMin: data['Минимальная цена'],
+                priceMax: data['Максимальная цена'],
+                tank: data['Количество топлива'],
+                colors,
+                thumbnail: preview,
+            };
+            if (id) {
+                (async function () {
+                    await entityApi.putEntity({
+                        entity: 'car',
+                        id,
+                        data: resultData,
+                    });
+                    setTimeout(dispatch(setManualRerender()), 0);
+                })();
+            } else {
+                (async function () {
+                    await entityApi.postEntity({
+                        entity: 'car',
+                        data: resultData,
+                    });
+                    setTimeout(dispatch(setManualRerender()), 0);
+                })();
+            }
+            navigate('/admin/car-list');
         }
-        navigate('/admin/car-list');
     };
 
     const pageTitle = id
         ? 'Изменение параметров автомобиля'
         : 'Добавление автомобиля';
+
+    const handleSetColorsClick = (currentValue, setNewValue) => {
+        if (currentValue !== '' && !colors.includes(currentValue)) {
+            setColors([...colors, currentValue]);
+        }
+        setNewValue('');
+    };
+
+    const onClickCheckboxColor = (color) => {
+        setColors(colors.filter((colorItem) => colorItem !== color));
+    };
 
     return (
         <div className={css.container}>
@@ -174,16 +189,12 @@ function CarListEditPage() {
                         <div className={css.image_load_block}>
                             <div className={css.imageContainer}>
                                 <img
-                                    // onError={() => setHasError(true)}
                                     className={css.carImage}
                                     src={
                                         preview
                                             ? preview.path
-                                            : formData.thumbnail?.path || carStubPicture
-                                        // hasError ||
-                                        //     !formData[`Фото автомобиля`]?.path
-                                        //     ? carStubPicture
-                                        //     : formData[`Фото автомобиля`]?.path
+                                            : formData['Фото автомобиля']
+                                                  ?.path || carStubPicture
                                     }
                                     alt="Автомобиль"
                                 />
@@ -199,13 +210,14 @@ function CarListEditPage() {
                             <InputFile
                                 label="Фото автомобиля"
                                 buttonText="Обзор"
-                                type="text"
+                                type="file"
                                 placeholder={
-                                    formData[`Фото автомобиля`]?.originalname || preview?.originalname ||
-                                    < span > Выберите файл...</span>
+                                    formData[`Фото автомобиля`]?.originalname ||
+                                    preview?.originalname || (
+                                        <span> Выберите файл...</span>
+                                    )
                                 }
                                 register={register}
-                                required
                                 setError={setError}
                                 errors={errors}
                                 onChange={convert}
@@ -215,7 +227,9 @@ function CarListEditPage() {
                             <h4 className={css.decription_block__title}>
                                 Описание
                             </h4>
-                            <div className={css.decription_block__text}>{formData[`Описание`] || ''}</div>
+                            <div className={css.decription_block__text}>
+                                {formData[`Описание`] || ''}
+                            </div>
                         </div>
                     </section>
                     <section className={`${css.card} ${css.card2}`}>
@@ -342,6 +356,31 @@ function CarListEditPage() {
                                 />
                             </div>
                             <div className={css.element_container}>
+                                <div className={css.colorsField}>
+                                    <InputWithButton
+                                        label="Доступные цвета"
+                                        placeholder="Введите цвет"
+                                        type="text"
+                                        onClick={handleSetColorsClick}
+                                    />
+                                </div>
+                                {colors.map((color) => (
+                                    <Checkbox
+                                        key={color}
+                                        id={color}
+                                        label={color}
+                                        disabled={false}
+                                        checked
+                                        onChange={() =>
+                                            onClickCheckboxColor(color)
+                                        }
+                                    />
+                                ))}
+                                <div style={{ height: '16px', opacity: '0' }}>
+                                    .
+                                </div>
+                            </div>
+                            <div className={css.element_container}>
                                 <TextArea
                                     label="Описание"
                                     type="text"
@@ -355,25 +394,6 @@ function CarListEditPage() {
                                     errors={errors}
                                 />
                             </div>
-                            {/* <div className={css.element_container}>
-                            <Input
-                                label="Стоимость"
-                                type="number"
-                                placeholder="Введите стоимость тарифа"
-                                register={register}
-                                required
-                                setError={setError}
-                                minLength={{
-                                    value: 1,
-                                    message: 'Не менее 1-го символа',
-                                }}
-                                maxLength={{
-                                    value: 10,
-                                    message: 'Не более 10-и символов',
-                                }}
-                                errors={errors}
-                            />
-                        </div> */}
                             <div className={css.button_block}>
                                 <button className={css.button} type="submit">
                                     Сохранить
@@ -388,8 +408,8 @@ function CarListEditPage() {
                         </div>
                     </section>
                 </div>
-            </form >
-        </div >
+            </form>
+        </div>
     );
 }
 

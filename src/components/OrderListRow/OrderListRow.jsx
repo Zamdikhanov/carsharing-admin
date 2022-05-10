@@ -1,9 +1,13 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Checkbox from '../Checkbox/Checkbox';
 import DoubleButton from '../DoubleButton/DoubleButton';
 import carStubPicture from '../../assets/images/car-stub-picture.png';
 import css from './OrderListRow.module.scss';
 import formatDate from '../../utils/formatDate';
+import entityApi from '../../api/entityApi';
+import { setManualRerender } from '../../store/appSlice';
 
 function OrderListRow(order) {
     const {
@@ -22,6 +26,18 @@ function OrderListRow(order) {
     const [hasImageError, setHasImageError] = useState(false);
 
     const noDataMessage = 'нет данных';
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    function onChangeButton() {
+        navigate(`edit?id=${id}`);
+    }
+
+    async function onDeleteButton() {
+        await entityApi.deleteEntity({ entity: 'order', id });
+        setTimeout(dispatch(setManualRerender()), 0);
+    }
 
     return (
         <div className={css.container}>
@@ -75,7 +91,10 @@ function OrderListRow(order) {
                 )}{' '}
                 ₽
             </div>
-            <DoubleButton />
+            <DoubleButton
+                onChangeButton={() => onChangeButton()}
+                onDeleteButton={() => onDeleteButton()}
+            />
         </div>
     );
 }

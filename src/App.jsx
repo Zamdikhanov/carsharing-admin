@@ -18,6 +18,7 @@ import CityListEditPage from './pages/SettingPages/CityListPage/CityListEditPage
 import PointListEditPage from './pages/SettingPages/PointListPage copy/PointListEditPage/PointListEditPage';
 import CategoryListEditPage from './pages/SettingPages/CategoryListPage/CategoryListEditPage/CategoryListEditPage';
 import CarListEditPage from './pages/SettingPages/CarListPage/CarListEditPage/CarListEditPage';
+import OrderListEditPage from './pages/SettingPages/OrderListPage/OrserListEditPage/OrderListEditPage';
 
 function App() {
     return (
@@ -37,6 +38,10 @@ function App() {
                     <Route path="car-list" element={<CarListPage />} />
                     <Route path="car-list/edit" element={<CarListEditPage />} />
                     <Route path="order-list" element={<OrderListPage />} />
+                    <Route
+                        path="order-list/edit"
+                        element={<OrderListEditPage />}
+                    />
                     <Route
                         path="category-list"
                         element={<CategoryListPage />}

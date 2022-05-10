@@ -34,6 +34,8 @@ function OrderListPage() {
         isFetching,
     } = useSelector((state) => state.order);
 
+    const { manualRerender } = useSelector((state) => state.app);
+
     const dispatch = useDispatch();
 
     const paginationPageCount = Math.ceil(orderCount / pageLimit.value);
@@ -57,6 +59,7 @@ function OrderListPage() {
         sortOption.value,
         cityOption.value,
         orderStatusOption.value,
+        manualRerender,
     ]);
 
     function handlePageChange(newPageNumber) {
@@ -157,7 +160,7 @@ function OrderListPage() {
     );
 
     return (
-        <PageMainCard pageTitle="Заказы">
+        <PageMainCard pageTitle="Заказы" addButton>
             <PageMainCardHeader>
                 <FilterForm
                     filterData={filterData}

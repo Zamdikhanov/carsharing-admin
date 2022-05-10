@@ -21,6 +21,8 @@ function SelectWithLabel(props) {
         type,
         field,
         onChange,
+        noOptionsMessage,
+        isLoading,
     } = props;
 
     const classNameSelect = `${css.input} ${
@@ -41,11 +43,14 @@ function SelectWithLabel(props) {
                     onChange={onChange}
                     type={type}
                     noOptionsMessage={({ inputValue }) =>
-                        inputValue ? 'не найдено' : 'не найдено'
+                        inputValue
+                            ? 'не найдено'
+                            : noOptionsMessage || 'не найдено'
                     }
                     errors={errors}
                     {...field}
                     required
+                    isLoading={isLoading}
                 />
             </label>
             {errors && errors[name] && (
