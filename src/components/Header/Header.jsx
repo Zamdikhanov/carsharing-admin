@@ -47,16 +47,15 @@ function Header({ onBurgerClick, isShow, burgerRef }) {
         dispatch(setAppIsFullScreen(localStorageItem));
     }, []);
 
-    const changeContentWrapper = (booleanValue) => {
-        setIsFullScreen(booleanValue);
-        localStorage.setItem('isFullScreen', booleanValue.toString());
-        dispatch(setAppIsFullScreen(booleanValue));
+    const changeContentWrapper = () => {
+        localStorage.setItem('isFullScreen', (!isFullScreen).toString());
+        dispatch(setAppIsFullScreen(!isFullScreen));
+        setIsFullScreen(!isFullScreen);
         setIsComponentVisible(false);
     };
 
-    const classNameButton = `${css.nav_burger} ${
-        isShow ? css.menu_button__active : ''
-    }`;
+    const classNameButton = `${css.nav_burger} ${isShow ? css.menu_button__active : ''
+        }`;
 
     return (
         <header className={css.header}>
@@ -103,6 +102,7 @@ function Header({ onBurgerClick, isShow, burgerRef }) {
                             id="headerMenuCheckbox"
                             label="На весь экран"
                             checked={isFullScreen}
+                            disabled={false}
                             onChange={changeContentWrapper}
                         />
                     </div>

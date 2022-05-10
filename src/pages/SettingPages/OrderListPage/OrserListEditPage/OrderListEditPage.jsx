@@ -2,21 +2,22 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import entityApi from '../../../../api/entityApi';
-import {
-    PageMainCard,
-    PageMainCardMain,
-} from '../../../../components/PageMainCard/PageMainCard';
+import { PageMainCard, PageMainCardMain } from '../../../../components/PageMainCard/PageMainCard';
 import SelectWithLabel from '../../../../components/SelectWithLabel/SelectWithLabel';
 import Input from '../../../../components/Input/Input';
 import css from './OrderListEditPage.module.scss';
+import Preloader from '../../../../components/Preloader/Preloader';
 
 function OrderListEditPage() {
     const [cityOptions, setCityOptions] = useState([]);
     const [pointOptions, setPointOptions] = useState([]);
     const [carOptions, setCarOptions] = useState([]);
-    const [isLoadingcarOptions, setIsLoadingCarOptions] = useState(false);
+    const [isLoadingOptions, setIsLoadingOptions] = useState(false);
     const [colorOptions, setColorOptions] = useState([]);
     const [rateOptions, setRateOptions] = useState([]);
+    const [orderStatusOptions, setOrderStatusOptions] = useState([]);
+    const [dateFromOptions, setDateFromOptions] = useState(null);
+    const [dateToOptions, setDateToOptions] = useState(null);
     const [isFullTankOptions] = useState([
         { label: 'Да', value: true },
         { label: 'Нет', value: false },
@@ -55,7 +56,7 @@ function OrderListEditPage() {
 
     useEffect(() => {
         async function fetchData() {
-            setIsLoadingCarOptions(true);
+            setIsLoadingOptions(true);
             const responseCity = await entityApi.getEntity({
                 entity: 'city',
                 page: 0,
@@ -77,7 +78,6 @@ function OrderListEditPage() {
                 label: item.name,
             }));
             setCarOptions(responseCarOptions);
-            setIsLoadingCarOptions(false);
 
             const responseRate = await entityApi.getEntity({
                 entity: 'rate',
@@ -90,18 +90,64 @@ function OrderListEditPage() {
             }));
             setRateOptions(responseRateOptions);
 
-            // if (id) {
-            //     const responseRate = await entityApi.getEntity({
-            //         entity: `rate/${id}`,
-            //         page: 0,
-            //         limit: 0,
-            //     });
-            //     setValue('Стоимость', responseRate.data.data.price);
-            //     setValue('rate', {
-            //         label: responseRate.data.data.rateTypeId.name,
-            //         value: responseRate.data.data.rateTypeId.id,
-            //     });
-            // }
+            const responseOrderStatus = await entityApi.getEntity({
+                entity: 'orderStatus',
+                page: 0,
+                limit: 0,
+            });
+            const responseOrderStatusOptions = responseOrderStatus.data.data.map((item) => ({
+                value: item.id,
+                label: item.name,
+            }));
+            setOrderStatusOptions(responseOrderStatusOptions);
+
+            if (id) {
+                const responseOrder = await entityApi.getEntity({
+                    entity: `order/${id}`,
+                    page: 0,
+                    limit: 0,
+                });
+                setValue('city', {
+                    label: responseOrder.data.data?.cityId?.name,
+                    value: responseOrder.data.data?.cityId?.id,
+                });
+                setValue('point', {
+                    label: responseOrder.data.data?.pointId?.address,
+                    value: responseOrder.data.data?.pointId?.id,
+                });
+                setValue('car', {
+                    label: responseOrder.data.data?.carId?.name,
+                    value: responseOrder.data.data?.carId?.id,
+                });
+                setValue('color', {
+                    label: responseOrder.data.data?.color || 'Любой',
+                    value: responseOrder.data.data?.color || null,
+                });
+                setValue('rate', {
+                    label: responseOrder.data.data?.rateId?.rateTypeId?.name,
+                    value: responseOrder.data.data?.rateId.id,
+                });
+                setDateFromOptions(responseOrder.data.data?.dateFrom);
+                setDateToOptions(responseOrder.data.data?.dateTo);
+                setValue('isFullTank', {
+                    label: responseOrder.data.data?.isFullTank ? 'Да' : 'Нет',
+                    value: responseOrder.data.data?.isFullTank,
+                });
+                setValue('isNeedChildChair', {
+                    label: responseOrder.data.data?.isNeedChildChair ? 'Да' : 'Нет',
+                    value: responseOrder.data.data?.isNeedChildChair,
+                });
+                setValue('isRightWheel', {
+                    label: responseOrder.data.data?.isRightWheel ? 'Да' : 'Нет',
+                    value: responseOrder.data.data?.isRightWheel,
+                });
+                setValue('Стоимость', responseOrder.data.data.price);
+                setValue('orderStatus', {
+                    label: responseOrder.data.data?.orderStatusId?.name,
+                    value: responseOrder.data.data?.orderStatusId?.id,
+                });
+            }
+            setIsLoadingOptions(false);
         }
         fetchData();
     }, []);
@@ -119,7 +165,7 @@ function OrderListEditPage() {
                 const responsePointOptions = responsePoint.data.data.map(
                     (item) => ({
                         value: item.id,
-                        label: item.name,
+                        label: item.address,
                     }),
                 );
                 setPointOptions(responsePointOptions);
@@ -129,7 +175,7 @@ function OrderListEditPage() {
     }, [formData.city]);
 
     useEffect(() => {
-        setValue('colors', null);
+        setValue('color', null);
         async function fetchData() {
             if (formData.car.value) {
                 const responseColor = await entityApi.getEntity({
@@ -143,50 +189,40 @@ function OrderListEditPage() {
                         label: item,
                     }),
                 );
-                setColorOptions(responseColorOptions);
+                setColorOptions([...responseColorOptions, { value: null, label: 'Любой' }]);
             }
         }
         fetchData();
     }, [formData.car]);
 
-    const resetError = () => {
-        clearErrors('rate');
-    };
-
-    const onChangeCity = () => {
-        clearErrors('city');
-    };
-
-    const onChangeCar = () => {
-        clearErrors('car');
-    };
-
     const onSubmit = (data) => {
-        if (!data.rate?.value) {
-            setError(
-                'rate',
-                { type: 'select', message: 'Тариф не выбран' },
-                { shouldFocus: true },
-            );
+        const resultData = {
+            cityId: data.city.value,
+            pointId: data.point.value,
+            carId: data.car.value,
+            color: data.color.value,
+            dateFrom: dateFromOptions,
+            dateTo: dateToOptions,
+            rateId: data.rate.value,
+            price: data[`Стоимость`],
+            isFullTank: data.isFullTank.value,
+            isNeedChildChair: data.isNeedChildChair.value,
+            isRightWheel: data.isRightWheel.value,
+            orderStatusId: data.orderStatus.value,
+        };
+        if (id) {
+            entityApi.putEntity({
+                entity: 'order',
+                id,
+                data: resultData,
+            });
         } else {
-            const resultData = {
-                rateTypeId: data.rate.value,
-                price: data['Стоимость'],
-            };
-            if (id) {
-                entityApi.putEntity({
-                    entity: 'order',
-                    id,
-                    data: resultData,
-                });
-            } else {
-                entityApi.postEntity({
-                    entity: 'order',
-                    data: resultData,
-                });
-            }
-            navigate('/admin/order-list');
+            entityApi.postEntity({
+                entity: 'order',
+                data: resultData,
+            });
         }
+        navigate('/admin/order-list');
     };
 
     const pageTitle = id ? 'Изменение заказа' : 'Добавление заказа';
@@ -194,204 +230,227 @@ function OrderListEditPage() {
     return (
         <PageMainCard pageTitle={pageTitle}>
             <PageMainCardMain>
-                <form onSubmit={handleSubmit(onSubmit)} onChange>
-                    <div className={css.central_container}>
-                        <div className={css.element_container}>
-                            <Controller
-                                name="city"
-                                control={control}
-                                rules={{ required: 'Обязательное поле' }}
-                                render={({ field }) => (
-                                    <SelectWithLabel
-                                        errors={errors}
-                                        field={field}
-                                        label="Город"
+                {isLoadingOptions ? <Preloader />
+                    : (
+                        <form onSubmit={handleSubmit(onSubmit)} onChange>
+                            <div className={css.central_container}>
+                                <div className={css.element_container}>
+                                    <Controller
                                         name="city"
-                                        placeholder="Выберите город"
-                                        id="orderListEditPageSelectCity"
-                                        options={cityOptions}
-                                        required
-                                        onChange={onChangeCity}
+                                        control={control}
+                                        rules={{ required: 'Обязательное поле' }}
+                                        render={({ field }) => (
+                                            <SelectWithLabel
+                                                errors={errors}
+                                                field={field}
+                                                label="Город"
+                                                name="city"
+                                                placeholder="Выберите город"
+                                                id="orderListEditPageSelectCity"
+                                                options={cityOptions}
+                                                required
+                                                onChange={() => { clearErrors('city') }}
+                                            />
+                                        )}
                                     />
-                                )}
-                            />
-                        </div>
-                        <div className={css.element_container}>
-                            <Controller
-                                name="point"
-                                control={control}
-                                rules={{ required: 'Обязательное поле' }}
-                                render={({ field }) => (
-                                    <SelectWithLabel
-                                        errors={errors}
-                                        field={field}
-                                        label="Пункт выдачи"
+                                </div>
+                                <div className={css.element_container}>
+                                    <Controller
                                         name="point"
-                                        placeholder="Выберите пункт выдачи"
-                                        noOptionsMessage="Сначала выберите город"
-                                        id="orderListEditPageSelectPoint"
-                                        options={pointOptions}
-                                        required
-                                        onChange={resetError}
+                                        control={control}
+                                        rules={{ required: 'Обязательное поле' }}
+                                        render={({ field }) => (
+                                            <SelectWithLabel
+                                                errors={errors}
+                                                field={field}
+                                                label="Пункт выдачи"
+                                                name="point"
+                                                placeholder="Выберите пункт выдачи"
+                                                noOptionsMessage="Сначала выберите город"
+                                                id="orderListEditPageSelectPoint"
+                                                options={pointOptions}
+                                                required
+                                                onChange={() => { clearErrors('point') }}
+                                            />
+                                        )}
                                     />
-                                )}
-                            />
-                        </div>
-                        <div className={css.element_container}>
-                            <Controller
-                                name="car"
-                                control={control}
-                                rules={{ required: 'Обязательное поле' }}
-                                render={({ field }) => (
-                                    <SelectWithLabel
-                                        errors={errors}
-                                        field={field}
-                                        label="Автомобиль"
+                                </div>
+                                <div className={css.element_container}>
+                                    <Controller
                                         name="car"
-                                        placeholder="Выберите автомобиль"
-                                        noOptionsMessage="облом"
-                                        id="orderListEditPageSelectCar"
-                                        options={carOptions}
-                                        required
-                                        onChange={onChangeCar}
-                                        isLoading={isLoadingcarOptions}
+                                        control={control}
+                                        rules={{ required: 'Обязательное поле' }}
+                                        render={({ field }) => (
+                                            <SelectWithLabel
+                                                errors={errors}
+                                                field={field}
+                                                label="Автомобиль"
+                                                name="car"
+                                                placeholder="Выберите автомобиль"
+                                                noOptionsMessage="облом"
+                                                id="orderListEditPageSelectCar"
+                                                options={carOptions}
+                                                required
+                                                onChange={() => { clearErrors('car') }}
+                                                isLoading={isLoadingOptions}
+                                            />
+                                        )}
                                     />
-                                )}
-                            />
-                        </div>
-                        <div className={css.element_container}>
-                            <Controller
-                                name="colors"
-                                control={control}
-                                rules={{ required: 'Обязательное поле' }}
-                                render={({ field }) => (
-                                    <SelectWithLabel
-                                        errors={errors}
-                                        field={field}
-                                        label="Цвет"
-                                        name="colors"
-                                        placeholder="Выберите цвет"
-                                        noOptionsMessage="Сначала выберите автомобиль"
-                                        id="orderListEditPageSelectColors"
-                                        options={colorOptions}
-                                        required
-                                        onChange={resetError}
+                                </div>
+                                <div className={css.element_container}>
+                                    <Controller
+                                        name="color"
+                                        control={control}
+                                        rules={{ required: 'Обязательное поле' }}
+                                        render={({ field }) => (
+                                            <SelectWithLabel
+                                                errors={errors}
+                                                field={field}
+                                                label="Цвет"
+                                                name="color"
+                                                placeholder="Выберите цвет"
+                                                noOptionsMessage="Сначала выберите автомобиль"
+                                                id="orderListEditPageSelectColors"
+                                                options={colorOptions}
+                                                required
+                                                onChange={() => { clearErrors('color') }}
+                                            />
+                                        )}
                                     />
-                                )}
-                            />
-                        </div>
-                        <div className={css.element_container}>
-                            <Controller
-                                name="rate"
-                                control={control}
-                                rules={{ required: 'Обязательное поле' }}
-                                render={({ field }) => (
-                                    <SelectWithLabel
-                                        errors={errors}
-                                        field={field}
-                                        label="Тариф"
+                                </div>
+                                <div className={css.element_container}>
+                                    <Controller
                                         name="rate"
-                                        placeholder="Выберите тариф"
-                                        id="orderListEditPageSelectRate"
-                                        options={rateOptions}
-                                        required
-                                        onChange={resetError}
+                                        control={control}
+                                        rules={{ required: 'Обязательное поле' }}
+                                        render={({ field }) => (
+                                            <SelectWithLabel
+                                                errors={errors}
+                                                field={field}
+                                                label="Тариф"
+                                                name="rate"
+                                                placeholder="Выберите тариф"
+                                                id="orderListEditPageSelectRate"
+                                                options={rateOptions}
+                                                required
+                                                onChange={() => { clearErrors('rate') }}
+                                            />
+                                        )}
                                     />
-                                )}
-                            />
-                        </div>
-                        <div className={css.element_container}>
-                            <Controller
-                                name="isNeedChildChair"
-                                control={control}
-                                rules={{ required: 'Обязательное поле' }}
-                                render={({ field }) => (
-                                    <SelectWithLabel
-                                        errors={errors}
-                                        field={field}
-                                        label="Детское кресло"
+                                </div>
+                                <div className={css.element_container}>
+                                    <Controller
                                         name="isNeedChildChair"
-                                        placeholder="Нужно детское кресло?"
-                                        id="orderListEditPageSelectIsNeedChildChair"
-                                        options={isNeedChildChairOptions}
-                                        required
-                                        onChange={resetError}
+                                        control={control}
+                                        rules={{ required: 'Обязательное поле' }}
+                                        render={({ field }) => (
+                                            <SelectWithLabel
+                                                errors={errors}
+                                                field={field}
+                                                label="Детское кресло"
+                                                name="isNeedChildChair"
+                                                placeholder="Нужно детское кресло?"
+                                                id="orderListEditPageSelectIsNeedChildChair"
+                                                options={isNeedChildChairOptions}
+                                                required
+                                                onChange={() => { clearErrors('isNeedChildChair') }}
+                                            />
+                                        )}
                                     />
-                                )}
-                            />
-                        </div>
-                        <div className={css.element_container}>
-                            <Controller
-                                name="isFullTank"
-                                control={control}
-                                rules={{ required: 'Обязательное поле' }}
-                                render={({ field }) => (
-                                    <SelectWithLabel
-                                        errors={errors}
-                                        field={field}
-                                        label="Полный бак"
+                                </div>
+                                <div className={css.element_container}>
+                                    <Controller
                                         name="isFullTank"
-                                        placeholder="Нужен полный бак?"
-                                        id="orderListEditPageSelectIsFullTank"
-                                        options={isFullTankOptions}
-                                        required
-                                        onChange={resetError}
+                                        control={control}
+                                        rules={{ required: 'Обязательное поле' }}
+                                        render={({ field }) => (
+                                            <SelectWithLabel
+                                                errors={errors}
+                                                field={field}
+                                                label="Полный бак"
+                                                name="isFullTank"
+                                                placeholder="Нужен полный бак?"
+                                                id="orderListEditPageSelectIsFullTank"
+                                                options={isFullTankOptions}
+                                                required
+                                                onChange={() => { clearErrors('isFullTank') }}
+                                            />
+                                        )}
                                     />
-                                )}
-                            />
-                        </div>
-                        <div className={css.element_container}>
-                            <Controller
-                                name="isRightWheel"
-                                control={control}
-                                rules={{ required: 'Обязательное поле' }}
-                                render={({ field }) => (
-                                    <SelectWithLabel
-                                        errors={errors}
-                                        field={field}
-                                        label="Правый руль"
+                                </div>
+                                <div className={css.element_container}>
+                                    <Controller
                                         name="isRightWheel"
-                                        placeholder="Нужен правый руль?"
-                                        id="orderListEditPageSelectIsRightWheel"
-                                        options={isRightWheelOptions}
-                                        required
-                                        onChange={resetError}
+                                        control={control}
+                                        rules={{ required: 'Обязательное поле' }}
+                                        render={({ field }) => (
+                                            <SelectWithLabel
+                                                errors={errors}
+                                                field={field}
+                                                label="Правый руль"
+                                                name="isRightWheel"
+                                                placeholder="Нужен правый руль?"
+                                                id="orderListEditPageSelectIsRightWheel"
+                                                options={isRightWheelOptions}
+                                                required
+                                                onChange={() => { clearErrors('isRightWheel') }}
+                                            />
+                                        )}
                                     />
-                                )}
-                            />
-                        </div>
-                        <div className={css.element_container}>
-                            <Input
-                                label="Стоимость"
-                                type="number"
-                                placeholder="Укажите стоимость"
-                                register={register}
-                                required
-                                setError={setError}
-                                minLength={{
-                                    value: 1,
-                                    message: 'Не менее 1-го символа',
-                                }}
-                                maxLength={{
-                                    value: 10,
-                                    message: 'Не более 10-и символов',
-                                }}
-                                errors={errors}
-                            />
-                        </div>
-                        <div className={css.button_block}>
-                            <button className={css.button} type="submit">
-                                Сохранить
-                            </button>
-                            <Link
-                                className={css.button_secondary}
-                                to="/admin/order-list"
-                            >
-                                Отменить
-                            </Link>
-                        </div>
-                    </div>
-                </form>
+                                </div>
+                                <div className={css.element_container}>
+                                    <Input
+                                        label="Стоимость"
+                                        type="number"
+                                        placeholder="Укажите стоимость"
+                                        register={register}
+                                        required
+                                        setError={setError}
+                                        minLength={{
+                                            value: 1,
+                                            message: 'Не менее 1-го символа',
+                                        }}
+                                        maxLength={{
+                                            value: 10,
+                                            message: 'Не более 10-и символов',
+                                        }}
+                                        errors={errors}
+                                    />
+                                </div>
+                                <div className={css.element_container}>
+                                    <Controller
+                                        name="orderStatus"
+                                        control={control}
+                                        rules={{ required: 'Обязательное поле' }}
+                                        render={({ field }) => (
+                                            <SelectWithLabel
+                                                errors={errors}
+                                                field={field}
+                                                label="Статус заказа"
+                                                name="orderStatus"
+                                                placeholder="Статус заказа"
+                                                id="orderListEditPageSelectOrderStatus"
+                                                options={orderStatusOptions}
+                                                required
+                                                onChange={() => { clearErrors('orderStatus') }}
+                                            />
+                                        )}
+                                    />
+                                </div>
+                                <div className={css.button_block}>
+                                    <button className={css.button} type="submit">
+                                        Сохранить
+                                    </button>
+                                    <Link
+                                        className={css.button_secondary}
+                                        to="/admin/order-list"
+                                    >
+                                        Отменить
+                                    </Link>
+                                </div>
+                            </div>
+                        </form>
+                    )}
             </PageMainCardMain>
         </PageMainCard>
     );
