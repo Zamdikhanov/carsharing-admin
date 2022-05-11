@@ -129,7 +129,9 @@ export const getOrder =
             });
             dispatch(setOrder(response.data));
         } catch {
-            dispatch(setResponseError({ message: 'Ошибка, попробуйте позже' }));
+            dispatch(
+                setResponseError({ message: 'Список заказов не доступен' }),
+            );
         }
         dispatch(setIsFetching(false));
     };

@@ -78,7 +78,11 @@ export const getPoint =
             });
             dispatch(setPoint(response.data));
         } catch {
-            dispatch(setResponseError({ message: 'Ошибка, попробуйте позже' }));
+            dispatch(
+                setResponseError({
+                    message: 'Список точек выдачи не доступен',
+                }),
+            );
         }
         dispatch(setIsFetching(false));
     };

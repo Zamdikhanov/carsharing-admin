@@ -80,7 +80,11 @@ export const getRate =
             });
             dispatch(setRate(response.data));
         } catch {
-            dispatch(setResponseError({ message: 'Ошибка, попробуйте позже' }));
+            dispatch(
+                setResponseError({
+                    message: 'Список стоимостей тарифов не доступен',
+                }),
+            );
         }
         dispatch(setIsFetching(false));
     };

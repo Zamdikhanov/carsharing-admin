@@ -75,7 +75,9 @@ export const getCity =
             });
             dispatch(setCity(response.data));
         } catch {
-            dispatch(setResponseError({ message: 'Ошибка, попробуйте позже' }));
+            dispatch(
+                setResponseError({ message: 'Список городов не доступен' }),
+            );
         }
         dispatch(setIsFetching(false));
     };

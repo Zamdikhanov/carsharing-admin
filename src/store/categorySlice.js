@@ -76,7 +76,9 @@ export const getCategory =
             });
             dispatch(setCategory(response.data));
         } catch {
-            dispatch(setResponseError({ message: 'Ошибка, попробуйте позже' }));
+            dispatch(
+                setResponseError({ message: 'Список категорий не доступен' }),
+            );
         }
         dispatch(setIsFetching(false));
     };

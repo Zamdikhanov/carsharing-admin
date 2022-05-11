@@ -8,7 +8,6 @@ import useComponentVisible from '../hooks/useComponentVisible';
 import { getFilters } from '../store/filterSlice';
 import css from './TemplatePage.module.scss';
 import ErrorPage from './SettingPages/ErrorPage/ErrorPage';
-import { resetResponseError } from '../store/appSlice';
 
 function TemplatePage() {
     const {
@@ -25,7 +24,6 @@ function TemplatePage() {
 
     useEffect(() => {
         if (responseError?.message) navigate('/admin/error');
-        setTimeout(dispath(resetResponseError()), 500);
     }, [responseError]);
 
     useEffect(() => {

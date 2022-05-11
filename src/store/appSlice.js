@@ -20,18 +20,11 @@ export const appSlice = createSlice({
         setResponseError: (state, action) => {
             state.responseError = action.payload;
         },
-        resetResponseError: (state) => {
-            state.responseError = initialState.responseError;
-        },
     },
 });
 
-export const {
-    setIsFullScreen,
-    setManualRerender,
-    setResponseError,
-    resetResponseError,
-} = appSlice.actions;
+export const { setIsFullScreen, setManualRerender, setResponseError } =
+    appSlice.actions;
 
 export const setAppIsFullScreen = (value) => async (dispatch) => {
     dispatch(setIsFullScreen(value));

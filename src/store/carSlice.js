@@ -102,7 +102,9 @@ export const getCar =
             });
             dispatch(setCar(response.data));
         } catch {
-            dispatch(setResponseError({ message: 'Ошибка, попробуйте позже' }));
+            dispatch(
+                setResponseError({ message: 'Список автомобилей не доступен' }),
+            );
         }
         dispatch(setIsFetching(false));
     };
