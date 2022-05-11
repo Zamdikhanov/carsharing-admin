@@ -6,10 +6,10 @@ function ErrorPage({ error, resetErrorBoundary }) {
         <div className={css.container}>
             <div className={css.error_content}>
                 <div className={css.error_content__code}>
-                    {error.status || 500}
+                    {error?.status || 500}
                 </div>
                 <div className={css.error_content__message}>
-                    {error.message || 'Что то пошло не так'}
+                    {error?.message || 'Что то пошло не так'}
                 </div>
                 <div className={css.error_content__tip}>
                     Попробуйте перезагрузить страницу

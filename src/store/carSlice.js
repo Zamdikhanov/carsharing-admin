@@ -1,31 +1,34 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 import entityApi from '../api/entityApi';
+import { setResponseError } from './appSlice';
 
 const initialState = {
-    cars: [{
-        updatedAt: null,
-        createdAt: null,
-        priceMax: null,
-        priceMin: null,
-        name: '',
-        thumbnail: {
-            path: null,
-            mimetype: '',
-            originalname: '',
-            size: null,
-        },
-        description: '',
-        categoryId: {
+    cars: [
+        {
+            updatedAt: null,
+            createdAt: null,
+            priceMax: null,
+            priceMin: null,
             name: '',
+            thumbnail: {
+                path: null,
+                mimetype: '',
+                originalname: '',
+                size: null,
+            },
             description: '',
+            categoryId: {
+                name: '',
+                description: '',
+                id: '',
+            },
+            number: '',
+            tank: null,
+            colors: [],
             id: '',
         },
-        number: '',
-        tank: null,
-        colors: [],
-        id: '',
-    }, ],
+    ],
     pageNumber: 0,
     pageLimit: {
         label: 'по 3 на странице',
@@ -88,7 +91,7 @@ export const {
 
 export const getCar =
     ({ page, limit, options }) =>
-    async(dispatch) => {
+    async (dispatch) => {
         dispatch(setIsFetching(true));
         try {
             const response = await entityApi.getEntity({
@@ -99,7 +102,7 @@ export const getCar =
             });
             dispatch(setCar(response.data));
         } catch {
-            console.log('getOrder slice error');
+            dispatch(setResponseError({ message: 'Ошибка, попробуйте позже' }));
         }
         dispatch(setIsFetching(false));
     };

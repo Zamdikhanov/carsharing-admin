@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import Header from '../components/Header/Header';
 import SideBar from '../components/SideBar/SideBar';
@@ -8,6 +8,7 @@ import useComponentVisible from '../hooks/useComponentVisible';
 import { getFilters } from '../store/filterSlice';
 import css from './TemplatePage.module.scss';
 import ErrorPage from './SettingPages/ErrorPage/ErrorPage';
+import { resetResponseError } from '../store/appSlice';
 
 function TemplatePage() {
     const {
@@ -18,6 +19,14 @@ function TemplatePage() {
     } = useComponentVisible(false);
 
     const dispath = useDispatch();
+    const navigate = useNavigate();
+
+    const { responseError } = useSelector((state) => state.app);
+
+    useEffect(() => {
+        if (responseError?.message) navigate('/admin/error');
+        setTimeout(dispath(resetResponseError()), 500);
+    }, [responseError]);
 
     useEffect(() => {
         dispath(getFilters());

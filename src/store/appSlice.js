@@ -4,6 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     isFullScreen: false,
     manualRerender: {},
+    responseError: { status: '', message: '' },
 };
 
 export const appSlice = createSlice({
@@ -16,12 +17,23 @@ export const appSlice = createSlice({
         setManualRerender: (state) => {
             state.manualRerender = {};
         },
+        setResponseError: (state, action) => {
+            state.responseError = action.payload;
+        },
+        resetResponseError: (state) => {
+            state.responseError = initialState.responseError;
+        },
     },
 });
 
-export const { setIsFullScreen, setManualRerender } = appSlice.actions;
+export const {
+    setIsFullScreen,
+    setManualRerender,
+    setResponseError,
+    resetResponseError,
+} = appSlice.actions;
 
-export const setAppIsFullScreen = (value) => async(dispatch) => {
+export const setAppIsFullScreen = (value) => async (dispatch) => {
     dispatch(setIsFullScreen(value));
 };
 

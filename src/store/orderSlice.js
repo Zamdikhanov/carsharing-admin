@@ -1,48 +1,51 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 import entityApi from '../api/entityApi';
+import { setResponseError } from './appSlice';
 
 const initialState = {
-    orders: [{
-        updatedAt: null,
-        createdAt: null,
-        cityId: null,
-        pointId: null,
-        carId: {
-            priceMax: null,
-            priceMin: null,
-            name: '',
-            number: '',
-            tank: null,
-            thumbnail: {
-                path: null,
-                mimetype: '',
-                originalname: '',
-                size: null,
-            },
-            description: '',
-            categoryId: {
+    orders: [
+        {
+            updatedAt: null,
+            createdAt: null,
+            cityId: null,
+            pointId: null,
+            carId: {
+                priceMax: null,
+                priceMin: null,
                 name: '',
+                number: '',
+                tank: null,
+                thumbnail: {
+                    path: null,
+                    mimetype: '',
+                    originalname: '',
+                    size: null,
+                },
                 description: '',
+                categoryId: {
+                    name: '',
+                    description: '',
+                    id: '',
+                },
+                colors: [''],
                 id: '',
             },
-            colors: [''],
+            color: '',
+            dateFrom: null,
+            dateTo: null,
+            rateId: null,
+            price: null,
+            isFullTank: false,
+            isNeedChildChair: false,
+            isRightWheel: false,
+            orderStatusId: {
+                name: '',
+                id: '',
+            },
             id: '',
         },
-        color: '',
-        dateFrom: null,
-        dateTo: null,
-        rateId: null,
-        price: null,
-        isFullTank: false,
-        isNeedChildChair: false,
-        isRightWheel: false,
-        orderStatusId: {
-            name: '',
-            id: '',
-        },
-        id: '',
-    }, ],
+    ],
     pageNumber: 0,
     pageLimit: {
         label: 'по 3 на странице',
@@ -114,8 +117,8 @@ export const {
 } = orderSlice.actions;
 
 export const getOrder =
-    ({ page, limit, options, }) =>
-    async(dispatch) => {
+    ({ page, limit, options }) =>
+    async (dispatch) => {
         dispatch(setIsFetching(true));
         try {
             const response = await entityApi.getEntity({
@@ -126,7 +129,7 @@ export const getOrder =
             });
             dispatch(setOrder(response.data));
         } catch {
-            console.log('getOrder slice error');
+            dispatch(setResponseError({ message: 'Ошибка, попробуйте позже' }));
         }
         dispatch(setIsFetching(false));
     };

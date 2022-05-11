@@ -1,17 +1,20 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 import entityApi from '../api/entityApi';
+import { setResponseError } from './appSlice';
 
 const initialState = {
-    points: [{
-        name: '',
-        cityId: {
+    points: [
+        {
             name: '',
+            cityId: {
+                name: '',
+                id: '',
+            },
+            address: '',
             id: '',
         },
-        address: '',
-        id: '',
-    }, ],
+    ],
     pageNumber: 0,
     pageLimit: {
         label: 'по 5 на странице',
@@ -64,7 +67,7 @@ export const {
 
 export const getPoint =
     ({ page, limit, options }) =>
-    async(dispatch) => {
+    async (dispatch) => {
         dispatch(setIsFetching(true));
         try {
             const response = await entityApi.getEntity({
@@ -75,7 +78,7 @@ export const getPoint =
             });
             dispatch(setPoint(response.data));
         } catch {
-            console.log('getPoint slice error');
+            dispatch(setResponseError({ message: 'Ошибка, попробуйте позже' }));
         }
         dispatch(setIsFetching(false));
     };
