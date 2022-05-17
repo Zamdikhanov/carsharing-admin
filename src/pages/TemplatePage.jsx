@@ -40,9 +40,8 @@ function TemplatePage() {
 
     const { isFullScreen } = useSelector((state) => state.app);
 
-    const classNameWrapper = `${css.wrapper} ${
-        isFullScreen ? css.wrapper_fullscreen : ''
-    }`;
+    const classNameWrapper = `${css.wrapper} ${isFullScreen ? css.wrapper_fullscreen : ''
+        }`;
 
     return (
         <div className={css.bg}>
@@ -89,7 +88,7 @@ function TemplatePage() {
                                 </li>
                             </ul>
                             <div className={css.copy}>
-                                Copyright © 2022 Simbirsoft
+                                Copyright © 2022 Zamdikhanov
                             </div>
                         </footer>
                     </div>
