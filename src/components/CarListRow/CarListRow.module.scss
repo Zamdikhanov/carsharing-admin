@@ -1,0 +1,84 @@
+@import '../../styles/variables.scss';
+.container {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px 0;
+    width: 100%;
+    min-width: 1000px;
+    box-shadow: inset 0 -0.5px 0 0 $color_input_border;
+    &:hover {
+        background-color: $color_background_hover;
+        box-shadow: inset 0 -0.5px 0 0 $color_input_border, 18px 0px 0px 0px $color_background_hover, -18px 0px 0px 0px $color_background_hover;
+    }
+    &:last-child {
+        box-shadow: none;
+        &:hover {
+            background-color: $color_background_hover;
+            box-shadow: 18px 0px 0px 0px $color_background_hover, -18px 0px 0px 0px $color_background_hover;
+        }
+    }
+    &.container_title {
+        background-color: $color_gray_light;
+        box-shadow: 18px 0px 0px 0px $color_gray_light, -18px 0px 0px 0px $color_gray_light;
+    }
+}
+
+.aboutCar {
+    display: flex;
+    width: 138px;
+    flex: 0 0 138px;
+}
+
+.imageContainer {
+    display: flex;
+    justify-content: flex-end;
+    font-family: $font_text;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 15px;
+    letter-spacing: -0.424914px;
+}
+
+.carImage {
+    width: 100%;
+    width: 138px;
+    height: 63px;
+    object-fit: contain;
+}
+
+.details_list {
+    width: 80px;
+    flex: 0 0 80px;
+    font-family: $font_text;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 15px;
+    letter-spacing: -0.424914px;
+    &__row {
+        color: $color_gray_dark;
+        font: inherit;
+    }
+    &__row span {
+        color: $color_main_black;
+        font: inherit;
+    }
+    &__row+.details_list__row {
+        margin-top: 6px;
+    }
+    &.section3 {
+        width: 170px;
+        flex: 0 0 170px;
+    }
+    &.section4 {
+        width: 250px;
+        flex: 0 0 250px;
+    }
+}
+
+.buttons {
+    width: 143px;
+}

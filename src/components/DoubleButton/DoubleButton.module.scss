@@ -1,0 +1,66 @@
+@import '../../styles/variables.scss';
+.container {
+    display: flex;
+}
+
+.button {
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    color: $color_main_text;
+    background: #ffffff;
+    border: none;
+    outline: none;
+    border-top: 0.5px solid $color_input_border;
+    border-bottom: 0.5px solid $color_input_border;
+    box-sizing: border-box;
+    height: 24px;
+    width: 71.5px;
+    @media (max-width: 767px) {
+        width: 36px;
+    }
+    @media (max-width: 600px) {
+        width: 71.5px;
+    }
+    &:first-child {
+        border-radius: 4px 0px 0px 4px;
+        border-right: 0.5px solid $color_input_border;
+        border-left: 0.5px solid $color_input_border;
+    }
+    &:last-child {
+        border-radius: 0px 4px 4px 0px;
+        border-right: 0.5px solid $color_input_border;
+        border-left: 0.5px solid $color_input_border;
+    }
+    &:hover {
+        color: $color_main_choice;
+        background-color: $color_background_hover;
+    }
+    &:active {
+        color: $color_main_black;
+    }
+    &:focus-visible {
+        color: $color_main_choice;
+        box-shadow: 0.5px 0 0 0 $color_input_border, -0.5px 0 0 0 $color_input_border, 0 0.5px 0 0 $color_input_border, 0 -0.5px 0 0 $color_input_border;
+    }
+    span {
+        color: inherit;
+        font: inherit;
+        @media (max-width: 767px) {
+            display: none;
+        }
+        @media (max-width: 600px) {
+            display: inline-block;
+        }
+    }
+}
+
+.svg {
+    margin-right: 4px;
+    @media (max-width: 767px) {
+        margin-right: 0px;
+    }
+    @media (max-width: 600px) {
+        margin-right: 4px;
+    }
+}

@@ -1,0 +1,33 @@
+@import '../../../../styles/variables.scss';
+@import '../../../../styles/mixins.scss';
+.central_container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 16px 0px;
+    column-gap: 21px;
+    .element_container {
+        flex: 1 1 250px;
+    }
+}
+
+.button_block {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 16px;
+}
+
+.button {
+    @include button_success;
+    justify-self: normal;
+    margin-right: 12.5px;
+}
+
+.button_reset {
+    @include button_danger;
+}
+
+.button_secondary {
+    @include button_secondary;
+    justify-self: flex-start;
+}

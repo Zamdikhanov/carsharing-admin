@@ -1,0 +1,84 @@
+@import '../../styles/variables.scss';
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px 0;
+    box-shadow: inset 0 -0.5px 0 0 $color_input_border;
+    &:hover {
+        background-color: $color_background_hover;
+        box-shadow: inset 0 -0.5px 0 0 $color_input_border, 18px 0px 0px 0px $color_background_hover, -18px 0px 0px 0px $color_background_hover;
+    }
+    &:last-child {
+        box-shadow: none;
+        &:hover {
+            background-color: $color_background_hover;
+            box-shadow: 18px 0px 0px 0px $color_background_hover, -18px 0px 0px 0px $color_background_hover;
+        }
+    }
+    @media (max-width: 600px) {
+        justify-content: flex-start;
+    }
+    &.container_title {
+        background-color: $color_gray_light;
+        box-shadow: 18px 0px 0px 0px $color_gray_light, -18px 0px 0px 0px $color_gray_light;
+        @media (max-width: 600px) {
+            display: none;
+        }
+    }
+}
+
+.details_list {
+    flex: 1 1 150px;
+    color: $color_gray_dark;
+    font-family: $font_text;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 15px;
+    letter-spacing: -0.424914px;
+    @media (max-width: 767px) {
+        flex: 1 1 140px;
+    }
+    @media (max-width: 600px) {
+        width: 100%;
+        flex: 1 1 auto;
+    }
+    .rowTitles {
+        display: none;
+        @media (max-width: 600px) {
+            display: inline-block;
+            color: inherit;
+            font: inherit;
+            padding-right: 0.3em;
+        }
+    }
+    & span {
+        color: $color_main_black;
+        font-family: $font_text;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 15px;
+    }
+    &.title {
+        span {
+            color: $color_main_black;
+            font-family: $font_title;
+            color: $color_title_text;
+            font-size: 16px;
+            line-height: 18px;
+        }
+    }
+}
+
+.buttons {
+    min-width: 143px;
+    @media (max-width: 767px) {
+        min-width: 72px;
+    }
+    @media (max-width: 600px) {
+        min-width: 143px;
+    }
+}

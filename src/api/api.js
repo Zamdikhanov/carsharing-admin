@@ -12,16 +12,22 @@ function b64EncodeUnicode(str) {
     );
 }
 
-const BASIC_TOKEN = b64EncodeUnicode(
-    `a1y2r3a4t5:${SECRET}`,
-);
+const BASIC_TOKEN = b64EncodeUnicode(`a1y2r3a4t5:${SECRET}`);
 
 const instance = axios.create({
     baseURL: `${BASE_URL}`,
     headers: {
         'X-Api-Factory-Application-Id': `${APPLICATION_ID}`,
-        Authorization: `Basic ${BASIC_TOKEN}`,
+        'Authorization': `Basic ${BASIC_TOKEN}`,
     },
 });
 
-export default instance;
+const instanceWithToken = axios.create({
+    baseURL: `${BASE_URL}`,
+    headers: {
+        'X-Api-Factory-Application-Id': `${APPLICATION_ID}`,
+        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+    },
+});
+
+export { instance, instanceWithToken };

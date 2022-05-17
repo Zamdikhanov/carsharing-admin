@@ -9,6 +9,7 @@ import { ReactComponent as SearchSvg } from '../../assets/header/search-icon.svg
 import useComponentVisible from '../../hooks/useComponentVisible';
 import Checkbox from '../Checkbox/Checkbox';
 import { setAppIsFullScreen } from '../../store/appSlice';
+import Modal from '../Modal/Modal';
 
 function Header({ onBurgerClick, isShow, burgerRef }) {
     const {
@@ -19,6 +20,8 @@ function Header({ onBurgerClick, isShow, burgerRef }) {
     } = useComponentVisible(false);
 
     const { user_name: userName, data } = useSelector((state) => state.auth);
+
+    const [isOpenExitModal, setIsOpenExitModal] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -31,7 +34,7 @@ function Header({ onBurgerClick, isShow, burgerRef }) {
     };
 
     const handleClickLogout = () => {
-        setIsComponentVisible(false);
+        setIsOpenExitModal(false);
         dispatch(logout(data.access_token));
     };
 
@@ -44,10 +47,10 @@ function Header({ onBurgerClick, isShow, burgerRef }) {
         dispatch(setAppIsFullScreen(localStorageItem));
     }, []);
 
-    const changeContentWrapper = (booleanValue) => {
-        setIsFullScreen(booleanValue);
-        localStorage.setItem('isFullScreen', booleanValue.toString());
-        dispatch(setAppIsFullScreen(booleanValue));
+    const changeContentWrapper = () => {
+        localStorage.setItem('isFullScreen', (!isFullScreen).toString());
+        dispatch(setAppIsFullScreen(!isFullScreen));
+        setIsFullScreen(!isFullScreen);
         setIsComponentVisible(false);
     };
 
@@ -96,20 +99,34 @@ function Header({ onBurgerClick, isShow, burgerRef }) {
                 <div className={css.user_menu} ref={ref}>
                     <div className={css.user_menu__item}>
                         <Checkbox
+                            id="headerMenuCheckbox"
                             label="На весь экран"
                             checked={isFullScreen}
+                            disabled={false}
                             onChange={changeContentWrapper}
                         />
                     </div>
                     <button
                         className={css.user_menu__button}
                         type="button"
-                        onClick={handleClickLogout}
+                        onClick={() => {
+                            setIsOpenExitModal(true);
+                        }}
                     >
                         Выйти
                     </button>
                 </div>
             )}
+            <Modal
+                title="Выход из аккаунта"
+                isOpen={isOpenExitModal}
+                onCancel={() => {
+                    setIsOpenExitModal(false);
+                }}
+                onSubmit={() => handleClickLogout()}
+            >
+                Действительно хотите выйти?
+            </Modal>
         </header>
     );
 }

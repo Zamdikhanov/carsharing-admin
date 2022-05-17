@@ -1,0 +1,142 @@
+@import '../../styles/variables';
+.input_container {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 66px;
+    font-family: $font_title;
+    font-style: normal;
+    font-weight: 400;
+    margin-bottom: 11.5px;
+    @media (max-width: 1023px) {
+        height: 63px;
+        margin-bottom: 6px;
+    }
+    & .label {
+        display: block;
+        font-size: 10.5px;
+        line-height: 12px;
+        letter-spacing: -0.17px;
+        margin-bottom: 8px;
+        @media (max-width: 1023px) {
+            margin-bottom: 6px;
+        }
+    }
+    & .error {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 12px;
+        width: calc(100% - 12px);
+        font-size: 10px;
+        line-height: 11px;
+        letter-spacing: -0.17px;
+        color: $color_alert;
+    }
+    &+.input_container {
+        margin-top: 12px;
+        @media (max-width: 1023px) {
+            margin-top: 6px;
+        }
+    }
+}
+
+.input {
+    box-sizing: border-box;
+    padding: 0;
+    border-radius: 4px;
+    outline: none;
+    border: 0.5px solid $color_input_border;
+    align-self: center;
+    width: 100%;
+    height: 30px;
+    &:hover {
+        box-shadow: 0.5px 0 0 0 $color_input_border, -0.5px 0 0 0 $color_input_border, 0 0.5px 0 0 $color_input_border, 0 -0.5px 0 0 $color_input_border;
+        background-color: $color_background_hover;
+    }
+    &:focus-within {
+        outline: 0.5px solid $color_input_border;
+    }
+    [class*='-control'] {
+        height: 100%;
+        box-sizing: border-box;
+        outline: none;
+        box-shadow: none;
+        min-height: auto;
+        border: none;
+        cursor: pointer;
+        background-color: inherit;
+    }
+    [class*='-ValueContainer'] {
+        color: $color_gray_dark;
+        padding: 0 8px 0;
+    }
+    [class*='-option'] {
+        color: $color_gray_dark;
+        padding: 8px;
+        background-color: #fff;
+        cursor: pointer;
+        font-family: $font_title;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 11px;
+        line-height: 13px;
+        letter-spacing: -0.17px;
+        &:hover {
+            color: $color_main_choice;
+        }
+        &:active {
+            background-color: white;
+            opacity: 1;
+        }
+    }
+    [class*='indicatorContainer'] {
+        padding: 0px;
+    }
+    [class*='indicatorSeparator'] {
+        display: none;
+    }
+    [class*='dropdown-indicator'] {
+        margin-right: 7.5px;
+    }
+    [class*='-singleValue'] {
+        margin: 0;
+        padding: 0;
+        color: $color_main_black;
+        font-family: $font_title;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 11px;
+        line-height: 13px;
+        letter-spacing: -0.17px;
+    }
+    [class*='-placeholder'] {
+        margin: 0;
+        padding: 0;
+        font-family: $font_title;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 11px;
+        line-height: 13px;
+        letter-spacing: -0.17px;
+    }
+    [class*='__menu'] {
+        margin-top: 3px;
+        max-height: 33vh;
+    }
+    [class*='-Input'] {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.input_error {
+    border: 0.5px solid $color_alert;
+    &:focus-within {
+        outline: 0.5px solid $color_alert;
+    }
+}
+
+input[type='search']::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+}

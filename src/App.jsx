@@ -2,10 +2,23 @@ import { Route, Routes } from 'react-router-dom';
 import LoginPage from './pages/LoginPage/LoginPage';
 import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
 import TemplatePage from './pages/TemplatePage';
+import CarListPage from './pages/SettingPages/CarListPage/CarListPage';
 import OrderListPage from './pages/SettingPages/OrderListPage/OrderListPage';
 import ErrorPage from './pages/SettingPages/ErrorPage/ErrorPage';
 import PageNotFound from './pages/PageNotFound/PageNotFound';
 import RequireAuth from './hoc/RequireAuth';
+import CategoryListPage from './pages/SettingPages/CategoryListPage/CategoryListPage';
+import CityListPage from './pages/SettingPages/CityListPage/CityListPage';
+import PointListPage from './pages/SettingPages/PointListPage copy/PointListPage';
+import RateTypeListPage from './pages/SettingPages/RateTypeListPage/RateTypeListPage';
+import RateListPage from './pages/SettingPages/RateListPage/RateListPage';
+import RateListEditPage from './pages/SettingPages/RateListPage/RateListEditPage/RateListEditPage';
+import RateTypeListEditPage from './pages/SettingPages/RateTypeListPage/RateTypeListEditPage/RateTypeListEditPage';
+import CityListEditPage from './pages/SettingPages/CityListPage/CityListEditPage/CityListEditPage';
+import PointListEditPage from './pages/SettingPages/PointListPage copy/PointListEditPage/PointListEditPage';
+import CategoryListEditPage from './pages/SettingPages/CategoryListPage/CategoryListEditPage/CategoryListEditPage';
+import CarListEditPage from './pages/SettingPages/CarListPage/CarListEditPage/CarListEditPage';
+import OrderListEditPage from './pages/SettingPages/OrderListPage/OrserListEditPage/OrderListEditPage';
 
 function App() {
     return (
@@ -22,15 +35,44 @@ function App() {
                         </RequireAuth>
                     }
                 >
-                    <Route
-                        path="car-setting"
-                        element={<div>car-setting</div>}
-                    />
-                    <Route path="car-list" element={<div>car-list</div>} />
+                    <Route path="car-list" element={<CarListPage />} />
+                    <Route path="car-list/edit" element={<CarListEditPage />} />
                     <Route path="order-list" element={<OrderListPage />} />
-                    <Route path="menu4" element={<div>menu4</div>} />
-                    <Route path="menu5" element={<div>menu5</div>} />
-                    <Route path="menu6" element={<div>menu6</div>} />
+                    <Route
+                        path="order-list/edit"
+                        element={<OrderListEditPage />}
+                    />
+                    <Route
+                        path="category-list"
+                        element={<CategoryListPage />}
+                    />
+                    <Route
+                        path="category-list/edit"
+                        element={<CategoryListEditPage />}
+                    />
+                    <Route path="city-list" element={<CityListPage />} />
+                    <Route
+                        path="city-list/edit"
+                        element={<CityListEditPage />}
+                    />
+                    <Route path="point-list" element={<PointListPage />} />
+                    <Route
+                        path="point-list/edit"
+                        element={<PointListEditPage />}
+                    />
+                    <Route
+                        path="rate-type-list"
+                        element={<RateTypeListPage />}
+                    />
+                    <Route
+                        path="rate-type-list/edit"
+                        element={<RateTypeListEditPage />}
+                    />
+                    <Route path="rate-list" element={<RateListPage />} />
+                    <Route
+                        path="rate-list/edit"
+                        element={<RateListEditPage />}
+                    />
                     <Route path="error" element={<ErrorPage />} />
                 </Route>
 

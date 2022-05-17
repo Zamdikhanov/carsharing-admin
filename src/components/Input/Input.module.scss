@@ -16,7 +16,7 @@
         display: block;
         font-size: 10.5px;
         line-height: 12px;
-        letter-spacing: -0.18421px;
+        letter-spacing: -0.17px;
         margin-bottom: 8px;
         @media (max-width: 1023px) {
             margin-bottom: 6px;
@@ -25,12 +25,17 @@
     & .input {
         font-size: 11px;
         line-height: 13px;
-        letter-spacing: -0.175439px;
+        letter-spacing: -0.17px;
         padding: 8px 11px;
+        height: 30px;
         width: 100%;
         border: 0.5px solid $color_input_border;
         border-radius: 4px;
         color: $color_main_text;
+        &:hover {
+            box-shadow: 0.5px 0 0 0 $color_input_border, -0.5px 0 0 0 $color_input_border, 0 0.5px 0 0 $color_input_border, 0 -0.5px 0 0 $color_input_border;
+            background-color: $color_background_hover;
+        }
         &:focus {
             outline: 0.5px solid $color_input_border;
             color: $color_main_black;
@@ -52,7 +57,7 @@
         width: calc(100% - 12px);
         font-size: 10px;
         line-height: 11px;
-        letter-spacing: -0.175439px;
+        letter-spacing: -0.17px;
         color: $color_alert;
     }
     &+.input_container {

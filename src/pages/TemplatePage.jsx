@@ -1,9 +1,13 @@
-import { useSelector } from 'react-redux';
-import { NavLink, Outlet } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { ErrorBoundary } from 'react-error-boundary';
 import Header from '../components/Header/Header';
 import SideBar from '../components/SideBar/SideBar';
 import useComponentVisible from '../hooks/useComponentVisible';
+import { getFilters } from '../store/filterSlice';
 import css from './TemplatePage.module.scss';
+import ErrorPage from './SettingPages/ErrorPage/ErrorPage';
 
 function TemplatePage() {
     const {
@@ -12,6 +16,19 @@ function TemplatePage() {
         setIsComponentVisible: setIsNavMobileVisible,
         ignoreRef: burgerRef,
     } = useComponentVisible(false);
+
+    const dispath = useDispatch();
+    const navigate = useNavigate();
+
+    const { responseError } = useSelector((state) => state.app);
+
+    useEffect(() => {
+        if (responseError?.message) navigate('/admin/error');
+    }, [responseError]);
+
+    useEffect(() => {
+        dispath(getFilters());
+    }, []);
 
     const handleClick = () => {
         setIsNavMobileVisible(!isNavMobileVisible);
@@ -23,9 +40,8 @@ function TemplatePage() {
 
     const { isFullScreen } = useSelector((state) => state.app);
 
-    const classNameWrapper = `${css.wrapper} ${
-        isFullScreen ? css.wrapper_fullscreen : ''
-    }`;
+    const classNameWrapper = `${css.wrapper} ${isFullScreen ? css.wrapper_fullscreen : ''
+        }`;
 
     return (
         <div className={css.bg}>
@@ -49,7 +65,9 @@ function TemplatePage() {
                             />
                         </div>
                         <main className={css.main}>
-                            <Outlet />
+                            <ErrorBoundary FallbackComponent={ErrorPage}>
+                                <Outlet />
+                            </ErrorBoundary>
                         </main>
                         <footer className={css.footer}>
                             <ul className={css.link_list}>
@@ -62,13 +80,15 @@ function TemplatePage() {
                                     <a
                                         className={css.link}
                                         href="https://zamdikhanov.github.io/carsharing/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                     >
                                         Need for drive
                                     </a>
                                 </li>
                             </ul>
                             <div className={css.copy}>
-                                Copyright © 2022 Simbirsoft
+                                Copyright © 2022 Zamdikhanov
                             </div>
                         </footer>
                     </div>

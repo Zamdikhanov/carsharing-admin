@@ -24,6 +24,7 @@ export const authSlice = createSlice({
         },
         setAuthServerResponce: (state, action) => {
             state.data = action.payload;
+            localStorage.setItem('accessToken', `${action.payload.access_token}`);
         },
         setIsAuth: (state, action) => {
             state.isAuth = action.payload;
@@ -36,6 +37,7 @@ export const authSlice = createSlice({
             state.user_name = initialState.user_name;
             state.isAuth = initialState.isAuth;
             state.authError = initialState.authError;
+            localStorage.removeItem('accessToken');
         },
     },
 });

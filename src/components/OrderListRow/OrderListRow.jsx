@@ -1,9 +1,13 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import Checkbox from '../Checkbox/Checkbox';
-import TripleButton from '../TripleButton/TripleButton';
+import DoubleButton from '../DoubleButton/DoubleButton';
 import carStubPicture from '../../assets/images/car-stub-picture.png';
 import css from './OrderListRow.module.scss';
 import formatDate from '../../utils/formatDate';
+import entityApi from '../../api/entityApi';
+import { setManualRerender } from '../../store/appSlice';
 
 function OrderListRow(order) {
     const {
@@ -17,46 +21,80 @@ function OrderListRow(order) {
         isFullTank,
         isNeedChildChair,
         isRightWheel,
+        id,
     } = order;
-    const [hasError, setHasError] = useState(false);
+    const [hasImageError, setHasImageError] = useState(false);
+
+    const noDataMessage = 'нет данных';
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    function onChangeButton() {
+        navigate(`edit?id=${id}`);
+    }
+
+    async function onDeleteButton() {
+        await entityApi.deleteEntity({ entity: 'order', id });
+        setTimeout(dispatch(setManualRerender()), 0);
+    }
 
     return (
         <div className={css.container}>
             <div className={css.aboutCar}>
                 <div className={css.imageContainer}>
                     <img
-                        onError={() => setHasError(true)}
+                        onError={() => setHasImageError(true)}
                         className={css.carImage}
-                        src={hasError ? carStubPicture : carId.thumbnail.path}
-                        alt={carId.name}
+                        src={
+                            hasImageError
+                                ? carStubPicture
+                                : carId?.thumbnail?.path || carStubPicture
+                        }
+                        alt={carId?.name || 'car image'}
                     />
                 </div>
                 <div className={css.details_list}>
                     <div className={css.details_list__row}>
-                        <span>{carId.name}</span> в <span>{cityId.name}</span>,{' '}
-                        {pointId.address}
+                        <span>{carId?.name || noDataMessage}</span> в{' '}
+                        <span>{cityId?.name || noDataMessage}</span>,{' '}
+                        {pointId?.address || noDataMessage}
                     </div>
                     <div className={css.details_list__row}>
-                        {`${formatDate(dateFrom)} - ${formatDate(dateTo)}`}
+                        {`${formatDate(dateFrom || 0)} - ${formatDate(
+                            dateTo || 0,
+                        )}`}
                     </div>
                     <div className={css.details_list__row}>
-                        Цвет: <span>{color}</span>
+                        Цвет: <span>{color || noDataMessage}</span>
                     </div>
                 </div>
             </div>
             <div className={css.checkboxes}>
-                <Checkbox {...{ checked: isFullTank, label: 'Полный бак' }} />
                 <Checkbox
-                    {...{ checked: isNeedChildChair, label: 'Детское кресло' }}
+                    {...{ id, checked: isFullTank, label: 'Полный бак' }}
                 />
                 <Checkbox
-                    {...{ checked: isRightWheel, label: 'Правый руль' }}
+                    {...{
+                        id,
+                        checked: isNeedChildChair,
+                        label: 'Детское кресло',
+                    }}
+                />
+                <Checkbox
+                    {...{ id, checked: isRightWheel, label: 'Правый руль' }}
                 />
             </div>
             <div className={css.price}>
-                {Intl.NumberFormat('ru', { useGrouping: true }).format(price)} ₽
+                {Intl.NumberFormat('ru', { useGrouping: true }).format(
+                    price || noDataMessage,
+                )}{' '}
+                ₽
             </div>
-            <TripleButton />
+            <DoubleButton
+                onChangeButton={() => onChangeButton()}
+                onDeleteButton={() => onDeleteButton()}
+            />
         </div>
     );
 }
